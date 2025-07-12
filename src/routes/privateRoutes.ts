@@ -1,5 +1,5 @@
+import Dashboard from "@/pages/private/Dashboard";
 import type { RouteConfig } from "../types/routes";
-// import { Dashboard } from "../pages/private/Dashboard";
 
 export const privateRoutes: RouteConfig[] = [
   {
