@@ -5,6 +5,13 @@ export const apiService = {
     return baseService.post("/admin/create/post", formData);
   },
 
+  checkApi: () => {
+    return baseService.get("/api/protected");
+  },
+  checkPublicApi: () => {
+    return baseService.get("/api/public");
+  },
+
   getSinglePost: async (post_id: string | null) => {
     return baseService
       .get(

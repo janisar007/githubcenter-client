@@ -1,9 +1,6 @@
-// import React, { useEffect } from "react";
 import { AppRoutes } from "./routes";
 import { Provider, useSelector } from "react-redux";
 import store, { type RootState } from "./store/store";
-// import { useDispatch } from "react-redux";
-// import { signOutUser } from "./store/slices/authSlice";
 import { GlobalLoader } from './components/common/GlobalLoader';
 
 const AppContent: React.FC = () => {

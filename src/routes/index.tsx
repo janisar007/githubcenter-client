@@ -1,8 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { MainLayout } from "../layouts/MainLayout";
-import { PrivateRoute } from "./PrivateRoute";
+// import { MainLayout } from "../layouts/MainLayout";
+// import { PrivateRoute } from "./PrivateRoute";
 import { navItems } from "../layouts/navItems";
 import { publicRoutes } from "./publicRoutes";
+import ProtectedRoute from "@/components/common/ProtectedRoute";
+import MainTabLayout from "@/layouts/MainTabLayout";
 
 export const AppRoutes = () => {
   return (
@@ -21,9 +23,9 @@ export const AppRoutes = () => {
       <Route
         path="/"
         element={
-          <PrivateRoute>
-            <MainLayout />
-          </PrivateRoute>
+          <ProtectedRoute>
+            <MainTabLayout />
+          </ProtectedRoute>
         }
       >
         <Route index element={<Navigate to="/dashboard" replace />} />

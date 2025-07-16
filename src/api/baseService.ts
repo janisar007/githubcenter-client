@@ -1,18 +1,22 @@
 import axios from "axios";
 import { getLocalStorageItem } from "../utils/storage";
+import Cookies from 'js-cookie';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 export const baseService = axios.create({
   baseURL,
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 baseService.interceptors.request.use(
-  (config) => {
-    const token = getLocalStorageItem("authToken");
+  async (config) => {
+    const token = Cookies.get('__session');
+
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
