@@ -1,11 +1,10 @@
 import { Tab, TabPanel, TabProvider, Tabs } from "@/components/costum/Tab";
 import SidebarTab from "./SidebarTab";
-import MainLayout from "./MainLayout";
 // app/layout.tsx
 export default function MainTabLayout() {
   return (
-    <MainLayout>
-      <TabProvider defaultTab="profile" storageKey="activeTab">
+    <div className=" ">
+      <TabProvider defaultTab="dashboard" storageKey="activeTab">
         <Tabs
           className="mb-4 bg-cgray-second border-cgray-border border-[0.09rem]"
           tabListClassName="flex space-x-1"
@@ -44,6 +43,6 @@ export default function MainTabLayout() {
           <p>This is the settings tab content.</p>
         </TabPanel>
       </TabProvider>
-    </MainLayout>
+    </div>
   );
 }

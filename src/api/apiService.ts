@@ -1,17 +1,34 @@
 import { baseService } from "./baseService";
 
 export const apiService = {
-  createPost: (formData: any) => {
-    return baseService.post("/admin/create/post", formData);
+  createPat: (formData: any) => {
+    return baseService.post("/pat/create/pat", formData);
   },
 
-  checkApi: () => {
-    return baseService.get("/api/protected");
+  getAllGhInfo: async (userId:string) => {
+    try {
+    const response = await baseService.get(
+      `/gh/get/allGh?userId=${userId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw error;
+  }
   },
-  checkPublicApi: () => {
-    return baseService.get("/api/public");
+  getUserInfo: async (clerkId:string, email:string) => {
+    try {
+    const response = await baseService.get(
+      `/users/get/user?clerkId=${clerkId}&email=${email}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw error;
+  }
   },
 
+  //------------------------------------------------------------------
   getSinglePost: async (post_id: string | null) => {
     return baseService
       .get(

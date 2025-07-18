@@ -1,7 +1,7 @@
 import type { NavItem } from "../types/layout";
-import Dashboard from "@/pages/private/Dashboard";  
-import  YourPost  from "../pages/private/YourPost/index"; 
-import  NewPost  from "../pages/private/AddNewPost/index";
+import Dashboard from "@/pages/private/Dashboard/Dashboard";
+import YourPost from "../pages/private/YourPost/index";
+import NewPost from "../pages/private/AddNewPost/index";
 import { FaTachometerAlt, FaUsers } from "react-icons/fa";
 import { SingleFeedPost } from "@/pages/private/SingleFeedPost/SingleFeedPost";
 
@@ -24,10 +24,6 @@ export const navItems: NavItem[] = [
     showInSidebar: true,
   },
 
-
-
-
-
   // Private pages not in sidebar
 
   {
@@ -47,5 +43,4 @@ export const navItems: NavItem[] = [
     path: "/singleFeedPost",
     showInSidebar: false,
   },
-
 ];

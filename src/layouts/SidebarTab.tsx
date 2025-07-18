@@ -11,7 +11,7 @@ import SelectRepos from './SelectRepos';
 const SidebarTab = () => {
   return (
     <div className="">
-      <Sidebar defaultOption="dashboard" storageKey="appSection" className="flex h-[calc(100vh-8rem)]">
+      <Sidebar defaultOption="dashboard" storageKey="appSection" className="flex h-[calc(100vh-12rem)]">
         {/* Dashboard Group */}
         <div className=' overflow-auto'>
         <SidebarGroup title="Main">
