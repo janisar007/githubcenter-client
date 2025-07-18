@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { FiX } from 'react-icons/fi';
+import React, { useEffect, useRef } from "react";
+import { FiX } from "react-icons/fi";
 
 interface DialogProps {
   isOpen: boolean;
@@ -27,15 +27,15 @@ const Dialog: React.FC<DialogProps> = ({
   onClose,
   children,
   title,
-  className = '',
-  overlayClassName = '',
-  contentClassName = '',
-  headerClassName = '',
-  bodyClassName = '',
-  footerClassName = '',
-  closeButtonClassName = '',
-  overlayBlur = 'blur(4px)',
-  overlayDarkness = 'rgba(0, 0, 0, 0.5)',
+  className = "",
+  overlayClassName = "",
+  contentClassName = "",
+  headerClassName = "",
+  bodyClassName = "",
+  footerClassName = "",
+  closeButtonClassName = "",
+  overlayBlur = "blur(4px)",
+  overlayDarkness = "rgba(1, 1, 1, 0.9)",
   disableClickOutsideClose = false,
   disableEscapeClose = false,
   showCloseButton = true,
@@ -43,17 +43,91 @@ const Dialog: React.FC<DialogProps> = ({
   footerContent,
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+    const dotSize = 2.5;
+    const dotSpacing = 6;
+    const cols = Math.ceil(width / dotSpacing);
+    const rows = Math.ceil(height / dotSpacing);
+
+    // SPEED CONTROL (lower = faster)
+    const fadeSpeed = 0.01; // Opacity change per frame
+
+    // Create a 2D array to store opacity and direction (1 = fade in, -1 = fade out)
+    const dots: { opacity: number; direction: 1 | -1 }[][] = Array.from(
+      { length: rows },
+      () =>
+        Array.from({ length: cols }, () => ({
+          opacity: Math.random() * 0.15,
+          direction: Math.random() < 0.5 ? 1 : -1,
+        }))
+    );
+
+    const resize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener("resize", resize);
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const dot = dots[row][col];
+
+          // Update opacity
+          dot.opacity += dot.direction * fadeSpeed;
+
+          // Reverse direction if limits hit
+          if (dot.opacity >= 0.15) {
+            dot.opacity = 0.15;
+            dot.direction = -1;
+          } else if (dot.opacity <= 0) {
+            dot.opacity = 0;
+            dot.direction = 1;
+          }
+
+          ctx.fillStyle = `rgba(255, 255, 255, ${dot.opacity})`;
+          ctx.fillRect(col * dotSpacing, row * dotSpacing, dotSize, dotSize);
+        }
+      }
+    };
+
+    let animationId: number;
+    const animate = () => {
+      draw();
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", resize);
+    };
+  }, [isOpen]);
 
   // Handle escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !disableEscapeClose) {
+      if (e.key === "Escape" && !disableEscapeClose) {
         onClose();
       }
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener("keydown", handleKeyDown);
       // Set initial focus
       if (initialFocusRef?.current) {
         initialFocusRef.current.focus();
@@ -63,20 +137,20 @@ const Dialog: React.FC<DialogProps> = ({
     }
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, disableEscapeClose, onClose, initialFocusRef]);
 
   // Prevent body scroll when dialog is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -89,11 +163,13 @@ const Dialog: React.FC<DialogProps> = ({
       aria-modal="true"
     >
       {/* Customizable Backdrop */}
-      <div
-        className={`fixed inset-0 transition-opacity ${overlayClassName} animated-dotted-overlay`}
+      <canvas
+        ref={canvasRef}
+        className={`fixed inset-0 z-40 ${overlayClassName}`}
         style={{
           backdropFilter: overlayBlur,
           backgroundColor: overlayDarkness,
+          pointerEvents: "auto", // allow click propagation if needed
         }}
         onClick={disableClickOutsideClose ? undefined : onClose}
       />
@@ -107,7 +183,9 @@ const Dialog: React.FC<DialogProps> = ({
       >
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className={`flex items-center justify-between p-4 border-b ${headerClassName}`}>
+          <div
+            className={`flex items-center justify-between p-4 border-b ${headerClassName}`}
+          >
             {title && <h2 className="text-xl font-semibold">{title}</h2>}
             {showCloseButton && (
               <button
@@ -123,9 +201,7 @@ const Dialog: React.FC<DialogProps> = ({
         )}
 
         {/* Body */}
-        <div className={`flex-1 p-4 ${bodyClassName}`}>
-          {children}
-        </div>
+        <div className={`flex-1 p-4 ${bodyClassName}`}>{children}</div>
 
         {/* Footer */}
         {footerContent && (

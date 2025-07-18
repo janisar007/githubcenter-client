@@ -334,3 +334,13 @@ html,
     background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
   }
 }
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Keep below dialog */
+  pointer-events: none; /* So it doesn't block clicks */
+}
