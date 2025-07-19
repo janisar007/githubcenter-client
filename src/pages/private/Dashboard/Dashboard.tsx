@@ -58,7 +58,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col p-4 bg-cgray-first h-[calc(100vh-7rem)]">
+    <div className="flex flex-col p-4 bg-white h-[calc(100vh-7rem)]">
       <div className="p-4border-2">
       <CardGrid
         cards={ghData}
@@ -66,7 +66,7 @@ const Dashboard = () => {
         onBookmark={(cardId) => console.log('Bookmark', cardId)}
         onShare={(cardId) => console.log('Share', cardId)}
         onCardClick={(card) => console.log('Card clicked', card)}
-        className="max-w-[84rem] mx-auto bg-cgray-first"
+        className="max-w-[84rem] mx-auto bg-white"
         cardClassName="cursor-pointer bg-white"
         searchPlaceholder="Search projects..."
         emptyMessage="No matching projects found"

@@ -1,31 +1,41 @@
 import { baseService } from "./baseService";
 
 export const apiService = {
-  createPat: (formData: any) => {
-    return baseService.post("/pat/create/pat", formData);
+  addPat: async (formData: any) => {
+    try {
+      const response = await baseService.post("/pat/create/pat", formData);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
   },
 
-  getAllGhInfo: async (userId:string) => {
+  getAllGhInfo: async (userId: string) => {
     try {
-    const response = await baseService.get(
-      `/gh/get/allGh?userId=${userId}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    throw error;
-  }
+      const response = await baseService.get(`/gh/get/allGh?userId=${userId}`);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
   },
-  getUserInfo: async (clerkId:string, email:string) => {
+  getUserInfo: async (clerkId: string, email: string) => {
     try {
-    const response = await baseService.get(
-      `/users/get/user?clerkId=${clerkId}&email=${email}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    throw error;
-  }
+      const response = await baseService.get(
+        `/users/get/user?clerkId=${clerkId}&email=${email}`
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
   },
 
   //------------------------------------------------------------------
@@ -46,7 +56,9 @@ export const apiService = {
   getAllUserPost: async () => {
     return baseService
       .get(
-        `/admin/get/alluserpost?org_id=${localStorage.getItem('orgId')}&user_id=${localStorage.getItem('userId')}`
+        `/admin/get/alluserpost?org_id=${localStorage.getItem(
+          "orgId"
+        )}&user_id=${localStorage.getItem("userId")}`
       )
       .then((response) => response.data) // Extract and return the data
       .catch((error) => {
@@ -55,10 +67,14 @@ export const apiService = {
       });
   },
 
-  getAllPost: async (data:any) => {
+  getAllPost: async (data: any) => {
     return baseService
       .get(
-        `/admin/get/allpost?org_id=${localStorage.getItem('orgId')}&user_id=${localStorage.getItem('userId')}&page=${data.page}&limit=${data.limit}`
+        `/admin/get/allpost?org_id=${localStorage.getItem(
+          "orgId"
+        )}&user_id=${localStorage.getItem("userId")}&page=${data.page}&limit=${
+          data.limit
+        }`
       )
       .then((response) => response.data) // Extract and return the data
       .catch((error) => {
@@ -67,9 +83,6 @@ export const apiService = {
       });
   },
 };
-
-
-
 
 // export async function apiUpdatePost(post_id:string) { // org done
 //     return ApiService.fetchData<any>({

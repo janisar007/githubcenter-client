@@ -22,7 +22,7 @@ export const Header = () => {
     console.log("eeeeeeeeeeeee")
 
   return (
-    <header className="bg-white shadow-sm border-b-2">
+    <header className="bg-cgray-first shadow-sm border-b-2">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <nav className="flex space-x-4">
           <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">

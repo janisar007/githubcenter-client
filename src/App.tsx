@@ -1,8 +1,8 @@
 
-import { Provider, useSelector } from "react-redux";
-import store, { type RootState } from "./store/store";
-import { GlobalLoader } from './components/common/GlobalLoader';
+import { Provider } from "react-redux";
+import store from "./store/store";
 import { AppRoutes } from "./routes/AppRoutes";
+import { ToastProvider } from "./components/costum/Toast/ToastContext";
 
 // const AppContent: React.FC = () => {
 //   const { initializing } = useSelector((state: RootState) => state.auth);
@@ -21,7 +21,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <div className="App">
-        <AppRoutes />
+        <ToastProvider>
+
+          <AppRoutes />
+        </ToastProvider>
       </div>
     </Provider>
   );

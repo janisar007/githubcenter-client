@@ -259,24 +259,24 @@ const CardGrid: React.FC<CardGridProps> = ({
       <Dialog
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="Custom Dialog"
+        title="Add Github Account"
         initialFocusRef={inputRef}
         overlayBlur="blur(8px)"
         overlayDarkness="rgba(0, 0, 0, 0.7)"
         overlayClassName="transition-opacity duration-300"
-        contentClassName="w-full max-w-md"
-        headerClassName="bg-gray-50"
+        contentClassName="w-full max-w-xl"
+        // headerClassName="bg-gray-50"
         bodyClassName="bg-white"
-        footerClassName="bg-gray-50"
+        // footerClassName="bg-gray-50"
         closeButtonClassName="text-gray-500 hover:text-gray-700"
         footerContent={
           <div className="flex justify-end gap-2">
-            <button  onClick={() => setIsOpen(false)}>
+            {/* <button className="white-button" onClick={() => setIsOpen(false)}>
               Cancel
             </button>
-            <button onClick={() => setIsOpen(false)}>
+            <button className="blue-button" onClick={() => setIsOpen(false)}>
               Confirm
-            </button>
+            </button> */}
           </div>
         }
       >
