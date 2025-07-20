@@ -8,7 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -18,7 +18,7 @@ import {
   KeyRound,
   Scale,
   BookText,
-} from "lucide-react"
+} from "lucide-react";
 
 const authItems = [
   { title: "Email, phone, username", value: "email", icon: LayoutDashboard },
@@ -27,32 +27,32 @@ const authItems = [
   { title: "Multi-factor", value: "mfa", icon: ShieldCheck },
   { title: "Restrictions", value: "restrictions", icon: Lock },
   { title: "Attack protection", value: "attack", icon: ShieldCheck },
-]
+];
 
 const sessionItems = [
   { title: "Sessions", value: "sessions", icon: KeyRound },
   { title: "JWT templates", value: "jwt", icon: Settings2 },
-]
+];
 
-const complianceItems = [
-  { title: "Legal", value: "legal", icon: Scale },
-]
+const complianceItems = [{ title: "Legal", value: "legal", icon: Scale }];
 
-const featureItems = [
-  { title: "Features", value: "features", icon: BookText },
-]
+const featureItems = [{ title: "Features", value: "features", icon: BookText }];
 
 export function AppSidebar({
   variant = "inset",
   collapsible = "icon",
 }: {
-  variant?: "sidebar" | "floating" | "inset"
-  collapsible?: "offcanvas" | "icon" | "none"
+  variant?: "sidebar" | "floating" | "inset";
+  collapsible?: "offcanvas" | "icon" | "none";
 }) {
   return (
     // <div className="h-64">
 
-        <Sidebar variant={variant} collapsible={collapsible} className="w-64 border-r h-full">
+    <Sidebar
+      variant={variant}
+      collapsible={collapsible}
+      className="w-64 border-r h-full"
+    >
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>User & Authentication</SidebarGroupLabel>
@@ -61,7 +61,10 @@ export function AppSidebar({
               {authItems.map((item) => (
                 <SidebarMenuItem key={item.value}>
                   <SidebarMenuButton asChild>
-                    <a href={`#${item.value}`} className="flex items-center gap-2">
+                    <a
+                      href={`#${item.value}`}
+                      className="flex items-center gap-2"
+                    >
                       <item.icon className="w-4 h-4" />
                       <span>{item.title}</span>
                     </a>
@@ -79,7 +82,10 @@ export function AppSidebar({
               {sessionItems.map((item) => (
                 <SidebarMenuItem key={item.value}>
                   <SidebarMenuButton asChild>
-                    <a href={`#${item.value}`} className="flex items-center gap-2">
+                    <a
+                      href={`#${item.value}`}
+                      className="flex items-center gap-2"
+                    >
                       <item.icon className="w-4 h-4" />
                       <span>{item.title}</span>
                     </a>
@@ -97,7 +103,10 @@ export function AppSidebar({
               {complianceItems.map((item) => (
                 <SidebarMenuItem key={item.value}>
                   <SidebarMenuButton asChild>
-                    <a href={`#${item.value}`} className="flex items-center gap-2">
+                    <a
+                      href={`#${item.value}`}
+                      className="flex items-center gap-2"
+                    >
                       <item.icon className="w-4 h-4" />
                       <span>{item.title}</span>
                     </a>
@@ -115,7 +124,10 @@ export function AppSidebar({
               {featureItems.map((item) => (
                 <SidebarMenuItem key={item.value}>
                   <SidebarMenuButton asChild>
-                    <a href={`#${item.value}`} className="flex items-center gap-2">
+                    <a
+                      href={`#${item.value}`}
+                      className="flex items-center gap-2"
+                    >
                       <item.icon className="w-4 h-4" />
                       <span>{item.title}</span>
                     </a>
@@ -129,6 +141,5 @@ export function AppSidebar({
     </Sidebar>
 
     // </div>
-    
-  )
+  );
 }

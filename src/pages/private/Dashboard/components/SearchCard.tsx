@@ -147,7 +147,7 @@ const CardGrid: React.FC<CardGridProps> = ({
             >
               {filteredCards.map((card) => (
                 <div
-                  key={card.userId}
+                  key={card.username}
                   className={` border-[0.09rem] border-gray-100 hover:border-gray-300 rounded-md overflow-hidden shadow-sm transition-shadow ${cardClassName}`}
                   onClick={() => onCardClick?.(card)}
                 >

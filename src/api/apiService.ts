@@ -13,7 +13,7 @@ export const apiService = {
     }
   },
 
-  getAllGhInfo: async (userId: string) => {
+  getAllGhInfo: async (userId: string | null) => {
     try {
       const response = await baseService.get(`/gh/get/allGh?userId=${userId}`);
       return response.data;
