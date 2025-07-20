@@ -3,12 +3,10 @@ import { publicRoutes } from "./publicRoutes";
 import { privateRoutes } from "./privateRoutes";
 
 
-import ProtectedRoute from "@/components/common/ProtectedRoute";
-// import HeaderLayout from "@/layouts/HeaderLayout";
-// import PublicLayout from "@/layouts/PublicLayout";
 import HeaderLayout from "@/components/common/TopHeader/HeaderLayout";
 import PublicLayout from "@/layouts/PublicLayout";
 import { useUser } from "@clerk/clerk-react";
+import PrivateLayout from "@/layouts/PrivateLayout";
 
 export const AppRoutes = () => {
   return (
@@ -24,9 +22,9 @@ export const AppRoutes = () => {
       <Route
         path=":username"
         element={
-          <ProtectedRoute>
+          <PrivateLayout>
             <HeaderLayout />
-          </ProtectedRoute>
+          </PrivateLayout>
         }
       >
         {privateRoutes.map(({ id, path, component: Component }) => (

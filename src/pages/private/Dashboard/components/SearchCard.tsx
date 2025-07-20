@@ -6,6 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { IoIosAnalytics } from "react-icons/io";
 import Dialog from "@/components/costum/Dialog";
 import AddGithubDialogBox from "./AddGithubDialogBox";
+import { Skeleton } from "@/components/costum/Skeleton";
 
 interface Card {
   userId: string;
@@ -18,6 +19,7 @@ interface Card {
 
 interface CardGridProps {
   cards: Card[];
+  loading?: boolean;
   className?: string;
   cardClassName?: string;
   searchPlaceholder?: string;
@@ -33,24 +35,25 @@ interface CardGridProps {
 
 const CardGrid: React.FC<CardGridProps> = ({
   cards,
+  loading = false,
   className = "",
   cardClassName = "",
   searchPlaceholder = "Search cards...",
   emptyMessage = "No cards found",
   maxColumns = 2,
   showSearch = true,
-//   showActions = true,
+  //   showActions = true,
   onCardClick,
-//   onFavorite,
-//   onBookmark,
-//   onShare,
+  //   onFavorite,
+  //   onBookmark,
+  //   onShare,
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const inputRef = useRef<any>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const inputRef = useRef<any>(null);
 
   const [searchTerm, setSearchTerm] = useState("");
-//   const [favoritesOnly, setFavoritesOnly] = useState(false);
-//   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  //   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  //   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   function convertGithubUrl(url: any) {
     try {
       const parsed = new URL(url);
@@ -75,7 +78,7 @@ const CardGrid: React.FC<CardGridProps> = ({
 
   // Filter cards based on search term, favorites, and tags
   const filteredCards = useMemo(() => {
-    return cards.filter((card) => {
+    return cards?.filter((card) => {
       const matchesSearch = card.username
         ?.toLowerCase()
         ?.includes(searchTerm?.toLowerCase());
@@ -84,7 +87,7 @@ const CardGrid: React.FC<CardGridProps> = ({
       //   const matchesTag = !selectedTag || card.tags?.includes(selectedTag);
       return matchesSearch;
     });
-  }, [cards, searchTerm]);
+  }, [cards, searchTerm, loading]);
 
   return (
     <div className={`flex flex-col ${className}`}>
@@ -103,10 +106,9 @@ const CardGrid: React.FC<CardGridProps> = ({
           </div>
 
           <div className="flex gap-2">
-
             <button
-            //   onClick={() => setFavoritesOnly(!favoritesOnly)}
-            onClick={() => setIsOpen(true)}
+              //   onClick={() => setFavoritesOnly(!favoritesOnly)}
+              onClick={() => setIsOpen(true)}
               className={`blue-button`}
             >
               Add Github
@@ -139,7 +141,8 @@ const CardGrid: React.FC<CardGridProps> = ({
 
         <div className=" w-[70%]">
           {/* Cards Grid */}
-          {filteredCards.length > 0 ? (
+
+          {!loading && filteredCards.length > 0 ? (
             <div
               className={`grid gap-6 ${
                 maxColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 "
@@ -200,53 +203,71 @@ const CardGrid: React.FC<CardGridProps> = ({
                       </div>
 
                       {/* {showActions && (
-                        <div className="flex gap-2">
-                        <button
-                            onClick={(e) => {
-                            e.stopPropagation();
-                            onFavorite?.(card.id);
-                            }}
-                            className={`p-1 rounded-full ${card.isFavorite ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
-                        >
-                            <FiHeart />
-                        </button>
-                        <button
-                            onClick={(e) => {
-                            e.stopPropagation();
-                            onBookmark?.(card.id);
-                            }}
-                            className={`p-1 rounded-full ${card.isBookmarked ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'}`}
-                        >
-                            <FiBookmark />
-                        </button>
-                        <button
-                            onClick={(e) => {
-                            e.stopPropagation();
-                            onShare?.(card.id);
-                            }}
-                            className="p-1 rounded-full text-gray-400 hover:text-gray-600"
-                        >
-                            <FiShare2 />
-                        </button>
-                        </div>
-                    )} */}
+                          <div className="flex gap-2">
+                          <button
+                              onClick={(e) => {
+                              e.stopPropagation();
+                              onFavorite?.(card.id);
+                              }}
+                              className={`p-1 rounded-full ${card.isFavorite ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                          >
+                              <FiHeart />
+                          </button>
+                          <button
+                              onClick={(e) => {
+                              e.stopPropagation();
+                              onBookmark?.(card.id);
+                              }}
+                              className={`p-1 rounded-full ${card.isBookmarked ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'}`}
+                          >
+                              <FiBookmark />
+                          </button>
+                          <button
+                              onClick={(e) => {
+                              e.stopPropagation();
+                              onShare?.(card.id);
+                              }}
+                              className="p-1 rounded-full text-gray-400 hover:text-gray-600"
+                          >
+                              <FiShare2 />
+                          </button>
+                          </div>
+                      )} */}
                     </div>
                     {/* <p className="text-gray-600 mb-3">{card.description}</p> */}
                     {/* {card.tags && card.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                        {card.tags.map(tag => (
-                        <span
-                            key={tag}
-                            className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
-                        >
-                            {tag}
-                        </span>
-                        ))}
-                    </div>
-                    )} */}
+                      <div className="flex flex-wrap gap-2">
+                          {card.tags.map(tag => (
+                          <span
+                              key={tag}
+                              className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                          >
+                              {tag}
+                          </span>
+                          ))}
+                      </div>
+                      )} */}
                   </div>
                 </div>
               ))}
+            </div>
+          ) : loading ? (
+            <div
+              className={`grid gap-6 ${
+                maxColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 "
+              }`}
+            >
+              {[1, 2, 3, 4, 5]?.map((e) => {
+                return (
+                  <div key={e} className="border rounded-lg p-6">
+                    <div className="mb-5">
+                      <Skeleton variant="text" className="mb-2" width="40%" />
+                      <Skeleton variant="text" className="" width="45%" />
+                    </div>
+                    <Skeleton variant="text" width="60%" className="" />
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-12 text-gray-500">
@@ -280,9 +301,7 @@ const CardGrid: React.FC<CardGridProps> = ({
           </div>
         }
       >
-
-        <AddGithubDialogBox/>
-        
+        <AddGithubDialogBox />
       </Dialog>
     </div>
   );

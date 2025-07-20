@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 // Types
 interface SidebarContextProps {
@@ -30,20 +30,21 @@ interface SidebarOptionProps {
   };
 }
 
-interface SidebarOptionWithSubOptionsProps extends Omit<SidebarOptionProps, 'children'> {
-  title: string;
-  subOptions: {
-    optionId: string;
-    children: React.ReactNode;
-  }[];
-  defaultExpanded?: boolean;
-  expandedClassName?: string;
-  collapsedClassName?: string;
-  subOptionsContainerClassName?: string;
-  subOptionClassName?: string;
-  subOptionActiveClassName?: string;
-  subOptionInactiveClassName?: string;
-}
+// interface SidebarOptionWithSubOptionsProps
+//   extends Omit<SidebarOptionProps, "children"> {
+//   title: string;
+//   subOptions: {
+//     optionId: string;
+//     children: React.ReactNode;
+//   }[];
+//   defaultExpanded?: boolean;
+//   expandedClassName?: string;
+//   collapsedClassName?: string;
+//   subOptionsContainerClassName?: string;
+//   subOptionClassName?: string;
+//   subOptionActiveClassName?: string;
+//   subOptionInactiveClassName?: string;
+// }
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -54,12 +55,14 @@ interface SidebarProps {
 }
 
 // Context
-const SidebarContext = createContext<SidebarContextProps | undefined>(undefined);
+const SidebarContext = createContext<SidebarContextProps | undefined>(
+  undefined
+);
 
 const useSidebar = () => {
   const context = useContext(SidebarContext);
   if (!context) {
-    throw new Error('useSidebar must be used within a SidebarProvider');
+    throw new Error("useSidebar must be used within a SidebarProvider");
   }
   return context;
 };
@@ -67,14 +70,16 @@ const useSidebar = () => {
 // Main Component
 const Sidebar: React.FC<SidebarProps> = ({
   children,
-  className = 'flex h-full overflow-hidden', // Added overflow-hidden here
-  contentClassName = 'flex-1 p-4 overflow-auto', // Ensure overflow-auto for content
-  storageKey = 'sidebarOption',
-  defaultOption = '',
+  className = "flex h-full overflow-hidden", // Added overflow-hidden here
+  contentClassName = "flex-1 p-4 overflow-auto", // Ensure overflow-auto for content
+  storageKey = "sidebarOption",
+  defaultOption = "",
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlOption = searchParams.get(storageKey);
-  const [selectedOption, setSelectedOption] = useState(urlOption || defaultOption);
+  const [selectedOption, setSelectedOption] = useState(
+    urlOption || defaultOption
+  );
 
   useEffect(() => {
     if (selectedOption) {
@@ -85,9 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <SidebarContext.Provider value={{ selectedOption, setSelectedOption }}>
-      <div className={className}>
-        {children}
-      </div>
+      <div className={className}>{children}</div>
     </SidebarContext.Provider>
   );
 };
@@ -98,24 +101,22 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
   children,
   collapsible = false,
   defaultCollapsed = false,
-  className = 'mb-4 border-b-[0.09rem] pb-4',
-  titleClassName = 'text-gray-600 uppercase text-[0.68rem] font-bold px-3 py-2 flex items-center justify-between',
-  contentClassName = 'mt-1',
+  className = "mb-4 border-b-[0.09rem] pb-4",
+  titleClassName = "text-gray-600 uppercase text-[0.68rem] font-bold px-3 py-2 flex items-center justify-between",
+  contentClassName = "mt-1",
 }) => {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
 
   return (
     <div className={className}>
-      <div 
+      <div
         className={titleClassName}
         onClick={() => collapsible && setCollapsed(!collapsed)}
-        style={{ cursor: collapsible ? 'pointer' : 'default' }}
+        style={{ cursor: collapsible ? "pointer" : "default" }}
       >
         <span>{title}</span>
         {collapsible && (
-          <span className="text-gray-400">
-            {collapsed ? '+' : '-'}
-          </span>
+          <span className="text-gray-400">{collapsed ? "+" : "-"}</span>
         )}
       </div>
       {!collapsed && <div className={contentClassName}>{children}</div>}
@@ -127,9 +128,9 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
 const SidebarOption: React.FC<SidebarOptionProps> = ({
   optionId,
   children,
-  className = 'px-3 py-2 text-sm rounded flex items-center justify-between',
-  activeClassName = 'bg-gray-100 text-gray-800',
-  inactiveClassName = 'text-gray-600 hover:bg-gray-50',
+  className = "px-3 py-2 text-sm rounded flex items-center justify-between",
+  activeClassName = "bg-gray-100 text-gray-800",
+  inactiveClassName = "text-gray-600 hover:bg-gray-50",
   rightAction,
 }) => {
   const { selectedOption, setSelectedOption } = useSidebar();
@@ -137,13 +138,15 @@ const SidebarOption: React.FC<SidebarOptionProps> = ({
 
   return (
     <button
-      className={`${className} ${isActive ? activeClassName : inactiveClassName} transition-colors duration-200 w-full text-left`}
+      className={`${className} ${
+        isActive ? activeClassName : inactiveClassName
+      } transition-colors duration-200 w-full text-left`}
       onClick={() => setSelectedOption(optionId)}
     >
       <span>{children}</span>
       {rightAction && (
-        <span 
-          className={`ml-2 ${rightAction.className || ''}`}
+        <span
+          className={`ml-2 ${rightAction.className || ""}`}
           onClick={(e) => {
             e.stopPropagation();
             rightAction.onClick(e);
@@ -157,44 +160,74 @@ const SidebarOption: React.FC<SidebarOptionProps> = ({
 };
 
 // Sidebar Option With SubOptions Component
-const SidebarOptionWithSubOptions: React.FC<SidebarOptionWithSubOptionsProps> = ({
+interface SubOption {
+  optionId: string;
+  children: React.ReactNode;
+  rightAction?: {
+    icon: React.ReactNode;
+    onClick: (e: React.MouseEvent) => void;
+    className?: string;
+  };
+}
+
+interface SidebarOptionWithSubOptionsProps
+  extends Omit<SidebarOptionProps, "children"> {
+  title: string;
+  subOptions: SubOption[];
+  defaultExpanded?: boolean;
+  expandedClassName?: string;
+  collapsedClassName?: string;
+  subOptionsContainerClassName?: string;
+  subOptionClassName?: string;
+  subOptionActiveClassName?: string;
+  subOptionInactiveClassName?: string;
+  subOptionRightActionClassName?: string;
+}
+
+const SidebarOptionWithSubOptions: React.FC<
+  SidebarOptionWithSubOptionsProps
+> = ({
   optionId,
   title,
   subOptions,
   defaultExpanded = false,
-  className = 'px-3 py-2 text-sm rounded flex items-center justify-between',
-  activeClassName = 'bg-gray-100 text-gray-800',
-  inactiveClassName = 'text-gray-600 hover:bg-gray-50',
-  expandedClassName = 'bg-gray-50',
-  collapsedClassName = '',
-  subOptionsContainerClassName = 'ml-4 mt-1 space-y-1',
-  subOptionClassName = 'px-3 py-1.5 text-sm rounded flex items-center',
-  subOptionActiveClassName = 'bg-gray-100 text-gray-800',
-  subOptionInactiveClassName = 'text-gray-600 hover:bg-gray-50',
+  className = "px-3 py-2 text-sm rounded flex items-center justify-between",
+  activeClassName = "bg-gray-100 text-gray-800",
+  inactiveClassName = "text-gray-600 hover:bg-gray-50",
+  expandedClassName = "bg-gray-50",
+  collapsedClassName = "",
+  subOptionsContainerClassName = "ml-4 mt-1 space-y-1",
+  subOptionClassName = "px-3 py-1.5 text-sm rounded flex items-center justify-between",
+  subOptionActiveClassName = "bg-gray-100 text-gray-800",
+  subOptionInactiveClassName = "text-gray-600 hover:bg-gray-50",
+  subOptionRightActionClassName = "ml-2",
   rightAction,
 }) => {
   const { selectedOption, setSelectedOption } = useSidebar();
   const [expanded, setExpanded] = useState(defaultExpanded);
-  
-  // Check if any sub-option is active to determine if parent should be active
-  const isSubOptionActive = subOptions.some(sub => sub.optionId === selectedOption);
+
+  const isSubOptionActive = subOptions.some(
+    (sub) => sub.optionId === selectedOption
+  );
   const isActive = selectedOption === optionId || isSubOptionActive;
 
   return (
     <div>
       <button
-        className={`${className} ${isActive ? activeClassName : inactiveClassName} ${
+        className={`${className} ${
+          isActive ? activeClassName : inactiveClassName
+        } ${
           expanded ? expandedClassName : collapsedClassName
         } transition-colors duration-200 w-full text-left`}
         onClick={() => setExpanded(!expanded)}
       >
-        <span>{title}</span>
-        <span className="ml-2">
-          {expanded ? '−' : '+'}
-        </span>
+        <div className="flex items-center">
+          <span>{title}</span>
+          <span className="ml-2">{expanded ? "−" : "+"}</span>
+        </div>
         {rightAction && (
-          <span 
-            className={`ml-2 ${rightAction.className || ''}`}
+          <span
+            className={`ml-2 ${rightAction.className || ""}`}
             onClick={(e) => {
               e.stopPropagation();
               rightAction.onClick(e);
@@ -204,21 +237,36 @@ const SidebarOptionWithSubOptions: React.FC<SidebarOptionWithSubOptionsProps> = 
           </span>
         )}
       </button>
-      
+
       {expanded && (
         <div className={subOptionsContainerClassName}>
           {subOptions.map((subOption) => (
-            <button
+            <div
               key={subOption.optionId}
-              className={`${subOptionClassName} ${
-                selectedOption === subOption.optionId 
-                  ? subOptionActiveClassName 
-                  : subOptionInactiveClassName
-              } transition-colors duration-200 w-full text-left`}
-              onClick={() => setSelectedOption(subOption.optionId)}
+              className="flex items-center justify-between"
             >
-              {subOption.children}
-            </button>
+              <button
+                className={`${subOptionClassName} ${
+                  selectedOption === subOption.optionId
+                    ? subOptionActiveClassName
+                    : subOptionInactiveClassName
+                } transition-colors duration-200 w-full text-left`}
+                onClick={() => setSelectedOption(subOption.optionId)}
+              >
+                {subOption.children}
+              </button>
+              {subOption.rightAction && (
+                <button
+                  className={`${subOptionRightActionClassName}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    subOption.rightAction?.onClick(e);
+                  }}
+                >
+                  {subOption.rightAction.icon}
+                </button>
+              )}
+            </div>
           ))}
         </div>
       )}
@@ -236,7 +284,7 @@ interface SidebarContentProps {
 const SidebarContent: React.FC<SidebarContentProps> = ({
   optionId,
   children,
-  className = '',
+  className = "",
 }) => {
   const { selectedOption } = useSidebar();
   const isActive = selectedOption === optionId;

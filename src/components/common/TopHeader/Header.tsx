@@ -1,9 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { useClerk} from '@clerk/clerk-react';
 
 export const Header = () => {
     const { signOut } = useClerk();
-  const { user } = useUser();
   const navigate = useNavigate();
 
     const handleSignOut = async () => {
@@ -13,13 +12,10 @@ export const Header = () => {
 
     // Sign out with Clerk
     await signOut();
-
-    console.log("asdfdsfsf")
     
     // Navigate to sign-in page
     navigate("/signin");
   };
-    console.log("eeeeeeeeeeeee")
 
   return (
     <header className="bg-cgray-first shadow-sm border-b-2">
