@@ -1,5 +1,5 @@
 import Combobox from "@/components/costum/Combobox";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const SelectRepos = () => {
   const [selected, setSelected] = useState<any>([]);

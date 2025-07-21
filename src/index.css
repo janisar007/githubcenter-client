@@ -54,7 +54,7 @@ html,
   --color-sidebar-ring: var(--sidebar-ring);
    
 
-  --color-cgray-border: #ECECEE; /* d*/
+  --color-cgray-border: #EBEBEC; /* d*/
   --color-cgray-first: #FCFCFC; /*first top gary lightest*/
   --color-cgray-second: #FAFAFB; /* right hand side of side bar gray == second top bar*/
   --color-cgray-focused: #FFFFFF; /* when focused on the option*/
@@ -65,6 +65,7 @@ html,
 
   --color-cblue-100: #5F15FE; /*normal toggle blue*/
   --color-cblue-200: #7DA9E8; /*information blue*/
+
 }
 
 :root {
@@ -310,6 +311,15 @@ html,
     #ffe0bd,
     #e67300
   );
+}
+
+.even-shadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* 👈 Even shadow */
+}
+.hard-shadow {
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.25);
+  /* border-radius: 6px; Optional: similar to the image's rounded corners */
+  /* background-color: white; Ensures shadow visibility */
 }
 
 

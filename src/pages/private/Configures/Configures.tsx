@@ -24,7 +24,11 @@ export default function Configures() {
           >
             Configures
           </Tab>
-          <Tab tabId="settings" disabled>
+          <Tab
+            tabId="settings"
+            activeClassName="text-cgray-dtext border-b-[0.09rem] border-gray-800"
+            inactiveClassName="bg-none text-cgray-ntext border-none"
+          >
             Settings
           </Tab>
         </Tabs>
@@ -34,7 +38,7 @@ export default function Configures() {
           <p>This is the dashboard tab content.</p>
         </TabPanel>
 
-        <TabPanel tabId="configures" className="p-4 bg-gray-50 rounded">
+        <TabPanel tabId="configures" className="p-4  rounded">
           <SidebarTabs />
         </TabPanel>
 

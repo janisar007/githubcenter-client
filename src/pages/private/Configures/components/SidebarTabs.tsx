@@ -8,6 +8,7 @@ import {
 } from "@/components/costum/Sidebar"; // Assuming the sidebar component is in a separate file
 import SelectRepos from "./SelectRepos";
 import { FiEdit2, FiSettings } from "react-icons/fi";
+import RepositorySettings from "./repositorysettings/RepositorySettings";
 
 const SidebarTabs = () => {
   return (
@@ -15,10 +16,10 @@ const SidebarTabs = () => {
       <Sidebar
         defaultOption="dashboard"
         storageKey="appSection"
-        className="flex h-[calc(100vh-12rem)] "
+        className="flex h-[calc(100%-12rem)] "
       >
         {/* Dashboard Group */}
-        <div className=" overflow-auto border-r-[0.09rem] w-[25%]">
+        <div className=" overflow-auto  w-[15%]">
           {/* Projects Group - Collapsible */}
           <SidebarGroup
             title="Groups"
@@ -125,7 +126,7 @@ const SidebarTabs = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 p-6 overflow-auto bg-gray-50">
+        <div className="flex-1 p-6 overflow-auto">
           <SidebarContent optionId="dashboard">
             <DashboardContent />
           </SidebarContent>
@@ -143,7 +144,7 @@ const SidebarTabs = () => {
           </SidebarContent>
 
           <SidebarContent optionId="repository">
-            <ProjectContent name="Repository Name" />
+            <RepositorySettings />
           </SidebarContent>
 
           <SidebarContent optionId="pat">
