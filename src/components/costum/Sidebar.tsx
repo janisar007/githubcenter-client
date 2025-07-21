@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+
+import { RiArrowRightSFill } from "react-icons/ri";
+import { RiArrowDownSFill } from "react-icons/ri";
+
 
 // Types
 interface SidebarContextProps {
@@ -102,7 +108,7 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
   collapsible = false,
   defaultCollapsed = false,
   className = "mb-4 border-b-[0.09rem] pb-4",
-  titleClassName = "text-gray-600 uppercase text-[0.68rem] font-bold px-3 py-2 flex items-center justify-between",
+  titleClassName = "text-gray-600 uppercase text-xs font-bold px-2 py-2 flex items-center justify-start gap-[0.25rem] hover:bg-gray-50",
   contentClassName = "mt-1",
 }) => {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
@@ -110,14 +116,14 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
   return (
     <div className={className}>
       <div
-        className={titleClassName}
+        className={` ${!collapsible && "ml-[1.21rem]"} ${titleClassName}`}
         onClick={() => collapsible && setCollapsed(!collapsed)}
         style={{ cursor: collapsible ? "pointer" : "default" }}
       >
-        <span>{title}</span>
         {collapsible && (
-          <span className="text-gray-400">{collapsed ? "+" : "-"}</span>
+          <span className="text-gray-400">{collapsed ? <RiArrowRightSFill/> : <RiArrowDownSFill/>}</span>
         )}
+        <span>{title}</span>
       </div>
       {!collapsed && <div className={contentClassName}>{children}</div>}
     </div>
@@ -128,7 +134,7 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
 const SidebarOption: React.FC<SidebarOptionProps> = ({
   optionId,
   children,
-  className = "px-3 py-2 text-sm rounded flex items-center justify-between",
+  className = "px-3 py-2 text-sm rounded flex items-center justify-between pl-6",
   activeClassName = "bg-gray-100 text-gray-800",
   inactiveClassName = "text-gray-600 hover:bg-gray-50",
   rightAction,
@@ -221,9 +227,9 @@ const SidebarOptionWithSubOptions: React.FC<
         } transition-colors duration-200 w-full text-left`}
         onClick={() => setExpanded(!expanded)}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <span className="ml-2">{expanded ? <MdOutlineKeyboardArrowDown/> : <MdKeyboardArrowRight/>}</span>
           <span>{title}</span>
-          <span className="ml-2">{expanded ? "−" : "+"}</span>
         </div>
         {rightAction && (
           <span

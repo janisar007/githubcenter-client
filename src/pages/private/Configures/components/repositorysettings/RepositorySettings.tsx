@@ -99,7 +99,7 @@ const RepositorySettings = () => {
         onSelectionChange={setSelectedRepos}
         className="h-[63%] rounded-lg flex gap-8 "
         searchContainerClassName="flex-1 p-[0.20rem] rounded-lg bg-cgray-second "
-        selectedContainerClassName="w-80 even-shadow h-[21.7rem] p-4 overflow-y-auto border rounded-lg bg-white"
+        selectedContainerClassName="w-80 even-shadow h-[21.7rem] p-4 custom-scrollbar overflow-y-auto border rounded-lg bg-white"
         // renderRepoIcon={(repo) => (
         //   <img
         //     src={`https://github.com/${repo.owner.login}.png?size=40`}

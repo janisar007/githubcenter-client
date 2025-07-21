@@ -20,7 +20,7 @@ import { ToastProvider } from "./components/costum/Toast/ToastContext";
 const App = () => {
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className="App ">
         <ToastProvider>
 
           <AppRoutes />

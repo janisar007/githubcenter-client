@@ -19,13 +19,12 @@ const SidebarTabs = () => {
         className="flex h-[calc(100%-12rem)] "
       >
         {/* Dashboard Group */}
-        <div className=" overflow-auto  w-[15%]">
+        <div className=" overflow-auto  w-[20%]">
           {/* Projects Group - Collapsible */}
           <SidebarGroup
             title="Groups"
             collapsible
             defaultCollapsed={false}
-            titleClassName="text-gray-600 uppercase text-xs font-bold px-3 py-2 flex items-center justify-between hover:bg-gray-50"
           >
             <SidebarOptionWithSubOptions
               optionId="group-1"
@@ -50,8 +49,8 @@ const SidebarTabs = () => {
                   },
                 },
               ]}
-              subOptionActiveClassName="bg-green-100 text-green-700"
-              subOptionInactiveClassName="hover:bg-green-50"
+              subOptionActiveClassName="bg-green-100 text-green-700 pl-7"
+              subOptionInactiveClassName="hover:bg-green-50 pl-7"
               subOptionRightActionClassName="px-2 text-gray-400 hover:text-gray-600"
             />
           </SidebarGroup>
@@ -60,7 +59,6 @@ const SidebarTabs = () => {
             title="Repositories"
             collapsible
             defaultCollapsed={false}
-            titleClassName="text-gray-600 uppercase text-xs font-bold px-3 py-2 flex items-center justify-between hover:bg-gray-50"
           >
             <SidebarOption
               optionId="repo-12"

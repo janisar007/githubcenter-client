@@ -16,6 +16,29 @@ html,
   height: 100%;
 }
 
+/* Works on Chrome, Edge, Safari */
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+
+/* For Firefox */
+html {
+  scrollbar-color: #888 #fff;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -145,6 +168,31 @@ html,
     @apply bg-background text-foreground;
   }
 }
+
+/* Apply this to the scrollable div */
+.custom-scrollbar {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #a0aec0 #fff; /* For Firefox */
+}
+
+/* Webkit-based browsers (Chrome, Edge, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;              /* width of the entire scrollbar */
+  height: 6px;             /* for horizontal scroll */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #fff;     /* background (scroll space) */
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #fff;  /* scrollbar color */
+  border-radius: 8px;
+  border: 2px solid #edf2f7;  /* adds padding and contrast */
+}
+
+
 
 
 .blue-button {

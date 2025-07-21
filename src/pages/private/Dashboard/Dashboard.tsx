@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import CardGrid from "./components/SearchCard";
 import { apiService } from "@/api/apiService";
 import { getLocalStorageItem } from "@/utils/storage";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 
 const Dashboard = () => {
   const [ghData, setGhData] = useState<any>();
   const [ghLoading, setGhLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const {user} = useUser();
+
+  const username = user?.id;
 
   const userId = getLocalStorageItem("userId");
 
@@ -25,6 +31,13 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  const handleCardClick = (card:any) => {
+
+    navigate(`/${username}/configures?username=${card?.username}&userId=${userId}`)
+    
+
+  }
+
   return (
     <div className="flex flex-col p-4 bg-white h-[calc(100vh-7rem)]">
       <div className="p-4border-2">
@@ -34,7 +47,7 @@ const Dashboard = () => {
             loading={ghLoading}
             onBookmark={(cardId) => console.log("Bookmark", cardId)}
             onShare={(cardId) => console.log("Share", cardId)}
-            onCardClick={(card) => console.log("Card clicked", card)}
+            onCardClick={handleCardClick}
             className="max-w-[84rem] mx-auto bg-white"
             cardClassName="cursor-pointer bg-white"
             searchPlaceholder="Search projects..."
