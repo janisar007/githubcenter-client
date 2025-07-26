@@ -1,94 +1,110 @@
 import { useEffect, useState } from "react";
-import RepositorySelector from "./RepositorySelector";
+import RepositorySelector, { type Repository } from "./RepositorySelector";
+import { apiService } from "@/api/apiService";
+import { getLocalStorageItem } from "@/utils/storage";
+import { useUser } from "@clerk/clerk-react";
+import { useQueryParam } from "@/hooks/useQueryParam";
+import { useToast } from "@/components/costum/Toast/ToastContext";
 
+export interface SelectRemovePostData {
+  userId: string | null;
+  clerkId: string | undefined;
+  username: string | null;
+  newRepos: Repository[];
+}
 const RepositorySettings = () => {
-  const [repos, setRepos] = useState<any>([
-    {
-      id: 12232,
-      name: "belsoft librica",
-      full_name: "belsoft librica",
-      description: "this is a java buidlpack child buildpack.",
-      html_url: "https://www.github.com/janisar007/belsoft-librica",
-      stargazers_count: 12,
-      language: "golang",
-      is_selected: false,
-    },
-    {
-      id: 53423,
-      name: "watchecx",
-      full_name: "watchecx",
-      description: "this is a global buidlpack for securepack buildpack.",
-      html_url: "https://www.github.com/janisar007/watchecx",
-      stargazers_count: 5,
-      language: "golang",
-      is_selected: false,
-    },
-    {
-      id: 3343,
-      name: "npm-run",
-      full_name: "npm run",
-      description: "this is a nodesjs buidlpack child buildpack.",
-      html_url: "https://www.github.com/janisar007/npm-run",
-      stargazers_count: 14,
-      language: "golang",
-      is_selected: false,
-    },
-    {
-      id: 90865,
-      name: "env-lib",
-      full_name: "env lib",
-      description: "this is a global buidlpack for securepack buildpack.",
-      html_url: "https://www.github.com/janisar007/env-lib",
-      stargazers_count: 19,
-      language: "golang",
-      is_selected: false,
-    },
-    {
-      id: 5567,
-      name: "gradle",
-      full_name: "gradle",
-      description: "this is a java env buidlpack child buildpack.",
-      html_url: "https://www.github.com/janisar007/gradle",
-      stargazers_count: 21,
-      language: "golang",
-      is_selected: false,
-    },
-    {
-      id: 1253,
-      name: "mavin",
-      full_name: "mavin",
-      description: "this is a java buidlpack for securepack buildpack.",
-      html_url: "https://www.github.com/janisar007/mavin",
-      stargazers_count: 76,
-      language: "golang",
-      is_selected: false,
-    },
-  ]);
-  const [selectedRepos, setSelectedRepos] = useState<any>([]);
+  const [repos, setRepos] = useState<Repository[]>([]);
+  const [selectedRepos, setSelectedRepos] = useState<Repository[]>([]);
 
-  // Fetch repositories (example)
+  const [repoLoading, setRepoLoading] = useState<boolean>(false);
+  const { addToast } = useToast();
+
+  const { user } = useUser();
+
+  const clerkId = user?.id;
+
+  const userId = getLocalStorageItem("userId");
+  const username = useQueryParam("username");
+
   useEffect(() => {
-    const fetchRepos = async () => {
-      // const response = await fetch('https://api.github.com/user/repos', {
-      //   headers: {
-      //     Authorization: `token YOUR_GITHUB_PAT`
-      //   }
-      // });
-      // const data = await response.json();
-      // setRepos(data);
-      // Load initially selected repos from your backend
-      // const savedRepos = await fetchSavedRepos();
-      // setSelectedRepos(savedRepos);
+    const fetchData = async () => {
+      try {
+        setRepoLoading(true);
+        const repoFromGhApi = await apiService.getRepoFromGhApi(
+          clerkId,
+          userId,
+          username
+        );
+        const allReadySelectedRepo = await apiService.getAllSelectedRepo(
+          userId,
+          username
+        );
+
+        // Create a Set of selected repo IDs for quick lookup
+        const selectedRepoIds = new Set(
+          allReadySelectedRepo?.data.map((repo: any) => repo.repo_id)
+        );
+
+        // Mark each repo as selected or not
+        const enrichedRepos = repoFromGhApi?.data.map((repo: any) => ({
+          ...repo,
+          is_selected: selectedRepoIds.has(repo.repo_id),
+        }));
+
+        setRepos(enrichedRepos);
+        setSelectedRepos(allReadySelectedRepo?.data);
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(error);
+      } finally {
+        setRepoLoading(false);
+      }
     };
 
-    fetchRepos();
+    fetchData();
   }, []);
 
   const handleSave = async () => {
-    // Save selectedRepos to your database
-    // await saveToDatabase(selectedRepos);
+    try {
+      console.log(selectedRepos);
 
-    console.log(selectedRepos);
+      const postData: SelectRemovePostData = {
+        userId,
+        clerkId,
+        username,
+        newRepos: selectedRepos,
+      };
+
+      const get_data = await apiService.postSaveRemoveRepos(postData);
+
+      if (get_data.status === false) {
+        addToast({
+          message: get_data.message || "Something went wrong",
+          type: "error",
+          duration: 4000,
+          closeButton: true,
+          position: "top-center",
+        });
+        return;
+      }
+
+      addToast({
+        message: get_data.message || "Something went wrong",
+        type: "success",
+        duration: 4000,
+        closeButton: true,
+        position: "top-center",
+      });
+    } catch (error: any) {
+      console.log(error);
+      addToast({
+        message: "Unexpected error occurred",
+        type: "error",
+        duration: 4000,
+        closeButton: true,
+        position: "top-center",
+      });
+    }
   };
 
   return (

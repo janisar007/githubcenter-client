@@ -1,6 +1,9 @@
+import type { SelectRemovePostData } from "@/pages/private/Configures/components/repositorysettings/RepositorySettings";
 import { baseService } from "./baseService";
 
 export const apiService = {
+
+  //---patapiservices----
   addPat: async (formData: any) => {
     try {
       const response = await baseService.post("/pat/create/pat", formData);
@@ -13,6 +16,9 @@ export const apiService = {
     }
   },
 
+
+  //---ghapiservices----
+
   getAllGhInfo: async (userId: string | null) => {
     try {
       const response = await baseService.get(`/gh/get/allGh?userId=${userId}`);
@@ -24,6 +30,8 @@ export const apiService = {
       throw error;
     }
   },
+
+  //---userapiservices----
   getUserInfo: async (clerkId: string, email: string) => {
     try {
       const response = await baseService.get(
@@ -37,6 +45,47 @@ export const apiService = {
       throw error;
     }
   },
+
+  //---repoapiservices----
+  getRepoFromGhApi: async (clerkId: string | undefined, userId: string | null, username: string | null) => {
+    try {
+      const response = await baseService.get(
+        `/repo/get/allrepofromghapi?clerkId=${clerkId}&userId=${userId}&username=${username}`
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  getAllSelectedRepo: async (userId: string | null, username: string | null) => {
+    try {
+      const response = await baseService.get(
+        `/repo/get/allselectedrepo?userId=${userId}&username=${username}`
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  postSaveRemoveRepos: async (selectedRepos: SelectRemovePostData) => {
+  try {
+    const response = await baseService.post(`/repo/post/saveremoverepo`, selectedRepos);
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.data) {
+      return error.response.data;
+    }
+    throw error;
+  }
+},
 
   //------------------------------------------------------------------
   getSinglePost: async (post_id: string | null) => {

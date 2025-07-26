@@ -1,21 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  FiSearch,
-  FiX,
-  FiCheck,
-  FiGithub,
-  FiStar,
-  FiCode,
-} from "react-icons/fi";
+import { FiSearch, FiX, FiCheck, FiGithub, FiStar } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
-interface Repository {
-  id: number;
-  name: string;
-  full_name: string;
+export interface Repository {
+  repo_id: number;
+  node_id: number;
+  repo_name: string;
   description: string;
-  html_url: string;
-  stargazers_count: number;
-  language: string;
+  repo_url: string;
+  visibility: number;
+  repo_updated_at: string;
   is_selected?: boolean;
 }
 
@@ -57,11 +50,17 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   const [selectedRepos, setSelectedRepos] =
     useState<Repository[]>(initiallySelected);
 
+  useEffect(() => {
+    setSelectedRepos(initiallySelected);
+  }, [initiallySelected]);
+
   // Merge initial selected state with all repositories
   const repositories = useMemo(() => {
     return allRepositories.map((repo) => ({
       ...repo,
-      is_selected: selectedRepos.some((selected) => selected.id === repo.id),
+      is_selected: selectedRepos.some(
+        (selected) => selected.repo_id === repo.repo_id
+      ),
     }));
   }, [allRepositories, selectedRepos]);
 
@@ -69,7 +68,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   const filteredRepos = useMemo(() => {
     return repositories.filter(
       (repo) =>
-        repo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        repo.repo_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         repo.description?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [repositories, searchTerm]);
@@ -77,9 +76,9 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   // Handle repo selection
   const toggleRepoSelection = (repo: Repository) => {
     setSelectedRepos((prev) => {
-      const isSelected = prev.some((r) => r.id === repo.id);
+      const isSelected = prev.some((r) => r.repo_id === repo.repo_id);
       const newSelection = isSelected
-        ? prev.filter((r) => r.id !== repo.id)
+        ? prev.filter((r) => r.repo_id !== repo.repo_id)
         : [...prev, repo];
 
       onSelectionChange?.(newSelection);
@@ -90,7 +89,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   // Remove selected repo
   const removeSelectedRepo = (repoId: number) => {
     setSelectedRepos((prev) => {
-      const newSelection = prev.filter((r) => r.id !== repoId);
+      const newSelection = prev.filter((r) => r.repo_id !== repoId);
       onSelectionChange?.(newSelection);
       return newSelection;
     });
@@ -106,7 +105,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   // Default selected repo renderer
   const defaultSelectedRepo = (repo: Repository, onRemove: () => void) => (
     <div
-      key={repo.name}
+      key={repo.repo_id}
       className="flex items-start justify-between p-3 mb-2 rounded-lg bg-white"
     >
       <div className="flex-1">
@@ -116,7 +115,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
           </div>
 
           <div>
-            <div className="font-medium text-cgray-dtext">{repo.name}</div>
+            <div className="font-medium text-cgray-dtext">{repo.repo_name}</div>
             {showRepoDetails && repo.description && (
               <div className="text-xs text-gray-600 mt-1">
                 {repo.description}
@@ -157,7 +156,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
             {filteredRepos?.length > 0 &&
               filteredRepos?.map((repo) => (
                 <div
-                  key={repo.id}
+                  key={repo.repo_id}
                   className={
                     repo.is_selected ? selectedOptionClassName : optionClassName
                   }
@@ -169,7 +168,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
                       : defaultRepoIcon(repo)}
                     <div className="flex-1">
                       <div className="font-medium text-cgray-dtext">
-                        {repo.name}
+                        {repo.repo_name}
                       </div>
                       {showRepoDetails && (
                         <>
@@ -179,14 +178,13 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
                             </div>
                           )}
                           <div className="flex items-center mt-2 text-xs text-gray-500 space-x-3">
-                            {repo.language && (
+                            {/* {repo.language && (
                               <span className="flex items-center">
                                 <FiCode className="mr-1" /> {repo.language}
                               </span>
-                            )}
+                            )} */}
                             <span className="flex items-center">
-                              <FiStar className="mr-1" />{" "}
-                              {repo.stargazers_count}
+                              <FiStar className="mr-1" /> {repo.visibility}
                             </span>
                           </div>
                         </>
@@ -223,8 +221,12 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
           ) : (
             selectedRepos.map((repo) =>
               renderSelectedRepo
-                ? renderSelectedRepo(repo, () => removeSelectedRepo(repo.id))
-                : defaultSelectedRepo(repo, () => removeSelectedRepo(repo.id))
+                ? renderSelectedRepo(repo, () =>
+                    removeSelectedRepo(repo.repo_id)
+                  )
+                : defaultSelectedRepo(repo, () =>
+                    removeSelectedRepo(repo.repo_id)
+                  )
             )
           )}
         </div>
