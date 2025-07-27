@@ -9,8 +9,41 @@ import {
 import SelectRepos from "./SelectRepos";
 import { FiEdit2, FiSettings } from "react-icons/fi";
 import RepositorySettings from "./repositorysettings/RepositorySettings";
+import { useEffect, useState } from "react";
+import { apiService } from "@/api/apiService";
+import { getLocalStorageItem } from "@/utils/storage";
+import { useQueryParam } from "@/hooks/useQueryParam";
+import type { Repository } from "./repositorysettings/RepositorySelector";
+import RepositoryComponent from "./repositories/RepositoryComponent";
 
 const SidebarTabs = () => {
+  const userId = getLocalStorageItem("userId");
+  const username = useQueryParam("username");
+
+  const [selectedRepo, setSelectedRepo] = useState<Repository[]>([]);
+
+  // console.log(selectedRepo)
+  const [repoLoading, setRepoLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setRepoLoading(true);
+
+        const allReadySelectedRepo = await apiService.getAllSelectedRepo(
+          userId,
+          username
+        );
+        setSelectedRepo(allReadySelectedRepo?.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setRepoLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="">
       <Sidebar
@@ -21,11 +54,7 @@ const SidebarTabs = () => {
         {/* Dashboard Group */}
         <div className=" overflow-auto  w-[20%]">
           {/* Projects Group - Collapsible */}
-          <SidebarGroup
-            title="Groups"
-            collapsible
-            defaultCollapsed={false}
-          >
+          <SidebarGroup title="Groups" collapsible defaultCollapsed={false}>
             <SidebarOptionWithSubOptions
               optionId="group-1"
               title="group 1"
@@ -60,20 +89,26 @@ const SidebarTabs = () => {
             collapsible
             defaultCollapsed={false}
           >
-            <SidebarOption
-              optionId="repo-12"
-              activeClassName="bg-green-50 text-green-600"
-              rightAction={{
-                icon: <span className="text-xs">↗</span>,
-                onClick: (e) => {
-                  e.stopPropagation();
-                  alert("Opening archived projects in new window");
-                },
-                className: "hover:text-green-700",
-              }}
-            >
-              Repo 12
-            </SidebarOption>
+            {!repoLoading &&
+              selectedRepo?.map((repo) => {
+                return (
+                  <SidebarOption
+                    key={repo.node_id}
+                    optionId={repo.node_id}
+                    activeClassName="bg-green-50 text-green-600"
+                    rightAction={{
+                      icon: <span className="text-xs">↗</span>,
+                      onClick: (e) => {
+                        e.stopPropagation();
+                        alert("Opening archived projects in new window");
+                      },
+                      className: "hover:text-green-700",
+                    }}
+                  >
+                    {repo.repo_name}
+                  </SidebarOption>
+                );
+              })}
           </SidebarGroup>
 
           {/* Team Group - With nested options */}
@@ -133,9 +168,13 @@ const SidebarTabs = () => {
             <CalendarContent />
           </SidebarContent>
 
-          <SidebarContent optionId="repo-12">
-            <AllProjectsContent />
-          </SidebarContent>
+          {selectedRepo.map((repo) => {
+            return (
+              <SidebarContent key={repo.node_id} optionId={repo.node_id}>
+                <RepositoryComponent repo_name={repo.repo_name} username={username} userId={userId} />
+              </SidebarContent>
+            );
+          })}
 
           <SidebarContent optionId="github">
             <ProjectContent name="Github Name" />
@@ -178,21 +217,6 @@ const CalendarContent = () => (
   </div>
 );
 
-const AllProjectsContent = () => (
-  <div className="bg-white p-6 rounded-lg shadow">
-    <h2 className="text-2xl font-bold mb-4">All Projects</h2>
-    <ul className="space-y-2">
-      {["Alpha", "Beta", "Gamma", "Delta", "Epsilon"].map((project) => (
-        <li
-          key={project}
-          className="p-3 bg-green-50 rounded hover:bg-green-100"
-        >
-          {project} Project
-        </li>
-      ))}
-    </ul>
-  </div>
-);
 
 const ProjectContent = ({ name }: { name: string }) => (
   <div className="bg-white p-6 rounded-lg shadow">

@@ -3,7 +3,7 @@ import { FiSearch, FiX, FiCheck, FiGithub, FiStar } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
 export interface Repository {
   repo_id: number;
-  node_id: number;
+  node_id: string;
   repo_name: string;
   description: string;
   repo_url: string;
