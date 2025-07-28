@@ -1,5 +1,6 @@
 import { apiService } from "@/api/apiService"
-import { useEffect } from "react"
+import type { PullRequestDataType } from "@/types/repotypes";
+import { useEffect, useState } from "react"
 
 interface RepositoryComponentType {
   repo_name: string,
@@ -17,6 +18,8 @@ interface RepoType {
 
 export type ReposRequestType = RepoType[];
 const RepositoryComponent = ({repo_name, username, userId}: RepositoryComponentType) => {
+
+  const [PrData, setPrData] = useState<any>([]);
 
   useEffect(() => {
 
@@ -36,6 +39,7 @@ const RepositoryComponent = ({repo_name, username, userId}: RepositoryComponentT
         const get_data = await apiService.getPrWorkflowInfo(reposRequest, userId, username);
 
         console.log(get_data.data);
+        setPrData(get_data.data?.pullRequests?.[`${username}/${repo_name}`]);
         
       } catch (error) {
         console.log(error);        
