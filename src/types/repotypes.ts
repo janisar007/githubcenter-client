@@ -1,10 +1,10 @@
 export interface PullRequestDataType {
   pullRequests: {
-    [repoName: string]: PullRequestWithWorkflows[];
+    [repoName: string]: PullRequestWithWorkflowsType[];
   };
 }
 
-export interface PullRequestWithWorkflows {
+export interface PullRequestWithWorkflowsType {
   pr: PullRequest;
   workflows: WorkflowRun[] | null;
 }

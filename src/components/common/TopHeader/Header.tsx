@@ -18,8 +18,11 @@ export const Header = () => {
   };
 
   return (
-    <header className="bg-cgray-first shadow-sm border-b-2">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <header className="bg-cgray-first shadow-sm border-b-2 flex items-center">
+      <div className='ml-4 h-[75px] w-[75px] flex items-center'>
+        <img src="/gclogoorange.jpg" alt="loading" className='h-[40px] w-[40px]'  />
+      </div>
+      <div className="w-full px-4 py-4 flex justify-between items-center">
         <nav className="flex space-x-4">
           <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">
             Dashboard

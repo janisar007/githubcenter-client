@@ -3,7 +3,6 @@ import { useState } from "react";
 
 const SelectRepos = () => {
   const [selected, setSelected] = useState<any>([]);
-  console.log(selected)
   
   return (
     <Combobox
