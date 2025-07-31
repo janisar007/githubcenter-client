@@ -7,7 +7,8 @@ import {
   //   useSidebar
 } from "@/components/costum/Sidebar"; // Assuming the sidebar component is in a separate file
 import SelectRepos from "./SelectRepos";
-import { FiEdit2, FiSettings } from "react-icons/fi";
+import { FiChevronDown, FiEdit, FiEdit2, FiSettings, FiTrash2 } from "react-icons/fi";
+import { PiDotsThree } from "react-icons/pi";
 import RepositorySettings from "./repositorysettings/RepositorySettings";
 import { useEffect, useState } from "react";
 import { apiService } from "@/api/apiService";
@@ -15,6 +16,7 @@ import { getLocalStorageItem } from "@/utils/storage";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import type { Repository } from "./repositorysettings/RepositorySelector";
 import RepositoryComponent from "./repositories/RepositoryComponent";
+import DropdownActionMenu from "@/components/costum/DropdownActionMenu/DropdownActionMenu";
 
 const SidebarTabs = () => {
   const userId = getLocalStorageItem("userId");
@@ -54,7 +56,52 @@ const SidebarTabs = () => {
         {/* Dashboard Group */}
         <div className=" overflow-auto  w-[20%]">
           {/* Projects Group - Collapsible */}
-          <SidebarGroup title="Groups" collapsible defaultCollapsed={false}>
+          <SidebarGroup
+            title="Groups"
+            collapsible
+            defaultCollapsed={false}
+            // rightAction={{
+            //   icon: <FiSettings />,
+            //   onClick: () => console.log("Main settings 2 action"),
+            //   className: "text-blue-500",
+            // }}
+            rightMenuAction={{
+              component: (
+                <DropdownActionMenu
+                  items={[
+                    {
+                      id: "edit",
+                      label: "Edit",
+                      icon: <FiEdit />,
+                      className: "text-cgray-dtext hover:text-black",
+                      hoverClass: "hover:bg-gray-100 hover:border-gray-200",
+                      onClick: () => console.log("Edit clicked"),
+                    },
+                    { divider: true },
+                    {
+                      id: "delete",
+                      label: "Delete",
+                      icon: <FiTrash2 />,
+                      className: "text-red-500 hover:text-red-700",
+                      hoverClass: "hover:bg-red-100 hover:border-red-200",
+                      onClick: () => console.log("Delete clicked"),
+                    },
+                  ]}
+                  trigger={(isOpen) => (
+                    <PiDotsThree
+                      // className={` hover:bg-gray-50 hover:border-gray-200 hover:border-[0.09rem] hover:rounded-sm ${
+                      //   isOpen ? "bg-gray-50 border-[0.09rem] p-[10px] rounded-sm border-gray-200" : "px-[0.1rem]"
+                      // }`}
+
+                      
+                    />
+                  )}
+                  position="bottom-right"
+                  menuClassName="w-48"
+                />
+              ),
+            }}
+          >
             <SidebarOptionWithSubOptions
               optionId="group-1"
               title="group 1"
@@ -171,7 +218,11 @@ const SidebarTabs = () => {
           {selectedRepo.map((repo) => {
             return (
               <SidebarContent key={repo.node_id} optionId={repo.node_id}>
-                <RepositoryComponent repo_name={repo.repo_name} username={username} userId={userId} />
+                <RepositoryComponent
+                  repo_name={repo.repo_name}
+                  username={username}
+                  userId={userId}
+                />
               </SidebarContent>
             );
           })}
@@ -216,7 +267,6 @@ const CalendarContent = () => (
     </div>
   </div>
 );
-
 
 const ProjectContent = ({ name }: { name: string }) => (
   <div className="bg-white p-6 rounded-lg shadow">

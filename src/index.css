@@ -469,3 +469,12 @@ canvas {
 .animate-fadeOut {
   animation: fadeOut 0.3s ease-in forwards;
 }
+
+/* CSS for animation (add to your global styles) */
+@keyframes fadeInDropDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInDropDown {
+  animation: fadeIn 0.2s ease-out forwards;
+}

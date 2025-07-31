@@ -6,7 +6,6 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { RiArrowRightSFill } from "react-icons/ri";
 import { RiArrowDownSFill } from "react-icons/ri";
 
-
 // Types
 interface SidebarContextProps {
   selectedOption: string;
@@ -21,6 +20,14 @@ interface SidebarGroupProps {
   className?: string;
   titleClassName?: string;
   contentClassName?: string;
+  rightAction?: {
+    icon: React.ReactNode;
+    onClick: (e: React.MouseEvent) => void;
+    className?: string;
+  };
+  rightMenuAction?: {
+    component: React.ReactNode
+  }
 }
 
 interface SidebarOptionProps {
@@ -110,20 +117,45 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
   className = "mb-4 border-b-[0.09rem] pb-4",
   titleClassName = "text-gray-600 uppercase text-xs font-bold px-2 py-2 flex items-center justify-start gap-[0.25rem] hover:bg-gray-50",
   contentClassName = "mt-1",
+  rightAction,
+  rightMenuAction,
 }) => {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
 
   return (
     <div className={className}>
-      <div
-        className={` ${!collapsible && "ml-[1.21rem]"} ${titleClassName}`}
-        onClick={() => collapsible && setCollapsed(!collapsed)}
-        style={{ cursor: collapsible ? "pointer" : "default" }}
-      >
-        {collapsible && (
-          <span className="text-gray-400">{collapsed ? <RiArrowRightSFill/> : <RiArrowDownSFill/>}</span>
+      <div className="flex items-center justify-between mr-[0.6rem]">
+        <div
+          className={` ${!collapsible && "ml-[1.21rem]"} ${titleClassName}`}
+          onClick={() => collapsible && setCollapsed(!collapsed)}
+          style={{ cursor: collapsible ? "pointer" : "default" }}
+        >
+          {collapsible && (
+            <span className="text-gray-400">
+              {collapsed ? <RiArrowRightSFill /> : <RiArrowDownSFill />}
+            </span>
+          )}
+          <span>{title}</span>
+        </div>
+
+        {rightAction && (
+          <span
+            className={`ml-2 ${rightAction.className || ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              rightAction.onClick(e);
+            }}
+          >
+            {rightAction.icon}
+          </span>
         )}
-        <span>{title}</span>
+
+        {rightMenuAction && (
+          <span
+          >
+            {rightMenuAction.component}
+          </span>
+        )}
       </div>
       {!collapsed && <div className={contentClassName}>{children}</div>}
     </div>
@@ -203,7 +235,7 @@ const SidebarOptionWithSubOptions: React.FC<
   expandedClassName = "bg-gray-50",
   collapsedClassName = "",
   subOptionsContainerClassName = "ml-4 mt-1 space-y-1",
-  subOptionClassName = "px-3 py-1.5 text-sm rounded flex items-center justify-between",
+  subOptionClassName = "px-3 py-1.5 text-xs text-cgray-ntext rounded flex items-center justify-between",
   subOptionActiveClassName = "bg-gray-100 text-gray-800",
   subOptionInactiveClassName = "text-gray-600 hover:bg-gray-50",
   subOptionRightActionClassName = "ml-2",
@@ -228,7 +260,13 @@ const SidebarOptionWithSubOptions: React.FC<
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-center gap-2">
-          <span className="ml-2">{expanded ? <MdOutlineKeyboardArrowDown/> : <MdKeyboardArrowRight/>}</span>
+          <span className="ml-2">
+            {expanded ? (
+              <MdOutlineKeyboardArrowDown />
+            ) : (
+              <MdKeyboardArrowRight />
+            )}
+          </span>
           <span>{title}</span>
         </div>
         {rightAction && (
