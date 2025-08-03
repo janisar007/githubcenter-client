@@ -151,7 +151,7 @@ const DropdownActionMenu: React.FC<DropdownActionMenuProps> = ({
       {/* Trigger */}
       <div 
         onClick={toggleMenu}
-        className={`cursor-pointer p-[0.15rem]  ${isOpen ? "bg-gray-50 border-gray-200 border-[0.09rem] rounded-sm" : "hover:bg-gray-50 hover:border-gray-200 border-white border-[0.09rem] hover:rounded-sm"}`}
+        className={`cursor-pointer p-[0.15rem]  ${isOpen ? "bg-gray-50 border-gray-200 border-[0.09rem] rounded-sm" : "hover:bg-gray-50 hover:border-gray-200 border-white border-[0.09rem] rounded-sm"}`}
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
@@ -168,8 +168,8 @@ const DropdownActionMenu: React.FC<DropdownActionMenuProps> = ({
             animate-fadeInDropDown
           `}
         >
-          {items.map((item) => (
-            <React.Fragment key={item.id}>
+          {items.map((item, index) => (
+            <React.Fragment key={index}>
               {item.divider ? (
                 <div className='flex items-center justify-center'>
                     <div className={dividerClassName} />

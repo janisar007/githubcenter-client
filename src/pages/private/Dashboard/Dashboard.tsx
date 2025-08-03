@@ -49,7 +49,7 @@ const Dashboard = () => {
             onShare={(cardId) => console.log("Share", cardId)}
             onCardClick={handleCardClick}
             className="max-w-[84rem] mx-auto bg-white"
-            cardClassName="cursor-pointer bg-white"
+            cardClassName="cursor-pointer border border-vol-200"
             searchPlaceholder="Search projects..."
             emptyMessage="No matching projects found"
           />

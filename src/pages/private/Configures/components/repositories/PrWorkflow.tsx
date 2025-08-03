@@ -102,7 +102,7 @@ const PrWorkflow = ({ pr, workflows }: PrWorkflowPropsType) => {
         >
           {workflows?.map((wf: WorkflowRun) => {
             return (
-              <div className="">
+              <div key={wf.id} className="">
                 <div className="flex justify-between ">
                   <div
                     className={` text-xs text-cgray-ntext pt-[.18rem]  px-1 bg-gray-100`}

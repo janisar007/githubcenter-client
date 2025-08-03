@@ -3,7 +3,8 @@ import { baseService } from "./baseService";
 import type { ReposRequestType } from "@/pages/private/Configures/components/repositories/RepositoryComponent";
 
 export const apiService = {
-  //---patapiservices----
+
+  //----patapiservices----
   addPat: async (formData: any) => {
     try {
       const response = await baseService.post("/pat/create/pat", formData);
@@ -16,8 +17,43 @@ export const apiService = {
     }
   },
 
-  //---ghapiservices----
+  updatePat: async (formData: any) => {
+    try {
+      const response = await baseService.put("/pat/update/pat", formData);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
 
+  renamePat: async (formData: any) => {
+    try {
+      const response = await baseService.put("/pat/rename/patname", formData);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  getPatDetails: async (reqData:any) => {
+    try {
+      const response = await baseService.get(`/pat/get/patDetails?userId=${reqData.userId}&ghUsername=${reqData.ghUsername}`);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  //----ghapiservices----
   getAllGhInfo: async (userId: string | null) => {
     try {
       const response = await baseService.get(`/gh/get/allGh?userId=${userId}`);
@@ -30,7 +66,43 @@ export const apiService = {
     }
   },
 
-  //---userapiservices----
+  getGhAccountDetails: async (reqData:any) => {
+    try {
+      const response = await baseService.get(`/gh/get/ghaccountdetails?userId=${reqData.userId}&ghUsername=${reqData.ghUsername}`);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  removeGhAccount: async (reqData:any) => {
+    try {
+      const response = await baseService.delete(`/gh/remove/ghaccount?userId=${reqData.userId}&ghUsername=${reqData.ghUsername}`);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  resetGhAccount: async (reqData:any) => {
+    try {
+      const response = await baseService.delete(`/gh/reset/ghaccount?userId=${reqData.userId}&ghUsername=${reqData.ghUsername}`);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  //----userapiservices----
   getUserInfo: async (clerkId: string, email: string) => {
     try {
       const response = await baseService.get(
@@ -45,7 +117,7 @@ export const apiService = {
     }
   },
 
-  //---repoapiservices----
+  //----repoapiservices----
   getRepoFromGhApi: async (
     clerkId: string | undefined,
     userId: string | null,
@@ -112,28 +184,84 @@ export const apiService = {
     }
   },
 
-  //------------------------------------------------------------------
+  //----groupapiservices----
+  getAllGroups: async (
+    userId: string | null,
+    username: string | null
+  ) => {
+    try {
+      const response = await baseService.get(
+        `/group/get/allgroups?userId=${userId}&ghUsername=${username}`
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  createGroupAndAddRepo: async (reqData: any) => {
+    try {
+      const response = await baseService.post(
+        `/group/post/creategroupandaddrepo`,
+        reqData
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+  
+  updateGroup: async (reqData: any) => {
+    try {
+      const response = await baseService.put(
+        `/group/put/group`,
+        reqData
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+  
+  removeRepoFromGroup: async (reqData: any) => {
+    try {
+      const response = await baseService.put(
+        `/group/remove/fromgroup`,
+        reqData
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+  deleteGroup: async (reqData: any) => {
+    try {
+      const response = await baseService.delete(
+        `/group/delete/group?groupId=${reqData.groupId}&userId=${reqData.userId}&ghUsername=${reqData.ghUsername}`,
+        reqData
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+  
+
 };
 
-// export async function apiUpdatePost(post_id:string) { // org done
-//     return ApiService.fetchData<any>({
-//         url: `admin/update/post`,
-//         method: 'put',
-//         data: { user_id: localStorage.getItem('userId'), org_id:localStorage.getItem('orgId'), post_id:post_id },
-//     }).then((response) => {
-//         return response.data
-//     })
-// }
-
-// export async function apiDeleteSinglePost(post_id:string) { // org done
-//     return ApiService.fetchData<any>({
-//         url: `admin/delete/singlepost`,
-//         method: 'delete',
-//         data: { user_id: localStorage.getItem('userId'),
-//             org_id:localStorage.getItem('orgId'),
-//             post_id:post_id,
-//          },
-//     }).then((response) => {
-//         return response.data
-//     })
-// }

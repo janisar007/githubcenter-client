@@ -15,12 +15,17 @@ export default function Signin() {
   //     navigate(`/${username}/dashboard`, { replace: true });
   //   }
   // }, [isSignedIn, user, navigate]);
+  useEffect(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+    console.log("Storage cleared on sign out");
+  }, []);
 
 
   useEffect(() => {
     const fetchAndStoreUser = async () => {
       if (isSignedIn && user) {
-        const username = user.username || user.id;
+        const username = user.id;
 
         // Check if already stored
         const existingId = localStorage.getItem("userId");

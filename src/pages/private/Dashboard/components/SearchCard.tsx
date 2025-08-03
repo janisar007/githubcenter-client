@@ -7,6 +7,7 @@ import { IoIosAnalytics } from "react-icons/io";
 import Dialog from "@/components/costum/Dialog";
 import AddGithubDialogBox from "./AddGithubDialogBox";
 import { Skeleton } from "@/components/costum/Skeleton";
+import { formatDate } from "@/utils/tools";
 
 interface Card {
   userId: string;
@@ -106,13 +107,13 @@ const CardGrid: React.FC<CardGridProps> = ({
           </div>
 
           <div className="flex gap-2">
-            <button
+            {/* <button
               //   onClick={() => setFavoritesOnly(!favoritesOnly)}
               onClick={() => setIsOpen(true)}
               className={`blue-button`}
             >
               Add Github
-            </button>
+            </button> */}
             {/* <button
               onClick={() => setFavoritesOnly(!favoritesOnly)}
               className={`px-4 py-2 rounded-lg ${favoritesOnly ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
@@ -137,17 +138,21 @@ const CardGrid: React.FC<CardGridProps> = ({
       )}
 
       <div className="flex w-full gap-6">
-        <div className="flex border-2 border-green-500 w-[30%]">something</div>
+        {/* <div className="flex border-2 border-green-500 w-[30%]">something</div> */}
 
-        <div className=" w-[70%]">
+        <div className=" w-[100%]">
           {/* Cards Grid */}
 
           {!loading && filteredCards.length > 0 ? (
             <div
               className={`grid gap-6 ${
-                maxColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 "
+                maxColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-4 "
               }`}
             >
+              <div
+              className={`flex items-center justify-center border-[0.09rem] hover:border-gray-500 rounded-md overflow-hidden cursor-pointer border-dashed border-vol-500 bg-vol-50 font-medium text-cgray-ntext hover:text-cgray-dtext`} onClick={() => setIsOpen(true)}>
+                + Add Github
+              </div>
               {filteredCards.map((card) => (
                 <div
                   key={card.username}
@@ -198,7 +203,7 @@ const CardGrid: React.FC<CardGridProps> = ({
 
                         <div className="text-sm capitalize text-cgray-ntext flex items-center gap-1">
                           <MdOutlineDateRange />
-                          <span>{card?.createdAt}</span>
+                          <span>{card?.createdAt && formatDate(card?.createdAt)}</span>
                         </div>
                       </div>
 
@@ -254,7 +259,7 @@ const CardGrid: React.FC<CardGridProps> = ({
           ) : loading ? (
             <div
               className={`grid gap-6 ${
-                maxColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 "
+                maxColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-4 "
               }`}
             >
               {[1, 2, 3, 4, 5]?.map((e) => {

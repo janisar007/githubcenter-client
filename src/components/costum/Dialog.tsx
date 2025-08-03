@@ -106,7 +106,7 @@ const Dialog: React.FC<DialogProps> = ({
 
     let animationId: number;
     const animate = () => {
-      draw();
+      // draw();
       animationId = requestAnimationFrame(animate);
     };
 
@@ -164,7 +164,7 @@ const Dialog: React.FC<DialogProps> = ({
     >
       {/* Customizable Backdrop */}
       <canvas
-        ref={canvasRef}
+        // ref={canvasRef}
         className={`fixed inset-0 z-40 ${overlayClassName}`}
         style={{
           backdropFilter: overlayBlur,
@@ -177,14 +177,14 @@ const Dialog: React.FC<DialogProps> = ({
       {/* Dialog Content */}
       <div
         ref={dialogRef}
-        className={`relative bg-cgray-second rounded-lg shadow-xl hide-scrollbar max-w-full max-h-[90vh] overflow-y-auto flex flex-col ${contentClassName}`}
+        className={`relative bg-vol-50 rounded-lg shadow-xl hide-scrollbar max-w-full max-h-[90vh] overflow-y-auto flex flex-col ${contentClassName}`}
         onClick={(e) => e.stopPropagation()}
         tabIndex={-1}
       >
         {/* Header */}
         {(title || showCloseButton) && (
           <div
-            className={`flex items-center bg-cgray-first justify-between p-4 border-b-[0.09rem] ${headerClassName}`}
+            className={`flex items-center bg-vol-50 justify-between p-4 border-b-[0.09rem] ${headerClassName}`}
           >
             {title && <h2 className="text-lg text-cgray-dtext font-semibold">{title}</h2>}
             {showCloseButton && (
@@ -201,11 +201,11 @@ const Dialog: React.FC<DialogProps> = ({
         )}
 
         {/* Body */}
-        <div className={`flex-1 overflow-y-auto p-4 rounded-b-xl border-b-[0.09rem] shadow-sm  bg-white `}>{children}</div>
+        <div className={`flex-1 overflow-y-auto p-4 rounded-b-xl border-b-[0.09rem] border-vol-200 shadow-sm  bg-white `}>{children}</div>
 
         {/* Footer */}
         {footerContent && (
-          <div className={`p-4  bg-cgray-second ${footerClassName}`}>
+          <div className={`p-4  bg-vol-50 ${footerClassName}`}>
             {footerContent}
           </div>
         )}

@@ -139,7 +139,9 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   return (
     <div className={className}>
       {/* Search and selection area */}
+      
       <div className={searchContainerClassName}>
+        <div className="ml-4 mt-4 font-medium text-lg text-cgray-dtext">Select Repositories to Track</div>
         <div className="relative flex">
           <FiSearch className="absolute left-7 top-7 text-cgray-dtext" />
           <input
@@ -152,7 +154,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
         </div>
 
         {filteredRepos?.length > 0 ? (
-          <div className="custom-scrollbar mt-2 overflow-y-auto max-h-[calc(100%-5.125rem)] border-cgray-border border bg-white  p-2 rounded-lg even-shadow">
+          <div className="custom-scrollbar mt-2 overflow-y-auto max-h-[calc(100%-7.8rem)] border-cgray-border border bg-white  p-2 rounded-lg even-shadow">
             {filteredRepos?.length > 0 &&
               filteredRepos?.map((repo) => (
                 <div

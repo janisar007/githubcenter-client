@@ -2,6 +2,7 @@ import { apiService } from "@/api/apiService";
 import type { PullRequestWithWorkflowsType } from "@/types/repotypes";
 import { useEffect, useState } from "react";
 import PrWorkflow from "./PrWorkflow";
+import { useQueryParam } from "@/hooks/useQueryParam";
 
 interface RepositoryComponentType {
   repo_name: string;
@@ -24,7 +25,9 @@ const RepositoryComponent = ({
   userId,
 }: RepositoryComponentType) => {
   const [prData, setPrData] = useState<PullRequestWithWorkflowsType[]>([]);
-  console.log(prData);
+  // console.log(prData);
+
+  const groupName = useQueryParam("groupName");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -445,7 +448,8 @@ const RepositoryComponent = ({
 
   return (
     <div className="flex flex-col">
-      <div className="flex pl-4 mb-3">
+      <div className="flex pl-4 mb-3  flex-col">
+        {groupName && <span className="text-cgray-ntext text-sm flex"><span className="bg-gray-100 px-1 rounded-xs">{groupName}</span></span>}
         <span className="text-4xl font-bold text-cgray-ntext">
           {`${repo_name}`}
         </span>
@@ -462,7 +466,7 @@ const RepositoryComponent = ({
             );
           })}
         </div>
-        <div className="border-black border-2 w-[35%]">right part</div>
+        {/* <div className="border-black border-2 w-[35%]">right part</div> */}
       </div>
     </div>
   );

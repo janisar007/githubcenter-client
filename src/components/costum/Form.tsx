@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import type {
   SubmitHandler,
@@ -8,7 +8,13 @@ import type {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { FiAlertCircle } from "react-icons/fi";
+import {
+  FiAlertCircle,
+  FiCheck,
+  FiChevronDown,
+  FiChevronUp,
+  FiX,
+} from "react-icons/fi";
 
 // Types
 export type FormField = {
@@ -21,6 +27,7 @@ export type FormField = {
     | "number"
     | "select"
     | "checkbox"
+    | "multiselect"
     | "textarea"
     | "date";
   placeholder?: string;
@@ -35,6 +42,17 @@ export type FormField = {
   descriptionClassName?: string;
   required?: boolean;
   disabled?: boolean;
+
+  //for the multiselect option
+  renderSelected?: (option: {
+    value: string | number;
+    label: string;
+  }) => React.ReactNode;
+  renderOption?: (option: {
+    value: string | number;
+    label: string;
+  }) => React.ReactNode;
+  maxSelections?: number;
 };
 
 export type FormProps<T extends FieldValues> = {
@@ -58,6 +76,176 @@ export type FormProps<T extends FieldValues> = {
     methods: UseFormReturn<T>;
     className: string;
   }) => React.ReactNode;
+};
+
+interface MultiSelectProps {
+  field: FormField;
+  methods: UseFormReturn<any>;
+  className: string;
+}
+
+const MultiSelectField: React.FC<MultiSelectProps> = ({
+  field,
+  methods,
+  className,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const values = methods.watch(field.name) || [];
+  const isArray = Array.isArray(values);
+
+  const filteredOptions =
+    field.options?.filter((option) =>
+      option.label.toLowerCase().includes(searchTerm.toLowerCase())
+    ) || [];
+
+  const toggleOption = (optionValue: string | number) => {
+    const currentValue = methods.getValues(field.name);
+    let newValue: any[] = [];
+
+    if (isArray) {
+      newValue = Array.isArray(currentValue) ? [...currentValue] : [];
+    } else {
+      newValue = currentValue ? [currentValue] : [];
+    }
+
+    const index = newValue.findIndex((val) => val === optionValue);
+
+    if (index >= 0) {
+      newValue.splice(index, 1);
+    } else {
+      if (field.maxSelections && newValue.length >= field.maxSelections) return;
+      newValue.push(optionValue);
+    }
+
+    methods.setValue(
+      field.name,
+      isArray ? newValue : newValue[0] || null,
+      {
+        shouldValidate: true,
+      }
+    );
+  };
+
+  const removeOption = (optionValue: string | number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleOption(optionValue);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      {/* Selected values display */}
+      <div
+        className={`${className} flex flex-wrap items-center gap-1 min-h-[38px] cursor-pointer`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {values?.length > 0 ? (
+          isArray ? (
+            values.map((value) => {
+              const option = field.options?.find((opt) => opt.value === value);
+              return option ? (
+                field.renderSelected ? (
+                  field.renderSelected(option)
+                ) : (
+                  <span
+                    key={value}
+                    className="inline-flex items-center bg-gray-100 rounded px-2 py-1 text-sm"
+                  >
+                    {option.label}
+                    <button
+                      type="button"
+                      onClick={(e) => removeOption(value, e)}
+                      className="ml-1 text-gray-500 hover:text-gray-700"
+                    >
+                      <FiX size={14} />
+                    </button>
+                  </span>
+                )
+              ) : null;
+            })
+          ) : (
+            <span>
+              {field.options?.find((opt) => opt.value === values)?.label}
+            </span>
+          )
+        ) : (
+          <span className="text-gray-400">
+            {field.placeholder || "Select options..."}
+          </span>
+        )}
+        <div className="ml-auto">
+          {isOpen ? <FiChevronUp /> : <FiChevronDown />}
+        </div>
+      </div>
+
+      {/* Dropdown menu */}
+      {isOpen && (
+        <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border border-gray-200 max-h-60 overflow-auto">
+          {/* Search input */}
+          {field.options && field.options.length > 5 && (
+            <div className="p-2 border-b">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full p-1 text-sm border rounded"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          )}
+
+          {/* Options list */}
+          <div className="py-1">
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={`px-3 py-2 text-sm cursor-pointer flex items-center ${
+                    values?.includes(option.value)
+                      ? "bg-blue-50 text-blue-700"
+                      : "hover:bg-gray-50"
+                  }`}
+                  onClick={() => toggleOption(option.value)}
+                >
+                  {field.renderOption ? (
+                    field.renderOption(option)
+                  ) : (
+                    <>
+                      <span className="mr-2">
+                        {values?.includes(option.value) && <FiCheck />}
+                      </span>
+                      <span>{option.label}</span>
+                    </>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className="px-3 py-2 text-sm text-gray-500">
+                No options found
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export function Form<T extends FieldValues>({
@@ -125,6 +313,14 @@ export function Form<T extends FieldValues>({
               </option>
             ))}
           </select>
+        );
+      case "multiselect":
+        return (
+          <MultiSelectField
+            field={field}
+            methods={methods}
+            className={commonProps.className}
+          />
         );
       case "checkbox":
         return (
