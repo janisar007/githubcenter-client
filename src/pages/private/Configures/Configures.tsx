@@ -1,6 +1,8 @@
 import { Tab, TabPanel, TabProvider, Tabs } from "@/components/costum/Tab";
 import SidebarTabs from "./components/SidebarTabs";
 
+
+
 export default function Configures() {
   return (
     <div className=" ">
@@ -33,9 +35,11 @@ export default function Configures() {
           </Tab>
         </Tabs>
 
-        <TabPanel tabId="dashboard" className="p-4 bg-gray-50 rounded">
-          <h2>Dashboard Content</h2>
-          <p>This is the dashboard tab content.</p>
+        <TabPanel
+          tabId="dashboard"
+          className="p-4 bg-gray-50 rounded"
+        >
+          dfff
         </TabPanel>
 
         <TabPanel tabId="configures" className="p-4  rounded">

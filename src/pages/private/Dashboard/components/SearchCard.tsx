@@ -143,6 +143,9 @@ const CardGrid: React.FC<CardGridProps> = ({
         <div className=" w-[100%]">
           {/* Cards Grid */}
 
+          <div className="text-2xl text-cgray-dtext font-semibold mb-6 mt-1">You Github Accounts</div>
+          
+
           {!loading && filteredCards.length > 0 ? (
             <div
               className={`grid gap-6 ${

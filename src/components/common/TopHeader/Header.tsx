@@ -19,9 +19,9 @@ export const Header = () => {
   };
 
   return (
-    <header className="bg-vol-50 shadow-sm border-b-2 flex items-center">
+    <header className="bg-white shadow-sm border-b-2 flex items-center">
       <div className="ml-4 h-[75px] w-[75px] flex items-center">
-        <img src="/bblogogc.jpg" alt="loading" className="h-[40px] w-[40px]" />
+        <img src="/final_gc_logo_inverted_removebg.png" alt="loading" className="h-[30px] w-[220px]" />
       </div>
       <div className="w-full px-4 py-4 flex justify-between items-center">
         <nav className="flex space-x-4">
