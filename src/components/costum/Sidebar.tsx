@@ -45,22 +45,6 @@ interface SidebarOptionProps {
   };
 }
 
-// interface SidebarOptionWithSubOptionsProps
-//   extends Omit<SidebarOptionProps, "children"> {
-//   title: string;
-//   subOptions: {
-//     optionId: string;
-//     children: React.ReactNode;
-//   }[];
-//   defaultExpanded?: boolean;
-//   expandedClassName?: string;
-//   collapsedClassName?: string;
-//   subOptionsContainerClassName?: string;
-//   subOptionClassName?: string;
-//   subOptionActiveClassName?: string;
-//   subOptionInactiveClassName?: string;
-// }
-
 interface SidebarProps {
   children: React.ReactNode;
   className?: string;

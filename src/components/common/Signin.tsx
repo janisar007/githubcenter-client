@@ -19,7 +19,6 @@ export default function Signin() {
   useEffect(() => {
     const fetchAndStoreUser = async () => {
       if (isSignedIn && user) {
-        const username = user.id;
 
         const existingId = localStorage.getItem("userId");
         if (!existingId) {
@@ -38,7 +37,7 @@ export default function Signin() {
           }
         }
 
-        navigate(`/${username}/dashboard`, { replace: true });
+        navigate(`/landing`, { replace: true });
       }
     };
 
