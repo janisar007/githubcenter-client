@@ -80,6 +80,8 @@ const SidebarTabs = () => {
   const [isGroupDeleteOpen, setIsGroupDeleteOpen] = useState(false);
   const [isRepoRemovalOpen, setIsRepoRemovalOpen] = useState(false);
 
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -211,25 +213,83 @@ const SidebarTabs = () => {
   };
 
   return (
-    <div className="">
+    <div className="relative">
+      {/* Mobile sidebar toggle button */}
+      <button
+        className="md:hidden fixed bottom-4 right-4 z-40 bg-vol-600 text-white p-3 rounded-full shadow-lg cursor-pointer"
+        onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+      >
+        {isMobileSidebarOpen ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        )}
+      </button>
+
       <Sidebar
         defaultOption="dashboard"
         storageKey="appSection"
         groupStorageKey="groupName"
-        className="flex h-[calc(100%-12rem)] "
+        className="flex flex-col md:flex-row h-[calc(100%-12rem)]"
       >
-        {/* Dashboard Group */}
-        <div className=" overflow-auto  w-[20%]">
+        {/* Sidebar content - hidden on mobile unless toggled */}
+        <div
+          className={`overflow-auto w-full md:w-[20%] bg-white md:bg-transparent z-30 md:z-auto fixed md:static inset-0 transform ${
+            isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300 ease-in-out`}
+        >
+          {/* Close button for mobile */}
+          {/* <button
+            className="md:hidden absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            onClick={() => setIsMobileSidebarOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button> */}
+
           {/* Projects Group - Collapsible */}
           <SidebarGroup
             title="Groups"
             collapsible
             defaultCollapsed={false}
-            // rightAction={{
-            //   icon: <FiSettings />,
-            //   onClick: () => console.log("Main settings 2 action"),
-            //   className: "text-blue-500",
-            // }}
             rightMenuAction={{
               component: (
                 <DropdownActionMenu
@@ -333,6 +393,9 @@ const SidebarTabs = () => {
                       groupRepoData[grp._id]?.map((repo: any) => {
                         return {
                           optionId: repo.node_id,
+                          callbackFunction: () => {
+                            setIsMobileSidebarOpen(false);
+                          },
                           children: repo.repo_name,
                           icon: <RiGitRepositoryLine />,
                           rightAction: {
@@ -366,16 +429,11 @@ const SidebarTabs = () => {
                 return (
                   <SidebarOption
                     key={repo.node_id}
+                    callbackFunction={() => {
+                      setIsMobileSidebarOpen(false);
+                    }}
                     optionId={repo.node_id}
                     activeClassName="bg-vol-50 text-vol-600"
-                    // rightAction={{
-                    //   icon: <span className="text-xs">↗</span>,
-                    //   onClick: (e) => {
-                    //     e.stopPropagation();
-                    //     alert("Opening archived projects in new window");
-                    //   },
-                    //   className: "hover:text-green-700",
-                    // }}
                   >
                     <span className="flex items-center gap-2">
                       <RiGitRepositoryLine />
@@ -391,15 +449,10 @@ const SidebarTabs = () => {
           <SidebarGroup title="Settings">
             <SidebarOption
               optionId="github"
+              callbackFunction={() => {
+                setIsMobileSidebarOpen(false);
+              }}
               activeClassName="bg-vol-50 text-vol-600"
-              // rightAction={{
-              //   icon: <span className="text-xs">↗</span>,
-              //   onClick: (e) => {
-              //     e.stopPropagation();
-              //     alert("Opening archived projects in new window");
-              //   },
-              //   className: "hover:text-green-700",
-              // }}
             >
               <span className="flex items-center gap-2 ">
                 <span>
@@ -409,16 +462,11 @@ const SidebarTabs = () => {
               </span>
             </SidebarOption>
             <SidebarOption
+              callbackFunction={() => {
+                setIsMobileSidebarOpen(false);
+              }}
               optionId="repository"
               activeClassName="bg-vol-50 text-vol-600"
-              // rightAction={{
-              //   icon: <span className="text-xs">↗</span>,
-              //   onClick: (e) => {
-              //     e.stopPropagation();
-              //     alert("Opening archived projects in new window");
-              //   },
-              //   className: "hover:text-green-700",
-              // }}
             >
               <span className="flex items-center gap-2 ">
                 <span>
@@ -428,16 +476,11 @@ const SidebarTabs = () => {
               </span>
             </SidebarOption>
             <SidebarOption
+              callbackFunction={() => {
+                setIsMobileSidebarOpen(false);
+              }}
               optionId="pat"
               activeClassName="bg-vol-50 text-vol-600"
-              // rightAction={{
-              //   icon: <span className="text-xs">↗</span>,
-              //   onClick: (e) => {
-              //     e.stopPropagation();
-              //     alert("Opening archived projects in new window");
-              //   },
-              //   className: "hover:text-green-700",
-              // }}
             >
               <span className="flex items-center gap-2 ">
                 <span>
@@ -472,7 +515,7 @@ const SidebarTabs = () => {
           })}
 
           <SidebarContent optionId="github">
-            <GhSettings/>
+            <GhSettings />
           </SidebarContent>
 
           <SidebarContent optionId="repository">
@@ -480,7 +523,7 @@ const SidebarTabs = () => {
           </SidebarContent>
 
           <SidebarContent optionId="pat">
-            <PatSettings/>
+            <PatSettings />
           </SidebarContent>
         </div>
       </Sidebar>
@@ -494,20 +537,9 @@ const SidebarTabs = () => {
         overlayDarkness="rgba(0, 0, 0, 0.7)"
         overlayClassName="transition-opacity duration-300"
         contentClassName="w-full max-w-xl"
-        // headerClassName="bg-gray-50"
         bodyClassName="bg-white"
-        // footerClassName="bg-gray-50"
         closeButtonClassName="text-gray-500 hover:text-gray-700"
-        footerContent={
-          <div className="flex justify-end gap-2">
-            {/* <button className="white-button" onClick={() => setIsOpen(false)}>
-              Cancel
-            </button>
-            <button className="blue-button" onClick={() => setIsOpen(false)}>
-              Confirm
-            </button> */}
-          </div>
-        }
+        footerContent={<div className="flex justify-end gap-2"></div>}
       >
         <AddGroupDialogBox repoOption={repoOption} />
       </Dialog>
@@ -521,9 +553,7 @@ const SidebarTabs = () => {
         overlayDarkness="rgba(0, 0, 0, 0.7)"
         overlayClassName="transition-opacity duration-300"
         contentClassName="w-full max-w-xl"
-        // headerClassName="bg-gray-50"
         bodyClassName="bg-white"
-        // footerClassName="bg-gray-50"
         closeButtonClassName="text-gray-500 hover:text-gray-700"
         footerContent={<div className="flex justify-end gap-2"></div>}
       >
@@ -539,9 +569,7 @@ const SidebarTabs = () => {
         overlayDarkness="rgba(0, 0, 0, 0.7)"
         overlayClassName="transition-opacity duration-300"
         contentClassName="w-full max-w-xl"
-        // headerClassName="bg-gray-50"
         bodyClassName="bg-white"
-        // footerClassName="bg-gray-50"
         closeButtonClassName="text-gray-500 hover:text-gray-700"
         footerContent={<div className="flex justify-end gap-2"></div>}
       >
@@ -580,7 +608,7 @@ const DashboardContent = () => (
   <div className="bg-white p-6 rounded-lg shadow">
     <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
     <p>Welcome to your dashboard. Here's an overview of your activities.</p>
-    <div className="mt-4 grid grid-cols-3 gap-4">
+    <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
       <div className="bg-blue-50 p-4 rounded">Stats 1</div>
       <div className="bg-blue-50 p-4 rounded">Stats 2</div>
       <div className="bg-blue-50 p-4 rounded">Stats 3</div>
@@ -597,6 +625,5 @@ const CalendarContent = () => (
     </div>
   </div>
 );
-
 
 export default SidebarTabs;

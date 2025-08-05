@@ -20,7 +20,7 @@ const GhSettings = () => {
   const [isGhResetDiaOpen, setIsGhResetDiaOpen] = useState(false);
   const inputGhResetDiaRef = useRef<any>(null);
   const [isGhResetAlrOpen, setIsGhResetAlrOpen] = useState(false);
-  
+
   const [isGhRemoveDiaOpen, setIsGhRemoveDiaOpen] = useState(false);
   const inputGhRemoveDiaRef = useRef<any>(null);
   const [isGhRemoveAlrOpen, setIsGhRemoveAlrOpen] = useState(false);
@@ -50,11 +50,9 @@ const GhSettings = () => {
     fetchData();
   }, []);
 
-
-
   return (
-    <div className="flex flex-col gap-16">
-      <div className="w-[80%] bg-vol-50 rounded-lg">
+    <div className="flex flex-col gap-16 px-4 md:px-0">
+      <div className="w-full md:w-[80%] bg-vol-50 rounded-lg mx-auto">
         <div className="px-5 py-5 flex flex-col gap-1">
           <span className="font-medium">Your Github Account Details</span>
           {/* <span className="text-xs text-cgray-ntext">
@@ -62,17 +60,19 @@ const GhSettings = () => {
           </span> */}
         </div>
         <div className="bg-white rounded-lg border m-[0.10rem]">
-          <div className="flex justify-between items-center px-5 py-5">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 px-5 py-5">
             <div className="text-cgray-dtext flex flex-col gap-4">
               <div className="font-medium flex items-center gap-2">
                 <img
                   src={ghData?.avatarUrl}
-                  className="w-8 h-8 rounded-full border-3 "
+                  className="w-8 h-8 rounded-full border-3"
                 />
-                <span className="font-semibold">{ghData?.username}</span>
+                <span className="font-semibold break-words">
+                  {ghData?.username}
+                </span>
               </div>
 
-              <div className="text-xs text-cgray-ntext font-medium flex items-center gap-2 bg-vol-50 py-1 px-2 rounded-sm">
+              <div className="text-xs text-cgray-ntext font-medium flex items-center gap-2 bg-vol-50 py-1 px-2 rounded-sm break-all">
                 <span>{ghData?.accUrl}</span>
               </div>
             </div>
@@ -87,15 +87,15 @@ const GhSettings = () => {
         </div>
       </div>
 
-      <div className="w-[80%] bg-red-50 rounded-lg">
+      <div className="w-full md:w-[80%] bg-red-50 rounded-lg mx-auto">
         <div className="px-5 py-5 flex flex-col gap-1">
           <span className="font-medium text-red-700">Danger Zone</span>
           <span className="text-xs text-red-500">
             These actions might not be reversible.
           </span>
         </div>
-        <div className="bg-white rounded-t-lg custom-bottom-dashed border-b border-l border-r border-t ml-[0.10rem] mr-[0.10rem]">
-          <div className="flex justify-between items-center px-5 py-5">
+        <div className="bg-white rounded-t-lg custom-bottom-dashed border-b border-l border-r border-t mx-[0.10rem]">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 px-5 py-5">
             <div className="text-cgray-dtext flex flex-col gap-2">
               <div className="flex items-center gap-1">
                 <span className="font-semibold text-cgray-dtext">
@@ -109,12 +109,19 @@ const GhSettings = () => {
               </div>
             </div>
 
-            <button onClick={() => setIsGhRemoveAlrOpen(true)} className="red-button">Remove this github account</button>
+            <div>
+              <button
+                onClick={() => setIsGhRemoveAlrOpen(true)}
+                className="red-button w-full md:w-auto"
+              >
+                Remove this github account
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-b-lg border-b border-l border-r mr-[0.10rem] ml-[0.10rem]">
-          <div className="flex justify-between items-center px-5 py-5">
+        <div className="bg-white rounded-b-lg border-b border-l border-r mx-[0.10rem]">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 px-5 py-5">
             <div className="text-cgray-dtext flex flex-col gap-2">
               <div className="flex items-center gap-1">
                 <span className="font-semibold text-cgray-dtext">
@@ -123,12 +130,20 @@ const GhSettings = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-cgray-ntext">
-                  Once you reset the account, you will not be getting old data back.
+                  Once you reset the account, you will not be getting old data
+                  back.
                 </span>
               </div>
             </div>
 
-            <button onClick={() => setIsGhResetAlrOpen(true)} className="red-button">Reset account</button>
+            <div>
+              <button
+                onClick={() => setIsGhResetAlrOpen(true)}
+                className="red-button w-full md:w-auto"
+              >
+                Reset account
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -148,7 +163,7 @@ const GhSettings = () => {
         closeButtonClassName="text-gray-500 hover:text-gray-700"
         footerContent={<div className="flex justify-end gap-2"></div>}
       >
-        <ResetGhDialogBox ghData={ghData}/>
+        <ResetGhDialogBox ghData={ghData} />
       </Dialog>
 
       <AlertDialog
@@ -178,7 +193,7 @@ const GhSettings = () => {
         closeButtonClassName="text-gray-500 hover:text-gray-700"
         footerContent={<div className="flex justify-end gap-2"></div>}
       >
-        <RemoveGhDialogBox ghData={ghData}/>
+        <RemoveGhDialogBox ghData={ghData} />
       </Dialog>
 
       <AlertDialog

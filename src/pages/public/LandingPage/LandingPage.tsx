@@ -62,27 +62,32 @@ const LandingPage = () => {
     },
   ];
 
- 
   return (
     <div className="w-full min-h-screen bg-white">
       <Navbar />
       <main className="">
         <div className="relative flex flex-col ">
-          <div className="border-b-2 border-gray-600">
-            <img src="circle_bg.png" className="w-full h-[70%]" />
+          <div className="md:border-b-2 md:border-gray-600 md:h-auto h-[40rem]">
+            <img src="circle_bg.png" className="md:w-full h-md:[70%] w-full h-full object-cover" />
           </div>
-          <div className="absolute text-white top-[2rem] lg:top-[11rem] left-[1rem] lg:left-[4rem] h-full flex  text-[2rem] lg:text-[5.5rem] font-bold z-10">
+          <div className="absolute text-white top-[10rem] lg:top-[11rem] lg:left-[4rem] h-full flex  text-[3rem] lg:text-[5.5rem] font-[800] z-10">
             <div className="flex flex-col gap-1">
-              <span className="flex gap-3">
+              <span className="flex gap-3 ml-[2.8rem] md:ml-[0rem]">
                 <span className="text-vol-300">Github</span>
                 <span className="text-vol-900">Center</span>
               </span>
 
               {/* <span className='text-lg text-vol-300'>Manage All Your GitHub Repositories & Workflows — In One Place.</span> */}
-              <span className="text-[0.4rem] lg:text-lg font-medium wrap-break-word w-[12rem] lg:w-[30rem] text-gray-300">
+              <span className="text-[1rem] lg:text-lg font-medium wrap-break-word  lg:w-[30rem] text-gray-100 text-center text-outline">
                 Stop switching tabs. Start monitoring your entire GitHub
                 universe from a single, intelligent dashboard.
               </span>
+
+              <div className="flex items-center justify-center">
+              <button className="text-sm font-normal start-button">Start for free</button>
+
+              </div>
+
             </div>
           </div>
         </div>
@@ -122,40 +127,41 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className="w-full h-full relative lg:mt-8">
-          <img src="footer_bg.png" />
-          <div className="absolute top-[1.9rem] lg:top-[7rem] left-2 w-[97%] lg:w-[99%] z-40 text-white  flex flex-col gap-[0.01rem] lg:gap-4">
-            <div className=" flex justify-between">
-              <div className=" flex flex-col gap-2 lg:gap-8 ml-[1rem] lg:ml-[4rem]">
+        {/* /footer */}
+        <div className="w-full h-full relative mt-8">
+          <img src="footer_bg.png" className="h-[41rem] md:h-auto" />
+          <div className="absolute top-[7.4rem] md:top-[7rem] left-1 md:left-2 w-[99%] z-40 text-white  flex flex-col gap-4">
+            <div className=" flex flex-col md:flex-row justify-between gap-12 md:gap-1">
+              <div className=" flex flex-col gap-2 md:gap-8 ml-[1rem] md:ml-[4rem]">
                 <div>
                   <img
                     src="final_gc_logo_inverted_removebg.png"
-                    className="h-3 w-6 lg:h-12 lg:w-24 bg-gray-900 rounded-xs lg:rounded-lg"
+                    className="h-10 w-20 md:h-12 md:w-24 bg-gray-900 rounded-lg"
                   />
                 </div>
                 <div>
-                  <p className="mb-1 lg:mb-4 wrap-break-word w-[8rem] lg:w-[30rem] text-[#78d1e6] text-[0.23rem] lg:text-sm">
+                  <p className="mb-4 wrap-break-word w-[22rem] md:w-[30rem] text-[#78d1e6] text-sm">
                     This project is{" "}
                     <span className="font-medium">open source</span>. Dive into
                     the code, learn how it works, or contribute to make it even
                     better.
                   </p>
-                  <button className="border hover:border-cgray-dtext hover:bg-cgray-first hover:text-cgray-dtext hover:font-medium transition-colors duration-300 rounded-xs lg:rounded-sm px-[0.1rem] lg:px-[0.6rem] text-[0.24rem] lg:text-sm py-[0.1rem] lg:py-2 flex items-center justify-center gap-[0.14rem] lg:gap-2 cursor-pointer">
+                  <button className="border hover:border-cgray-dtext hover:bg-cgray-first hover:text-cgray-dtext hover:font-medium transition-colors duration-300 rounded-sm px-[0.6rem] text-sm py-2 flex items-center justify-center gap-2 cursor-pointer">
                     <span>Github</span>
                     <FaRegArrowAltCircleRight />
                   </button>
                 </div>
               </div>
 
-              <div className=" flex gap-6 lg:gap-12 mr-[1rem] lg:mr-[12rem] ">
+              <div className=" flex flex-row flex-wrap md:flex-nowrap  gap-12 mr-[12rem]  w-full px-6">
                 {footerData.map((data: any, idx: any) => {
                   return (
                     <div
                       key={idx}
-                      className="flex flex-col gap-1 lg:gap-5 text-[0.23rem] lg:text-sm font-semibold"
+                      className="flex flex-col gap-5 text-sm font-semibold  w-[40%]"
                     >
                       <span className="text-vol-300">{data.heading}</span>
-                      <div className="flex flex-col gap-1 lg:gap-3 text-gray-100 font-medium ">
+                      <div className="flex flex-col gap-3 text-gray-100 font-medium ">
                         {data.options.map((option: any, index: any) => {
                           return (
                             <span
@@ -173,7 +179,7 @@ const LandingPage = () => {
               </div>
             </div>
 
-            <div className="lg:ml-[4rem] text-[0.3rem] lg:text-xs text-gray-500  flex justify-end mr-[12rem] w-[90%]">
+            <div className="md:ml-[4rem] text-xs text-gray-500 mt-3 md:mt-1  flex justify-end mr-[12rem] w-[90%]">
               Copyright @ 2025 Github Center
             </div>
           </div>
@@ -184,3 +190,61 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+
+// <div className="w-full h-full relative lg:mt-8">
+//           <img src="footer_bg.png" />
+//           <div className="absolute top-[1.9rem] lg:top-[7rem] left-2 w-[97%] lg:w-[99%] z-40 text-white  flex flex-col gap-[0.01rem] lg:gap-4">
+//             <div className=" flex justify-between">
+//               <div className=" flex flex-col gap-2 lg:gap-8 ml-[1rem] lg:ml-[4rem]">
+//                 <div>
+//                   <img
+//                     src="final_gc_logo_inverted_removebg.png"
+//                     className="h-3 w-6 lg:h-12 lg:w-24 bg-gray-900 rounded-xs lg:rounded-lg"
+//                   />
+//                 </div>
+//                 <div>
+//                   <p className="mb-1 lg:mb-4 wrap-break-word w-[8rem] lg:w-[30rem] text-[#78d1e6] text-[0.23rem] lg:text-sm">
+//                     This project is{" "}
+//                     <span className="font-medium">open source</span>. Dive into
+//                     the code, learn how it works, or contribute to make it even
+//                     better.
+//                   </p>
+//                   <button className="border hover:border-cgray-dtext hover:bg-cgray-first hover:text-cgray-dtext hover:font-medium transition-colors duration-300 rounded-xs lg:rounded-sm px-[0.1rem] lg:px-[0.6rem] text-[0.24rem] lg:text-sm py-[0.1rem] lg:py-2 flex items-center justify-center gap-[0.14rem] lg:gap-2 cursor-pointer">
+//                     <span>Github</span>
+//                     <FaRegArrowAltCircleRight />
+//                   </button>
+//                 </div>
+//               </div>
+
+//               <div className=" flex gap-6 lg:gap-12 mr-[1rem] lg:mr-[12rem] ">
+//                 {footerData.map((data: any, idx: any) => {
+//                   return (
+//                     <div
+//                       key={idx}
+//                       className="flex flex-col gap-1 lg:gap-5 text-[0.23rem] lg:text-sm font-semibold"
+//                     >
+//                       <span className="text-vol-300">{data.heading}</span>
+//                       <div className="flex flex-col gap-1 lg:gap-3 text-gray-100 font-medium ">
+//                         {data.options.map((option: any, index: any) => {
+//                           return (
+//                             <span
+//                               key={index}
+//                               className="cursor-pointer hover:text-gray-400"
+//                             >
+//                               {option}
+//                             </span>
+//                           );
+//                         })}
+//                       </div>
+//                     </div>
+//                   );
+//                 })}
+//               </div>
+//             </div>
+
+//             <div className="lg:ml-[4rem] text-[0.3rem] lg:text-xs text-gray-500  flex justify-end mr-[12rem] w-[90%]">
+//               Copyright @ 2025 Github Center
+//             </div>
+//           </div>
+//         </div>

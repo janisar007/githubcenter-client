@@ -25,8 +25,6 @@ const RepositoryComponent = ({
   userId,
 }: RepositoryComponentType) => {
   const [prData, setPrData] = useState<PullRequestWithWorkflowsType[]>([]);
-  // console.log(prData);
-
   const groupName = useQueryParam("groupName");
 
   useEffect(() => {
@@ -47,7 +45,6 @@ const RepositoryComponent = ({
           userId,
           username
         );
-
         setPrData(get_data.data?.pullRequests?.[`${username}/${repo_name}`]);
       } catch (error) {
         console.log(error);
@@ -447,15 +444,19 @@ const RepositoryComponent = ({
   }, [repo_name, username]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex pl-4 mb-3  flex-col">
-        {groupName && <span className="text-cgray-ntext text-sm flex"><span className="bg-gray-100 px-1 rounded-xs">{groupName}</span></span>}
-        <span className="text-4xl font-bold text-cgray-ntext">
+    <div className="flex flex-col w-full">
+      <div className="flex pl-4 mb-3 flex-col">
+        {groupName && (
+          <span className="text-cgray-ntext text-sm flex">
+            <span className="bg-gray-100 px-1 rounded-xs">{groupName}</span>
+          </span>
+        )}
+        <span className="text-2xl md:text-4xl font-bold text-cgray-ntext">
           {`${repo_name}`}
         </span>
       </div>
-      <div className=" flex w-full  overflow-y-auto p-2">
-        <div className="w-[65%] gap-2 flex flex-col p-2">
+      <div className="flex w-full overflow-y-auto p-2">
+        <div className="w-full lg:w-[65%] gap-2 flex flex-col p-2">
           {prData.map((prInfo: PullRequestWithWorkflowsType, index: number) => {
             return (
               <PrWorkflow
@@ -466,7 +467,6 @@ const RepositoryComponent = ({
             );
           })}
         </div>
-        {/* <div className="border-black border-2 w-[35%]">right part</div> */}
       </div>
     </div>
   );

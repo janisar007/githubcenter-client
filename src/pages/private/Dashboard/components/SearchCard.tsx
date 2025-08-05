@@ -143,7 +143,7 @@ const CardGrid: React.FC<CardGridProps> = ({
         <div className=" w-[100%]">
           {/* Cards Grid */}
 
-          <div className="text-2xl text-cgray-dtext font-semibold mb-6 mt-1">You Github Accounts</div>
+          <div className="text-2xl text-cgray-dtext font-semibold mb-6 mt-1 ">You Github Accounts</div>
           
 
           {!loading && filteredCards.length > 0 ? (
@@ -153,7 +153,7 @@ const CardGrid: React.FC<CardGridProps> = ({
               }`}
             >
               <div
-              className={`flex items-center justify-center border-[0.09rem] hover:border-gray-500 rounded-md overflow-hidden cursor-pointer border-dashed border-vol-500 bg-vol-50 font-medium text-cgray-ntext hover:text-cgray-dtext`} onClick={() => setIsOpen(true)}>
+              className={`flex items-center justify-center border-[0.09rem] hover:border-gray-500 rounded-md overflow-hidden cursor-pointer border-dashed border-vol-500 bg-vol-50 font-medium text-cgray-ntext hover:text-cgray-dtext h-[9.5rem] sm:h-auto`} onClick={() => setIsOpen(true)}>
                 + Add Github
               </div>
               {filteredCards.map((card) => (

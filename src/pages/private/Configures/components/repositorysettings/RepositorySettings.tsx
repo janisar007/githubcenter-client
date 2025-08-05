@@ -113,9 +113,9 @@ const RepositorySettings = () => {
         allRepositories={repos}
         initiallySelected={selectedRepos}
         onSelectionChange={setSelectedRepos}
-        className="h-[63%] rounded-lg flex gap-8 "
-        searchContainerClassName="flex-1 p-[0.20rem] rounded-lg bg-cgray-second "
-        selectedContainerClassName="w-80 even-shadow h-[23.6rem] p-4 custom-scrollbar overflow-y-auto border rounded-lg bg-white"
+        className="h-[63%] overflow-auto rounded-lg flex flex-col sm:flex-row gap-14 sm:gap-8 px-4 py-2 hide-scrollbar sm:show-scrollbar"
+        searchContainerClassName="flex-1 p-[0.20rem] h-full rounded-lg bg-cgray-second "
+        selectedContainerClassName="w-full even-shadow h-[22.6rem] p-4 custom-scrollbar overflow-y-auto border rounded-lg bg-white"
         // renderRepoIcon={(repo) => (
         //   <img
         //     src={`https://github.com/${repo.owner.login}.png?size=40`}
@@ -129,6 +129,8 @@ const RepositorySettings = () => {
       <button onClick={handleSave} className="blue-button mt-2">
         Save Selection
       </button>
+
+      
     </div>
   );
 };

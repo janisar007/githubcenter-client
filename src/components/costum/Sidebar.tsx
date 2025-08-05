@@ -34,6 +34,7 @@ interface SidebarGroupProps {
 
 interface SidebarOptionProps {
   optionId: string;
+  callbackFunction?: () => void,
   children: React.ReactNode;
   className?: string;
   activeClassName?: string;
@@ -170,6 +171,7 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
 // Sidebar Option Component
 const SidebarOption: React.FC<SidebarOptionProps> = ({
   optionId,
+  callbackFunction,
   children,
   className = "px-3 py-2 text-sm rounded flex items-center justify-between pl-6",
   activeClassName = "bg-gray-100 text-gray-800",
@@ -185,7 +187,8 @@ const SidebarOption: React.FC<SidebarOptionProps> = ({
         isActive ? activeClassName : inactiveClassName
       } transition-colors duration-200 w-full text-left`}
       onClick={() => {
-        setSelectedOption(optionId), setSelectedGroup?.("");
+        setSelectedOption(optionId); setSelectedGroup?.("");
+        callbackFunction?.();
       }}
     >
       <span>{children}</span>
@@ -207,6 +210,7 @@ const SidebarOption: React.FC<SidebarOptionProps> = ({
 // Sidebar Option With SubOptions Component
 interface SubOption {
   optionId: string;
+  callbackFunction?: () => void;
   children: React.ReactNode;
   icon?: React.ReactNode;
   rightAction?: {
@@ -329,6 +333,7 @@ const SidebarOptionWithSubOptions: React.FC<
                 onClick={() => {
                   setSelectedOption(subOption.optionId);
                   setSelectedGroup?.(title);
+                  subOption.callbackFunction?.();
                 }}
               >
                 <span className="flex items-center gap-2">
