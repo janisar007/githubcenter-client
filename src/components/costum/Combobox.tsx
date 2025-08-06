@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface ComboboxOption {
   id: string | number;
@@ -26,7 +26,7 @@ const Combobox = <T extends ComboboxOption>({
   placeholder = 'Select options...',
   className = '',
   disabled = false,
-  name,
+  // name,
 }: ComboboxProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -88,13 +88,13 @@ const Combobox = <T extends ComboboxOption>({
   };
 
   // Remove selected option
-  const removeSelected = (option: T) => {
-    const newSelected = selectedOptions.filter(selected => selected.id !== option.id);
-    setSelectedOptions(newSelected);
-    if (onChange) {
-      onChange(newSelected);
-    }
-  };
+  // const removeSelected = (option: T) => {
+  //   const newSelected = selectedOptions.filter(selected => selected.id !== option.id);
+  //   setSelectedOptions(newSelected);
+  //   if (onChange) {
+  //     onChange(newSelected);
+  //   }
+  // };
 
   return (
     <div ref={comboboxRef} className={`relative ${className}`}>

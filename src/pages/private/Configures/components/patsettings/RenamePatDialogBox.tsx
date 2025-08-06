@@ -3,8 +3,8 @@ import { Form, type FormField } from "@/components/costum/Form";
 import { useToast } from "@/components/costum/Toast/ToastContext";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { getLocalStorageItem } from "@/utils/storage";
-import { useUser } from "@clerk/clerk-react";
-import { RiGitRepositoryLine } from "react-icons/ri";
+// import { useUser } from "@clerk/clerk-react";
+// import { RiGitRepositoryLine } from "react-icons/ri";
 import { z } from "zod";
 
 // 1. Define validation schema

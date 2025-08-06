@@ -84,13 +84,13 @@ const AlertDialog = forwardRef<HTMLDivElement, AlertDialogProps>(
       confirmButtonClassName = "",
       cancelButtonClassName = "",
       closeButtonClassName = "",
-      icon,
+      // icon,
       customIcon,
       size = "md",
       isDismissable = true,
       preventScroll = true,
     },
-    ref
+    // ref
   ) => {
     const overlayRef = React.useRef(null);
     const { overlayProps } = useOverlay(
