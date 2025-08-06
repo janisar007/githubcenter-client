@@ -48,11 +48,11 @@ export const AppRoutes = () => {
 
 export const RedirectToUserDashboard = () => {
   const { user } = useUser();
-  if (!user) return <Navigate to={`/signin`} replace />;;
+  if (!user) return <Navigate to={`/landing`} replace />;;
 
 
 
-  const un = user.username || user.id; // fallback if no username
+  const un = user.id; // fallback if no username
 
   return <Navigate to={`/${un}/dashboard`} replace />;
 };
