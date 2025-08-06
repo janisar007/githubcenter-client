@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FiChevronDown, FiX, FiCheck } from 'react-icons/fi';
+import { FiCheck } from 'react-icons/fi';
 
 interface DropdownItem {
   id?: string;

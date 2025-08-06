@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { BsDot } from "react-icons/bs";
 import { apiService } from "@/api/apiService";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { getLocalStorageItem } from "@/utils/storage";
 import { formatDate } from "@/utils/tools";
-import { useToast } from "@/components/costum/Toast/ToastContext";
-import { GoPencil } from "react-icons/go";
+// import { useToast } from "@/components/costum/Toast/ToastContext";
 import { AlertDialog } from "@/components/costum/AlertDialog/AlertDialog";
 import Dialog from "@/components/costum/Dialog";
 import ResetGhDialogBox from "./ResetGhDialogBox";
@@ -14,7 +12,7 @@ import RemoveGhDialogBox from "./RemoveGhDialogBox";
 const GhSettings = () => {
   //   const [reqPatData, setReqPatData] = useState<any>({});
   const [ghData, setGhData] = useState<any>({});
-  const { addToast } = useToast();
+  // const { addToast } = useToast();
 
   console.log(ghData);
   const [isGhResetDiaOpen, setIsGhResetDiaOpen] = useState(false);

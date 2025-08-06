@@ -62,6 +62,8 @@ const SidebarTabs = () => {
   const [groupLoading, setGroupLoading] = useState<boolean>(false);
   const [repoOption, setRepoOption] = useState<any>([]);
 
+  console.log(groupLoading)
+
   const [groupName, setGroupName] = useState<any>();
   const [groupId, setGroupId] = useState<string>();
   const [repoId, setRepoId] = useState<string>();
@@ -312,7 +314,7 @@ const SidebarTabs = () => {
                       onClick: () => console.log("Delete clicked"),
                     },
                   ]}
-                  trigger={(isOpen) => (
+                  trigger={() => (
                     <PiDotsThree
                     // className={` hover:bg-gray-50 hover:border-gray-200 hover:border-[0.09rem] hover:rounded-sm ${
                     //   isOpen ? "bg-gray-50 border-[0.09rem] p-[10px] rounded-sm border-gray-200" : "px-[0.1rem]"
@@ -382,7 +384,7 @@ const SidebarTabs = () => {
                               },
                             },
                           ]}
-                          trigger={(isOpen) => <PiDotsThree />}
+                          trigger={() => <PiDotsThree />}
                           position="bottom-right"
                           menuClassName="w-48"
                         />

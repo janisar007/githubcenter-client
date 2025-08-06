@@ -18,6 +18,7 @@ const RepositorySettings = () => {
 
   const [repoLoading, setRepoLoading] = useState<boolean>(false);
   const { addToast } = useToast();
+  console.log(repoLoading)
 
   const { user } = useUser();
 

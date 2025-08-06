@@ -72,7 +72,7 @@ const useSidebar = () => {
 const Sidebar: React.FC<SidebarProps> = ({
   children,
   className = "flex h-full overflow-hidden", // Added overflow-hidden here
-  contentClassName = "flex-1 p-4 overflow-auto", // Ensure overflow-auto for content
+  // contentClassName = "flex-1 p-4 overflow-auto", // Ensure overflow-auto for content
   storageKey = "sidebarOption",
   groupStorageKey = "groupName",
   defaultOption = "",

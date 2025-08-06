@@ -1,5 +1,7 @@
 // import { Link, useNavigate } from "react-router-dom";
-import { useClerk, UserButton } from "@clerk/clerk-react";
+import { 
+  // useClerk,
+   UserButton } from "@clerk/clerk-react";
 import { LuChevronsUpDown } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import { apiService } from "@/api/apiService";
+// import { apiService } from "@/api/apiService";
 import type { PullRequestWithWorkflowsType } from "@/types/repotypes";
 import { useEffect, useState } from "react";
 import PrWorkflow from "./PrWorkflow";
@@ -28,28 +28,30 @@ const RepositoryComponent = ({
   const groupName = useQueryParam("groupName");
 
   useEffect(() => {
-    const fetchData = async () => {
-      const reposRequest: ReposRequestType = [
-        {
-          owner: {
-            login: username,
-          },
-          name: repo_name,
-          full_name: `${username}/${repo_name}`,
-        },
-      ];
+    // const fetchData = async () => {
+    //   const reposRequest: ReposRequestType = [
+    //     {
+    //       owner: {
+    //         login: username,
+    //       },
+    //       name: repo_name,
+    //       full_name: `${username}/${repo_name}`,
+    //     },
+    //   ];
 
-      try {
-        const get_data = await apiService.getPrWorkflowInfo(
-          reposRequest,
-          userId,
-          username
-        );
-        setPrData(get_data.data?.pullRequests?.[`${username}/${repo_name}`]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    //   try {
+    //     const get_data = await apiService.getPrWorkflowInfo(
+    //       reposRequest,
+    //       userId,
+    //       username
+    //     );
+    //     setPrData(get_data.data?.pullRequests?.[`${username}/${repo_name}`]);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+
+    console.log(userId)
 
     setPrData([
       {

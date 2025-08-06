@@ -96,7 +96,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   };
 
   // Default repo icon renderer
-  const defaultRepoIcon = (repo: Repository) => (
+  const defaultRepoIcon = () => (
     <div className="mr-3 text-gray-500">
       <FiGithub size={20} />
     </div>
@@ -169,7 +169,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
                   <div className="flex items-center">
                     {renderRepoIcon
                       ? renderRepoIcon(repo)
-                      : defaultRepoIcon(repo)}
+                      : defaultRepoIcon()}
                     <div className="flex-1">
                       <div className="font-medium text-cgray-dtext">
                         {repo.repo_name}

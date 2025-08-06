@@ -1,4 +1,7 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet
+  
+  // , useNavigate 
+} from "react-router-dom";
 import { Header } from "./Header";
 import { useParams } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";

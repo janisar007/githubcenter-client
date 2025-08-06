@@ -1,7 +1,7 @@
 import type { PullRequest, WorkflowRun } from "@/types/repotypes";
 import { formatDate } from "@/utils/tools";
 import {
-  alphabetBgColors,
+  // alphabetBgColors,
   alphabetColorPalette,
   conclusionConstant,
   statusConstant,

@@ -1,5 +1,5 @@
 import Dialog from "@/components/costum/Dialog";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsDot } from "react-icons/bs";
 import UpdatePatDialogBox from "./UpdatePatDialogBox";
 import { apiService } from "@/api/apiService";

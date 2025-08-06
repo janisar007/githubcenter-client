@@ -1,7 +1,6 @@
 import { useClerk, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { FiMenu } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 
