@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import { TbLivePhotoFilled } from "react-icons/tb";
 import { GiConcentricCrescents } from "react-icons/gi";
-import { FaCodeMerge } from "react-icons/fa6";
+import { FaCodeMerge, FaPlay } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa6";
 import { RiGitRepositoryCommitsLine } from "react-icons/ri";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
@@ -68,7 +68,10 @@ const LandingPage = () => {
       <main className="">
         <div className="relative flex flex-col ">
           <div className="md:border-b-2 md:border-gray-600 md:h-auto h-[40rem]">
-            <img src="circle_bg.png" className="md:w-full h-md:[70%] w-full h-full object-cover" />
+            <img
+              src="circle_bg.png"
+              className="md:w-full h-md:[70%] w-full h-[90%] object-cover"
+            />
           </div>
           <div className="absolute text-white top-[10rem] lg:top-[11rem] lg:left-[4rem] h-full flex  text-[3rem] lg:text-[5.5rem] font-[800] z-10">
             <div className="flex flex-col gap-1">
@@ -78,21 +81,41 @@ const LandingPage = () => {
               </span>
 
               {/* <span className='text-lg text-vol-300'>Manage All Your GitHub Repositories & Workflows — In One Place.</span> */}
-              <span className="text-[1rem] lg:text-lg font-medium wrap-break-word  lg:w-[30rem] text-gray-100 text-center text-outline">
+              <span className=" md:ml-[2.6rem] text-[1rem] lg:text-lg font-medium wrap-break-word  lg:w-[30rem] text-gray-100 text-center text-outline">
                 Stop switching tabs. Start monitoring your entire GitHub
                 universe from a single, intelligent dashboard.
               </span>
 
-              <div className="flex items-center justify-center">
-              <button className="text-sm font-normal start-button">Start for free</button>
-
+              <div className="flex items-center justify-center mt-6">
+                <button className="text-sm font-normal start-button">
+                  Start for free
+                </button>
               </div>
 
+              <div className="mt-3 gap-1 flex items-center justify-center">
+                <div className="relative flex items-center justify-center w-7 h-7">
+                  {/* Spinning conic gradient ring */}
+                  <div
+                    className="absolute inset-0 rounded-full p-[2px] animate-[spin_3s_linear_infinite]"
+                    style={{
+                      background:
+                        "conic-gradient(from 0deg, #000000, #444444, #000000)",
+                    }}
+                  ></div>
+
+                  {/* Inner white circle */}
+                  <div className="relative z-10 flex items-center justify-center w-[85%] h-[85%] rounded-full bg-black">
+                    <FaPlay className="text-white ml-[2px] text-[0.6rem]" />
+                  </div>
+                </div>
+
+                <span className="text-[0.9rem] font-semibold text-outline">Watch demo</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="flex w-full items-center justify-center mt-12">
+        <div className="flex w-full items-center justify-center  md:mt-12">
           <div className="font-bold text-sm px-4 lg:text-4xl text-vol-950">
             Manage All Your GitHub Repositories & Workflows — In One Place.
           </div>
@@ -190,7 +213,6 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
 
 // <div className="w-full h-full relative lg:mt-8">
 //           <img src="footer_bg.png" />

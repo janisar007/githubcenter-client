@@ -553,11 +553,11 @@ canvas {
 /* In your global CSS file */
 .text-outline {
   text-shadow:
-    -0.5px -0.5px 0 #000,  
-     0.5px -0.5px 0 #000,
-    -0.5px  0.5px 0 #000,
-     0.5px  0.5px 0 #000;
-  color: #BAA6FF;
+    -0.3px -0.3px 0 #000,  
+     0.3px -0.3px 0 #000,
+    -0.3px  0.3px 0 #000,
+     0.3px  0.3px 0 #000;
+  color: #fff;
 }
 
 
