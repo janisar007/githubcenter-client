@@ -7,6 +7,8 @@ import { RiGitRepositoryCommitsLine } from "react-icons/ri";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 
 const LandingPage = () => {
+
+  
   const featureData = [
     {
       heading: "Live GitHub Actions Status",

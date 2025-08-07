@@ -9,6 +9,7 @@ import { useUser } from "@clerk/clerk-react";
 import PrivateLayout from "@/layouts/PrivateLayout";
 
 export const AppRoutes = () => {
+    
   return (
     <Routes>
       {/* Public Pages */}
@@ -41,14 +42,14 @@ export const AppRoutes = () => {
       />
 
       {/* Fallback */}
-      <Route path="*" element={<RedirectToUserDashboard />} />
+      <Route path="*" element={<RedirectToUserDashboard  />} />
     </Routes>
   );
 };
 
 export const RedirectToUserDashboard = () => {
   const { user } = useUser();
-  if (!user) return <Navigate to={`/landing`} replace />;;
+  if (!user) return <Navigate to={`/landing`} replace />;
 
 
 

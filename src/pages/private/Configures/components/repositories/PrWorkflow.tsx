@@ -18,6 +18,7 @@ interface PrWorkflowPropsType {
 
 const PrWorkflow = ({ pr, workflows }: PrWorkflowPropsType) => {
   const [showWorkflow, setShowWorkflow] = useState<boolean>(false);
+  const p = 0;
   return (
     <div className="border-[0.09rem] border-gray-100 hover:border-gray-300 rounded-lg overflow-hidden shadow-sm transition-shadow cursor-pointer bg-white flex flex-col px-3 py-4 gap-2 w-full">
       <div className="flex flex-col sm:flex-row sm:gap-2 sm:justify-between">

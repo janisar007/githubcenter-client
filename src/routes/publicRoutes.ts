@@ -6,7 +6,7 @@ import LandingPage from "@/pages/public/LandingPage/LandingPage";
 export const publicRoutes: RouteConfig[] = [
   {
     id: "signin",
-    path: "/signin",
+    path: "/signin/*",
     component: SignIn,
     exact: true,
   },

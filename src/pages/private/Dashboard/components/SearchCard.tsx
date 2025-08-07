@@ -90,6 +90,8 @@ const CardGrid: React.FC<CardGridProps> = ({
     });
   }, [cards, searchTerm, loading]);
 
+  console.log(filteredCards)
+
   return (
     <div className={`flex flex-col ${className}`}>
       {/* Search and Filter Controls */}
@@ -143,8 +145,9 @@ const CardGrid: React.FC<CardGridProps> = ({
         <div className=" w-[100%]">
           {/* Cards Grid */}
 
-          <div className="text-2xl text-cgray-dtext font-semibold mb-6 mt-1 ">You Github Accounts</div>
-          
+          <div className="text-2xl text-cgray-dtext font-semibold mb-6 mt-1 ">
+            You Github Accounts
+          </div>
 
           {!loading && filteredCards.length > 0 ? (
             <div
@@ -153,7 +156,9 @@ const CardGrid: React.FC<CardGridProps> = ({
               }`}
             >
               <div
-              className={`flex items-center justify-center border-[0.09rem] hover:border-gray-500 rounded-md overflow-hidden cursor-pointer border-dashed border-vol-500 bg-vol-50 font-medium text-cgray-ntext hover:text-cgray-dtext h-[9.5rem] sm:h-auto`} onClick={() => setIsOpen(true)}>
+                className={`flex items-center justify-center border-[0.09rem] hover:border-gray-500 rounded-md overflow-hidden cursor-pointer border-dashed border-vol-500 bg-vol-50 font-medium text-cgray-ntext hover:text-cgray-dtext h-[9.5rem] sm:h-auto`}
+                onClick={() => setIsOpen(true)}
+              >
                 + Add Github
               </div>
               {filteredCards.map((card) => (
@@ -206,7 +211,9 @@ const CardGrid: React.FC<CardGridProps> = ({
 
                         <div className="text-sm capitalize text-cgray-ntext flex items-center gap-1">
                           <MdOutlineDateRange />
-                          <span>{card?.createdAt && formatDate(card?.createdAt)}</span>
+                          <span>
+                            {card?.createdAt && formatDate(card?.createdAt)}
+                          </span>
                         </div>
                       </div>
 
@@ -276,6 +283,19 @@ const CardGrid: React.FC<CardGridProps> = ({
                   </div>
                 );
               })}
+            </div>
+          ) : !loading && filteredCards.length <= 0 ? (
+            <div
+              className={`grid gap-6 ${
+                maxColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-4 "
+              }`}
+            >
+              <div
+                className={`flex items-center justify-center border-[0.09rem] hover:border-gray-500 rounded-md overflow-hidden cursor-pointer border-dashed border-vol-500 bg-vol-50 font-medium text-cgray-ntext hover:text-cgray-dtext h-[9.5rem] sm:h-[8.5rem]`}
+                onClick={() => setIsOpen(true)}
+              >
+                + Add Github
+              </div>
             </div>
           ) : (
             <div className="text-center py-12 text-gray-500">

@@ -4,23 +4,13 @@ import {
    UserButton } from "@clerk/clerk-react";
 import { LuChevronsUpDown } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { Logout } from "../Logout";
 
 
 export const Header = () => {
   // const { signOut } = useClerk();
   const navigate = useNavigate();
 
-  // const handleSignOut = async () => {
-  //   // Clear localStorage
-  //   localStorage.removeItem("userId");
-  //   localStorage.removeItem("email");
-
-  //   // Sign out with Clerk
-  //   await signOut();
-
-  //   // Navigate to sign-in page
-  //   navigate("/signin");
-  // };
 
   return (
     <header className="bg-vol-50 shadow-sm border-b-2 flex items-center">
@@ -39,6 +29,7 @@ export const Header = () => {
           </div>
         </nav>
         <div className="flex items-center space-x-2">
+          {/* <Logout/> */}
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>

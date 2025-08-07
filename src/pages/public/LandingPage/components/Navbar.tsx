@@ -1,14 +1,16 @@
 import { useClerk, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
-
+import { apiService } from "@/api/apiService";
 
 export default function Navbar() {
   const { isSignedIn, user } = useUser();
   const clerkId = user?.id;
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
+
 
   const { signOut } = useClerk();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -92,6 +94,7 @@ export default function Navbar() {
               onClick={() =>
                 navigate(`/${clerkId}/dashboard`, { replace: true })
               }
+              
             >
               Dashboard
             </button>
@@ -115,10 +118,7 @@ export default function Navbar() {
           )}
 
           {/* Hamburger menu */}
-          <button
-            className="md:hidden"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
             <HiOutlineMenuAlt4 className="text-xl" />
           </button>
         </div>
@@ -131,16 +131,13 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col">
-
-            
           <div className="flex justify-between bg-cgray-first py-[1.11rem] items-center">
-
             <div className=" ml-2">
-            <img
-              src="final_gc_logo_inverted_removebg.png"
-              className="lg:h-12 lg:w-24 h-8 w-16 bg-vol-50 rounded-sm lg:rounded-lg"
-            />
-          </div>
+              <img
+                src="final_gc_logo_inverted_removebg.png"
+                className="lg:h-12 lg:w-24 h-8 w-16 bg-vol-50 rounded-sm lg:rounded-lg"
+              />
+            </div>
             <div className="mr-4 flex items-center gap-3 ">
               {isSignedIn ? (
                 <button
@@ -177,6 +174,7 @@ export default function Navbar() {
                   onClick={() =>
                     navigate(`/${clerkId}/dashboard`, { replace: true })
                   }
+                  disabled={!!userId}
                 >
                   Dashboard
                 </button>
@@ -200,13 +198,12 @@ export default function Navbar() {
               )}
 
               <button
-              onClick={() => setMenuOpen(false)}
-              className="mt-2 mr-1 mb-2 cursor-pointer"
-            >
-              <RxCross2 />
-            </button>
+                onClick={() => setMenuOpen(false)}
+                className="mt-2 mr-1 mb-2 cursor-pointer"
+              >
+                <RxCross2 />
+              </button>
             </div>
-            
           </div>
 
           <div className="flex flex-col p-4 gap-4 text-gray-800 font-semibold text-lg">
