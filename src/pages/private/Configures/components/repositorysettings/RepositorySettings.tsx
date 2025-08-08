@@ -96,6 +96,9 @@ const RepositorySettings = () => {
         closeButton: true,
         position: "top-center",
       });
+
+      window.location.reload();
+      
     } catch (error: any) {
       console.log(error);
       addToast({

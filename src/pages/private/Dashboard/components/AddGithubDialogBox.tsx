@@ -72,6 +72,8 @@ const AddGithubDialogBox = ({
         closeButton: true,
         position: "top-center",
       });
+
+      window.location.reload();
     } catch (error) {
       console.error("Unexpected error:", error);
       addToast({
