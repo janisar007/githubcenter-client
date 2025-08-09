@@ -164,6 +164,7 @@ const SidebarTabs = () => {
         closeButton: true,
         position: "top-center",
       });
+      window.location.reload();
     } catch (error) {
       console.error("Unexpected error:", error);
       addToast({
@@ -202,6 +203,7 @@ const SidebarTabs = () => {
         closeButton: true,
         position: "top-center",
       });
+      window.location.reload();
     } catch (error) {
       console.error("Unexpected error:", error);
       addToast({
