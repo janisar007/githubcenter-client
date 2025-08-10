@@ -589,3 +589,8 @@ canvas {
     #e5e5e5
   );
 }
+
+.relative-box {
+  background-image: radial-gradient(rgba(0, 200, 255, 0.05) 1px, transparent 1px);
+  background-size: 4px 4px;
+}

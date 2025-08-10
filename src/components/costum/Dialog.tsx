@@ -52,57 +52,57 @@ const Dialog: React.FC<DialogProps> = ({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // let width = (canvas.width = window.innerWidth);
-    // let height = (canvas.height = window.innerHeight);
-    // const dotSize = 2.5;
-    // const dotSpacing = 6;
-    // const cols = Math.ceil(width / dotSpacing);
-    // const rows = Math.ceil(height / dotSpacing);
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+    const dotSize = 2.5;
+    const dotSpacing = 6;
+    const cols = Math.ceil(width / dotSpacing);
+    const rows = Math.ceil(height / dotSpacing);
 
     // SPEED CONTROL (lower = faster)
-    // const fadeSpeed = 0.02; // Opacity change per frame
+    const fadeSpeed = 0.02; // Opacity change per frame
 
     // Create a 2D array to store opacity and direction (1 = fade in, -1 = fade out)
-    // const dots: { opacity: number; direction: 1 | -1 }[][] = Array.from(
-    //   { length: rows },
-    //   () =>
-    //     Array.from({ length: cols }, () => ({
-    //       opacity: Math.random() * 0.15,
-    //       direction: Math.random() < 0.5 ? 1 : -1,
-    //     }))
-    // );
+    const dots: { opacity: number; direction: 1 | -1 }[][] = Array.from(
+      { length: rows },
+      () =>
+        Array.from({ length: cols }, () => ({
+          opacity: Math.random() * 0.15,
+          direction: Math.random() < 0.5 ? 1 : -1,
+        }))
+    );
 
-    // const resize = () => {
-    //   width = canvas.width = window.innerWidth;
-    //   height = canvas.height = window.innerHeight;
-    // };
+    const resize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
 
-    // window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize);
 
-    // const draw = () => {
-    //   ctx.clearRect(0, 0, width, height);
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
 
-    //   for (let row = 0; row < rows; row++) {
-    //     for (let col = 0; col < cols; col++) {
-    //       const dot = dots[row][col];
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const dot = dots[row][col];
 
-    //       // Update opacity
-    //       dot.opacity += dot.direction * fadeSpeed;
+          // Update opacity
+          dot.opacity += dot.direction * fadeSpeed;
 
-    //       // Reverse direction if limits hit
-    //       if (dot.opacity >= 0.15) {
-    //         dot.opacity = 0.15;
-    //         dot.direction = -1;
-    //       } else if (dot.opacity <= 0) {
-    //         dot.opacity = 0;
-    //         dot.direction = 1;
-    //       }
+          // Reverse direction if limits hit
+          if (dot.opacity >= 0.15) {
+            dot.opacity = 0.15;
+            dot.direction = -1;
+          } else if (dot.opacity <= 0) {
+            dot.opacity = 0;
+            dot.direction = 1;
+          }
 
-    //       ctx.fillStyle = `rgba(255, 255, 255, ${dot.opacity})`;
-    //       ctx.fillRect(col * dotSpacing, row * dotSpacing, dotSize, dotSize);
-    //     }
-    //   }
-    // };
+          ctx.fillStyle = `rgba(255, 255, 255, ${dot.opacity})`;
+          ctx.fillRect(col * dotSpacing, row * dotSpacing, dotSize, dotSize);
+        }
+      }
+    };
 
     let animationId: number;
     const animate = () => {

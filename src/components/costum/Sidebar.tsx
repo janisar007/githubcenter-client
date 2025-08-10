@@ -34,7 +34,7 @@ interface SidebarGroupProps {
 
 interface SidebarOptionProps {
   optionId: string;
-  callbackFunction?: () => void,
+  callbackFunction?: () => void;
   children: React.ReactNode;
   className?: string;
   activeClassName?: string;
@@ -187,7 +187,8 @@ const SidebarOption: React.FC<SidebarOptionProps> = ({
         isActive ? activeClassName : inactiveClassName
       } transition-colors duration-200 w-full text-left`}
       onClick={() => {
-        setSelectedOption(optionId); setSelectedGroup?.("");
+        setSelectedOption(optionId);
+        setSelectedGroup?.("");
         callbackFunction?.();
       }}
     >
@@ -262,14 +263,48 @@ const SidebarOptionWithSubOptions: React.FC<
   onExpandFunction,
 }) => {
   const { selectedOption, setSelectedOption, setSelectedGroup } = useSidebar();
-  const [expanded, setExpanded] = useState(defaultExpanded);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Read expanded groups from URL
+  const expandedGroupsFromUrl =
+    searchParams.get("expandedGroups")?.split(",") || [];
+  const isInitiallyExpanded =
+    expandedGroupsFromUrl.includes(optionId) || defaultExpanded;
+
+  const [expanded, setExpanded] = useState(isInitiallyExpanded);
 
   const isSubOptionActive = subOptions?.some(
     (sub) => sub.optionId === selectedOption
   );
   const isActive = selectedOption === optionId || isSubOptionActive;
 
-  // const Icon = icon.Compo;
+  useEffect(() => {
+    setExpanded(expandedGroupsFromUrl.includes(optionId) || defaultExpanded);
+  }, [searchParams, optionId, defaultExpanded]);
+
+  const handleExpandToggle = () => {
+    const newExpandedState = !expanded;
+    setExpanded(newExpandedState);
+    onExpandFunction?.();
+
+    // Update URL param without removing other params
+    let updatedGroups = new Set(expandedGroupsFromUrl);
+
+    if (newExpandedState) {
+      updatedGroups.add(optionId);
+    } else {
+      updatedGroups.delete(optionId);
+    }
+
+    // Update searchParams object
+    if (updatedGroups.size > 0) {
+      searchParams.set("expandedGroups", Array.from(updatedGroups).join(","));
+    } else {
+      searchParams.delete("expandedGroups");
+    }
+
+    setSearchParams(searchParams, { replace: true });
+  };
 
   return (
     <div>
@@ -280,12 +315,7 @@ const SidebarOptionWithSubOptions: React.FC<
           expanded ? expandedClassName : collapsedClassName
         } transition-colors duration-200 w-full text-left`}
       >
-        <button
-          onClick={() => {
-            setExpanded(!expanded);
-            onExpandFunction?.();
-          }}
-        >
+        <button onClick={handleExpandToggle}>
           <div className="flex items-center gap-2">
             <span className="ml-2">
               {expanded ? (
@@ -295,8 +325,7 @@ const SidebarOptionWithSubOptions: React.FC<
               )}
             </span>
             <span className="flex items-center gap-2">
-              {icon.Compo}
-
+              {icon?.Compo}
               <span>{title}</span>
             </span>
           </div>

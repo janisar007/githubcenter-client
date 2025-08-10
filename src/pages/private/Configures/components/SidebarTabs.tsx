@@ -63,8 +63,6 @@ const SidebarTabs = () => {
   const [groupLoading, setGroupLoading] = useState<boolean>(true);
   const [repoOption, setRepoOption] = useState<any>([]);
 
-  console.log(groupLoading)
-
   const [groupName, setGroupName] = useState<any>();
   const [groupId, setGroupId] = useState<string>();
   const [repoId, setRepoId] = useState<string>();
@@ -131,13 +129,30 @@ const SidebarTabs = () => {
     fetchData();
   }, []);
 
-  const getGroupRepos = (groupId: string) => {
-    const repo_data = selectedRepo.filter(
-      (repo: any) => repo.group_id === groupId
-    );
+  // const getGroupRepos = (groupId: string) => {
+  //   const repo_data = selectedRepo.filter(
+  //     (repo: any) => repo.group_id === groupId
+  //   );
 
-    setGroupRepoData({ ...groupRepoData, [groupId]: repo_data });
-  };
+  //   setGroupRepoData({ ...groupRepoData, [groupId]: repo_data });
+  // };
+
+  useEffect(() => {
+    const getGroupReposTemp = () => {
+      const groupedData: { [key: string]: any[] } = {};
+
+      selectedRepo.forEach((repo: any) => {
+        const gid = repo.group_id;
+        if (!groupedData[gid]) {
+          groupedData[gid] = [];
+        }
+        groupedData[gid].push(repo);
+      });
+
+      setGroupRepoData(groupedData);
+    };
+    getGroupReposTemp();
+  }, [selectedRepo]);
 
   const handleGroupDelete = async (groupId: any) => {
     const reqData = {
@@ -343,7 +358,7 @@ const SidebarTabs = () => {
                     activeClassName="bg-vol-50 text-vol-600"
                     inactiveClassName="hover:bg-vol-50"
                     expandedClassName="bg-vol-50"
-                    onExpandFunction={() => getGroupRepos(grp._id)}
+                    // onExpandFunction={() => getGroupRepos(grp._id)}
                     rightMenuAction={{
                       component: (
                         <DropdownActionMenu
