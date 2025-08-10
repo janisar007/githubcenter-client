@@ -35,6 +35,7 @@ import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 import { FaKey } from "react-icons/fa";
 import PatSettings from "./patsettings/PatSettings";
 import GhSettings from "./githubsettings/GhSettings";
+import AllGroups from "./groups/AllGroups";
 
 export type GroupType = {
   _id: string;
@@ -59,7 +60,7 @@ const SidebarTabs = () => {
   // console.log(groupRepoData);
   // console.log(groupData);
   const [repoLoading, setRepoLoading] = useState<boolean>(false);
-  const [groupLoading, setGroupLoading] = useState<boolean>(false);
+  const [groupLoading, setGroupLoading] = useState<boolean>(true);
   const [repoOption, setRepoOption] = useState<any>([]);
 
   console.log(groupLoading)
@@ -499,7 +500,7 @@ const SidebarTabs = () => {
         {/* Main Content Area */}
         <div className="flex-1 p-6 overflow-auto">
           <SidebarContent optionId="dashboard">
-            <DashboardContent />
+            {!groupLoading && <AllGroups groupData={groupData} />}
           </SidebarContent>
 
           <SidebarContent optionId="repo-1">
