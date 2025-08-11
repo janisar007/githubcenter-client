@@ -44,7 +44,7 @@ const AllGroups = ({ groupData }: any) => {
               </div>
 
               <div className="flex flex-col text-[0.5rem] px-2 py-1">
-                <span className="text-cgray-dtext">Created at</span>
+                <span className="text-cgray-dtext font-medium">Created at</span>
                 <span className="text-cgray-ntext">
                   {`${group?.createdAt && formatDate(group?.createdAt)}`}
                 </span>
