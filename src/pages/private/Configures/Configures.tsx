@@ -6,19 +6,19 @@ import SidebarTabs from "./components/SidebarTabs";
 export default function Configures() {
   return (
     <div className=" ">
-      <TabProvider defaultTab="dashboard" storageKey="activeTab">
+      <TabProvider defaultTab="configures" storageKey="activeTab">
         <Tabs
           className="mb-4 bg-cgray-second border-cgray-border border-[0.09rem]"
           tabListClassName="flex space-x-1"
         >
-          <Tab
+          {/* <Tab
             tabId="dashboard"
             //   className="px-3 py-1 text-sm"
             activeClassName="text-cgray-dtext border-b-[0.09rem] border-gray-800"
             inactiveClassName="bg-none text-cgray-ntext border-none"
           >
             Dashboard
-          </Tab>
+          </Tab> */}
           <Tab
             tabId="configures"
             activeClassName="text-cgray-dtext border-b-[0.09rem] border-gray-800"
@@ -30,17 +30,18 @@ export default function Configures() {
             tabId="settings"
             activeClassName="text-cgray-dtext border-b-[0.09rem] border-gray-800"
             inactiveClassName="bg-none text-cgray-ntext border-none"
+            disabled
           >
             Settings
           </Tab>
         </Tabs>
 
-        <TabPanel
+        {/* <TabPanel
           tabId="dashboard"
           className="p-4 bg-gray-50 rounded"
         >
           dfff
-        </TabPanel>
+        </TabPanel> */}
 
         <TabPanel tabId="configures" className="p-4  rounded">
           <SidebarTabs />
