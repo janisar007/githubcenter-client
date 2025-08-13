@@ -1,54 +1,75 @@
-# React + TypeScript + Vite
+# GitHub Center
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A centralized dashboard to manage all your GitHub repositories, workflows, and pull requests across multiple GitHub accounts — in one place.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Overview
 
-## Expanding the ESLint configuration
+Managing multiple repositories with several GitHub Actions workflows can be time-consuming and tedious.  
+**GitHub Center** eliminates the need to check each repository manually by giving you a single interface to:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- View all repositories across one or more GitHub accounts.
+- Monitor GitHub Actions workflow runs (passed/failed).
+- Track pull request statuses (merged, failed, pending).
+- Quickly navigate directly to the repository in GitHub.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎯 Problem It Solves
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+> Imagine you have 20 repositories, each with 5+ workflows.  
+> Some workflows fail, some pass, and pull requests may be pending or merged.  
+> Normally, you'd open each repository daily to check them one by one.  
+> **GitHub Center** automates this monitoring process, saving hours of manual work.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## ✨ Features
+
+- **Multi-Account Support** — Connect and manage multiple GitHub accounts.
+- **Centralized Repo Dashboard** — View all repositories in one place.
+- **Workflow Monitoring** — Instantly see which workflows passed or failed.
+- **Pull Request Tracker** — Identify failed or pending PRs that need action.
+- **Repository Grouping** — Organize repos into custom groups for better management.
+- **Direct GitHub Navigation** — One click to open the repo or PR in GitHub.
+- **Secure Token Storage** —  
+  - Personal Access Tokens (PATs) are encrypted and stored securely on our servers.
+  - Tokens are **never** sent back to the browser after saving.
+  - Backend token handling code is open source for transparency.
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend**  
+- React.js  
+- Tailwind CSS  
+- Shadcn/UI (if used)  
+
+**Backend**  
+- Node.js  
+- Express.js  
+- MongoDB  
+
+**Integrations**  
+- GitHub REST & GraphQL APIs  
+
+**Security**  
+- Encrypted Personal Access Token storage  
+- HTTPS  
+
+---
+
+## 📸 Screenshots / Demo
+
+> _(Insert a few screenshots of your dashboard, workflow view, PR tracker, grouping interface.)_
+
+---
+
+## ⚙️ Installation & Setup
+
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/janisar007/githubcenter-client.git
+   cd githubcenter-client
