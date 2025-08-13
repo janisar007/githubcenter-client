@@ -36,6 +36,8 @@ import { FaKey } from "react-icons/fa";
 import PatSettings from "./patsettings/PatSettings";
 import GhSettings from "./githubsettings/GhSettings";
 import AllGroups from "./groups/AllGroups";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 
 export type GroupType = {
   _id: string;
@@ -51,6 +53,9 @@ const SidebarTabs = () => {
   const userId = getLocalStorageItem("userId");
   const username = useQueryParam("username");
   const { addToast } = useToast();
+  const {user} = useUser();
+
+  const navigate = useNavigate();
 
   const [selectedRepo, setSelectedRepo] = useState<Repository[]>([]);
   const [groupData, setGroupData] = useState<GroupType[]>([]);
@@ -232,6 +237,11 @@ const SidebarTabs = () => {
     }
   };
 
+  const handleRedirect = () => {
+
+    navigate(`/${user?.id}/configures?username=${username}&userId=${userId}&activeTab=configures&appSection=dashboard&groupName=dashboard`)
+  }
+
   return (
     <div className="relative">
       {/* Mobile sidebar toggle button */}
@@ -309,6 +319,11 @@ const SidebarTabs = () => {
           <SidebarGroup
             title="Groups"
             collapsible
+            action= {{
+              name: "via all",
+              onClick: () => handleRedirect()
+              // className: ""
+            }}
             defaultCollapsed={false}
             rightMenuAction={{
               component: (

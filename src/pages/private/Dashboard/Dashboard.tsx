@@ -52,8 +52,8 @@ const Dashboard = () => {
             onCardClick={handleCardClick}
             className="max-w-[84rem] mx-auto bg-white"
             cardClassName="cursor-pointer border border-vol-200"
-            searchPlaceholder="Search projects..."
-            emptyMessage="No matching projects found"
+            searchPlaceholder="Search accounts..."
+            emptyMessage="No matching accoiunt found"
           />
         }
       </div>

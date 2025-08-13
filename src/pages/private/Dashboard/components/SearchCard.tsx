@@ -308,7 +308,9 @@ const CardGrid: React.FC<CardGridProps> = ({
       <Dialog
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="Add Github Account"
+        title={
+          <span>Add Github Account</span>
+          }
         initialFocusRef={inputRef}
         overlayBlur="blur(8px)"
         overlayDarkness="rgba(0, 0, 0, 0.7)"

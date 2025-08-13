@@ -87,7 +87,9 @@ const AddGithubDialogBox = ({
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-2 bg-white rounded-lg">
+    <div className="max-w-2xl mx-auto p-2 bg-white rounded-lg flex flex-col gap-2">
+      <span className="text-[0.70rem] leading-[1rem] mb-4 text-blue-600">🔒 Your Personal Access Token (PAT) is encrypted and securely stored on our servers. We never send it to your browser after saving. The backend code handling this is <span onClick={() => window.open("https://github.com/janisar007/github-center-api", "_blank")} className="text-blue-800 font-semibold underline hover:text-blue-700 cursor-pointer">open source </span>for full transparency.</span>
+        
       <Form<UserFormData>
         fields={userFormFields}
         onSubmit={handleSubmit}

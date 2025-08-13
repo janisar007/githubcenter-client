@@ -27,6 +27,10 @@ interface SidebarGroupProps {
     onClick: (e: React.MouseEvent) => void;
     className?: string;
   };
+  action?: {
+    name?: string,
+    onClick: () => void;
+  };
   rightMenuAction?: {
     component: React.ReactNode;
   };
@@ -128,6 +132,7 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
   className = "mb-4 border-b-[0.09rem] pb-4",
   titleClassName = "text-gray-600 uppercase text-[0.65rem] font-bold px-2 py-2 flex items-center justify-start gap-[0.25rem] hover:bg-gray-50",
   contentClassName = "mt-1",
+  action,
   rightAction,
   rightMenuAction,
 }) => {
@@ -136,9 +141,15 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
   return (
     <div className={className}>
       <div className="flex items-center justify-between mr-[0.6rem]">
-        <div
+
+        <div className="flex items-center gap-1">
+           <div
           className={` ${!collapsible && "ml-[1.21rem]"} ${titleClassName}`}
-          onClick={() => collapsible && setCollapsed(!collapsed)}
+          onClick={() => {
+            collapsible && setCollapsed(!collapsed);
+            action?.onClick();
+
+          }}
           style={{ cursor: collapsible ? "pointer" : "default" }}
         >
           {collapsible && (
@@ -146,8 +157,18 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
               {collapsed ? <RiArrowRightSFill /> : <RiArrowDownSFill />}
             </span>
           )}
-          <span>{title}</span>
+          <span className="flex items-center gap-2">
+            <span>{title}</span>
+          </span>
         </div>
+            {action?.name && <span onClick={() => {
+            action?.onClick();
+            window.location.reload();
+
+          }} className="lowercase text-xs cursor-pointer hover:underline hover:text-blue-700">{action?.name}</span>}
+
+        </div>
+       
 
         {rightAction && (
           <span
