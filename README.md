@@ -73,3 +73,15 @@ Managing multiple repositories with several GitHub Actions workflows can be time
    ```bash
    git clone https://github.com/janisar007/githubcenter-client.git
    cd githubcenter-client
+
+2. **Install dependencies**  
+   ```bash
+   npm install
+
+3. **Create .env.local file**  
+   ```bash
+   VITE_API_BASE_URL=<backend url (http://localhost:5000/api/)>
+   VITE_CLERK_FRONTEND_API=<clerk-frontend-api (it stats with pk_test)>
+
+4. **To Set up backend go to**  
+   [Backend](https://github.com/janisar007/github-center-api)
