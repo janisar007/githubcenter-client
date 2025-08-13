@@ -64,7 +64,8 @@ Managing multiple repositories with several GitHub Actions workflows can be time
 
 ## 📸 Screenshots / Demo
 
-> _(Insert a few screenshots of your dashboard, workflow view, PR tracker, grouping interface.)_
+![Landing View](readme/landing.png)
+![Features View](readme/features.png)
 
 ---
 
