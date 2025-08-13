@@ -45,7 +45,7 @@ Managing multiple repositories with several GitHub Actions workflows can be time
 **Frontend**  
 - React.js  
 - Tailwind CSS  
-- Shadcn/UI (if used)  
+- Typescript 
 
 **Backend**  
 - Node.js  
@@ -53,11 +53,12 @@ Managing multiple repositories with several GitHub Actions workflows can be time
 - MongoDB  
 
 **Integrations**  
-- GitHub REST & GraphQL APIs  
+- GitHub REST API  
 
 **Security**  
 - Encrypted Personal Access Token storage  
-- HTTPS  
+- HTTPS
+- [Clerk](https://clerk.com/docs/quickstarts/react) Authentication
 
 ---
 
@@ -83,5 +84,8 @@ Managing multiple repositories with several GitHub Actions workflows can be time
    VITE_API_BASE_URL=<backend url (http://localhost:5000/api/)>
    VITE_CLERK_FRONTEND_API=<clerk-frontend-api (it stats with pk_test)>
 
-4. **To Set up backend go to**  
+4. **To Set up clerk authentication visit**  
+   [Clerk Authentication](https://clerk.com/docs/quickstarts/react)
+
+5. **To Set up backend go to**  
    [Backend](https://github.com/janisar007/github-center-api)
