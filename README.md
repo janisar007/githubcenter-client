@@ -64,8 +64,9 @@ Managing multiple repositories with several GitHub Actions workflows can be time
 
 ## 📸 Screenshots / Demo
 
-![Landing View](readme/landing.png)
-![Features View](readme/features.png)
+![Landing View](public/readme/landing.png)
+![Features View](public/readme/features.png)
+![Accounts View](public/readme/accounts.png)
 
 ---
 
