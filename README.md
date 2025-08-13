@@ -91,3 +91,12 @@ Managing multiple repositories with several GitHub Actions workflows can be time
 
 5. **To Set up backend go to**  
    [Backend](https://github.com/janisar007/github-center-api)
+
+
+## 📜 License
+All Rights Reserved © 2025 Janisar Akhtar
+
+This repository and its contents are the property of Janisar Akhtar.
+
+You are free to view, learn and use from the source code, but commercial use is strictly prohibited.
+Unauthorized use will result in legal action under applicable copyright laws.
