@@ -202,7 +202,7 @@ const LandingPage = () => {
                     the code, learn how it works, or contribute to make it even
                     better.
                   </p>
-                  <button className="border hover:border-cgray-dtext hover:bg-cgray-first hover:text-cgray-dtext hover:font-medium transition-colors duration-300 rounded-sm px-[0.6rem] text-sm py-2 flex items-center justify-center gap-2 cursor-pointer">
+                  <button className="border hover:border-cgray-dtext hover:bg-cgray-first hover:text-cgray-dtext hover:font-medium transition-colors duration-300 rounded-sm px-[0.6rem] text-sm py-2 flex items-center justify-center gap-2 cursor-pointer" onClick={() => window.open("https://github.com/janisar007/githubcenter-client", "_blank")}>
                     <span>Github</span>
                     <FaRegArrowAltCircleRight />
                   </button>

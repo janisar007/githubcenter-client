@@ -6,7 +6,6 @@ import {
   SidebarContent,
   // useSidebar
 } from '@/components/costum/Sidebar'; // Assuming the sidebar component is in a separate file
-import SelectRepos from './SelectRepos';
 
 const SidebarTab = () => {
   return (
@@ -198,7 +197,6 @@ const SidebarTab = () => {
 // Content Components
 const DashboardContent = () => (
   <div className="bg-white p-6 rounded-lg shadow">
-    <SelectRepos/>
     <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
     <p>Welcome to your dashboard. Here's an overview of your activities.</p>
     <div className="mt-4 grid grid-cols-3 gap-4">

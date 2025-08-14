@@ -13,10 +13,17 @@ export const Header = () => {
 
 
   return (
-    <header className="bg-vol-50 shadow-sm border-b-2 flex items-center">
-      <div className="ml-4 h-[75px] w-[75px] flex items-center">
+    <header className="bg-vol-50 shadow-sm border-b-2 flex items-center px-2 lg:px-4 py-[0.65rem]">
+      <div className="">
+            <img
+            onClick={() => navigate("/landing")}
+              src="/final_gc_logo_inverted_removebg.png"
+              className="cursor-pointer lg:h-12 lg:w-24 lg:ml-7 h-8 w-16 bg-vol-50 rounded-sm lg:rounded-lg border"
+            />
+          </div>
+      {/* <div className="ml-4 h-[75px] w-[75px] flex items-center">
         <img src="/final_gc_logo_inverted_removebg.png" alt="loading" className="h-[30px] w-[220px] cursor-pointer" onClick={() => navigate("/landing")} />
-      </div>
+      </div> */}
       <div className="w-full px-4 py-4 flex justify-between items-center">
         <nav className="flex space-x-4">
           

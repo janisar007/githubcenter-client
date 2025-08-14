@@ -320,7 +320,7 @@ const SidebarTabs = () => {
             title="Groups"
             collapsible
             action= {{
-              name: "via all",
+              name: "Via all",
               onClick: () => handleRedirect()
               // className: ""
             }}

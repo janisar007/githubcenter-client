@@ -165,7 +165,7 @@ const SidebarGroup: React.FC<SidebarGroupProps> = ({
             action?.onClick();
             window.location.reload();
 
-          }} className="lowercase text-xs cursor-pointer hover:underline hover:text-blue-700">{action?.name}</span>}
+          }} className="text-xs cursor-pointer hover:underline text-blue-800 hover:text-blue-700">{action?.name}</span>}
 
         </div>
        
@@ -269,7 +269,7 @@ const SidebarOptionWithSubOptions: React.FC<
   icon,
   subOptions,
   defaultExpanded = false,
-  className = "px-3 py-2 text-sm rounded flex items-center font-medium justify-between mb-[0.10rem]",
+  className = "px-3 py-2 text-sm text-cgray-dtext rounded flex items-center font-medium justify-between mb-[0.10rem]",
   activeClassName = "bg-gray-100 text-gray-800",
   inactiveClassName = "text-gray-600 hover:bg-gray-50",
   expandedClassName = "bg-gray-50",
