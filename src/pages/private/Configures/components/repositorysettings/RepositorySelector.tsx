@@ -10,6 +10,7 @@ export interface Repository {
   visibility: number;
   repo_updated_at: string;
   is_selected?: boolean;
+  _id?: boolean;
 }
 
 interface RepositorySelectorProps {
@@ -50,6 +51,10 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   const [selectedRepos, setSelectedRepos] =
     useState<Repository[]>(initiallySelected);
 
+  const [removedRepo, setRemovedRepo] =
+    useState<any>([]);
+
+
   useEffect(() => {
     setSelectedRepos(initiallySelected);
   }, [initiallySelected]);
@@ -79,7 +84,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
       const isSelected = prev.some((r) => r.repo_id === repo.repo_id);
       const newSelection = isSelected
         ? prev.filter((r) => r.repo_id !== repo.repo_id)
-        : [...prev, repo];
+        : [repo, ...prev];
 
       onSelectionChange?.(newSelection);
       return newSelection;
@@ -88,6 +93,13 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
 
   // Remove selected repo
   const removeSelectedRepo = (repoId: number) => {
+    setRemovedRepo((prev:any) => {
+
+      const newRemoved = selectedRepos.find((r) => r._id && r.repo_id === repoId)
+
+      return newRemoved ? [newRemoved, ...prev] : prev
+
+    })
     setSelectedRepos((prev) => {
       const newSelection = prev.filter((r) => r.repo_id !== repoId);
       onSelectionChange?.(newSelection);
@@ -115,7 +127,21 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
           </div>
 
           <div>
-            <div className="font-medium text-cgray-dtext">{repo.repo_name}</div>
+            <div className="flex gap-2">
+              <div className="font-medium text-cgray-dtext">{repo.repo_name}</div>
+
+              
+              {!repo?._id &&
+
+              <div className="flex items-center justify-center">
+
+                <span className="text-[0.50rem] bg-green-100 text-green-500 rounded-sm py-[0.20rem] px-1">Just added</span>
+
+              </div>
+              
+              }
+
+            </div>
             {showRepoDetails && repo.description && (
               <div className="text-xs text-gray-600 mt-1">
                 {repo.description}
@@ -135,6 +161,9 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
       </button>
     </div>
   );
+
+  // console.log(selectedRepos)
+  console.log(removedRepo)
 
   return (
     <div className={className}>
