@@ -3,36 +3,43 @@ import store from "./store/store";
 import { AppRoutes } from "./routes/AppRoutes";
 import { ToastProvider } from "./components/costum/Toast/ToastContext";
 import { OverlayProvider } from "@react-aria/overlays";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { apiService } from "./api/apiService";
-// const AppContent: React.FC = () => {
-//   const { initializing } = useSelector((state: RootState) => state.auth);
+import { Trefoil } from "ldrs/react";
+import "ldrs/react/Trefoil.css";
 
-//   console.log(initializing)
+const GlobalLoader = () => (
+  <div className="w-full h-screen flex flex-col items-center justify-center bg-white">
+    <Trefoil
+      size="140"
+      stroke="7"
+      strokeLength="0.15"
+      bgOpacity="0.1"
+      speed="2.2"
+      color="#4604AE"
+    />
+    <div className="flex items-center gap-1 font-bold">
+      <span className="text-vol-300">Github</span>
+      <span className="text-vol-950">Center</span>
+    </div>
+  </div>
+);
 
-//   return (
-//     <>
-//       <GlobalLoader loading={initializing} />
-//       {!initializing && <AppRoutes />}
-//     </>
-//   );
-// };
-
-const AppInitializer = () => {
-  const { isSignedIn, user } = useUser();
-  console.log(isSignedIn)
-
-  useEffect(() => {
-
-    if(isSignedIn != undefined && isSignedIn === false) {
-      localStorage.clear();
-    }
-
-  }, [isSignedIn])
+const AppInitializer = ({ onInitDone }: any) => {
+  const { isSignedIn, user, isLoaded } = useUser(); // isLoaded ensures Clerk has finished loading
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const init = async () => {
+      if (!isLoaded) return; // Wait until Clerk finishes
+      if (isSignedIn === false) {
+        localStorage.clear();
+        setLoading(false);
+        onInitDone();
+        return;
+      }
+
       if (isSignedIn && user) {
         try {
           const userInfo = await apiService.getUserInfo(
@@ -42,31 +49,36 @@ const AppInitializer = () => {
           if (userInfo?.data?._id) {
             localStorage.setItem("userId", userInfo.data._id);
             localStorage.setItem("email", userInfo.data.email);
-            // sessionStorage.setItem("userId", userInfo.data._id);
-            // sessionStorage.setItem("email", userInfo.data.email);
           }
         } catch (err) {
           console.error("Error fetching initial data:", err);
         }
       }
+      setLoading(false);
+      onInitDone();
     };
 
     init();
-  }, [isSignedIn, user]);
+  }, [isSignedIn, user, isLoaded, onInitDone]);
 
-  return null;
+  return loading ? <GlobalLoader /> : null;
 };
 
 const App = () => {
+  const [initDone, setInitDone] = useState(false);
+
   return (
     <Provider store={store}>
-      <div className="App ">
-        <AppInitializer/>
-        <OverlayProvider>
-          <ToastProvider>
-            <AppRoutes />
-          </ToastProvider>
-        </OverlayProvider>
+      <div className="App">
+        {!initDone && <GlobalLoader />}
+        <AppInitializer onInitDone={() => setInitDone(true)} />
+        {initDone && (
+          <OverlayProvider>
+            <ToastProvider>
+              <AppRoutes />
+            </ToastProvider>
+          </OverlayProvider>
+        )}
       </div>
     </Provider>
   );

@@ -12,9 +12,9 @@ import { useUser } from "@clerk/clerk-react";
 
 const LandingPage = () => {
   const [heroLoaded, setHeroLoaded] = useState(false);
-  const {user} = useUser();
+  const { user } = useUser();
   const clerkId = user?.id;
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const featureData = [
     {
@@ -79,15 +79,19 @@ const LandingPage = () => {
 
   if (!heroLoaded) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-white">
+      <div className="w-full h-screen flex flex-col items-center justify-center bg-white">
         <Trefoil
-          size="170"
+          size="140"
           stroke="7"
           strokeLength="0.15"
           bgOpacity="0.1"
           speed="2.2"
           color="#4604AE"
         />
+        <div className="flex items-center gap-1 font-bold">
+          <span className="text-vol-300">Github</span>
+          <span className="text-vol-950">Center</span>
+        </div>
       </div>
     );
   }
