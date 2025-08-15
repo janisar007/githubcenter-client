@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FiSearch, FiX, FiCheck, FiGithub, FiStar } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
+import { NotFoundComponent } from "@/components/costum/Missing/NotFoundComponent";
+import { Skeleton } from "@/components/costum/Skeleton";
 export interface Repository {
   repo_id: number;
   node_id: string;
@@ -15,6 +17,7 @@ export interface Repository {
 
 interface RepositorySelectorProps {
   allRepositories: Repository[];
+  loading: boolean;
   initiallySelected?: Repository[];
   onSelectionChange?: (selected: Repository[]) => void;
   className?: string;
@@ -34,6 +37,7 @@ interface RepositorySelectorProps {
 
 const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   allRepositories,
+  loading,
   initiallySelected = [],
   onSelectionChange,
   className = "flex gap-4 h-full ",
@@ -51,9 +55,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   const [selectedRepos, setSelectedRepos] =
     useState<Repository[]>(initiallySelected);
 
-  const [removedRepo, setRemovedRepo] =
-    useState<any>([]);
-
+  const [removedRepo, setRemovedRepo] = useState<any>([]);
 
   useEffect(() => {
     setSelectedRepos(initiallySelected);
@@ -93,13 +95,13 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
 
   // Remove selected repo
   const removeSelectedRepo = (repoId: number) => {
-    setRemovedRepo((prev:any) => {
+    setRemovedRepo((prev: any) => {
+      const newRemoved = selectedRepos.find(
+        (r) => r._id && r.repo_id === repoId
+      );
 
-      const newRemoved = selectedRepos.find((r) => r._id && r.repo_id === repoId)
-
-      return newRemoved ? [newRemoved, ...prev] : prev
-
-    })
+      return newRemoved ? [newRemoved, ...prev] : prev;
+    });
     setSelectedRepos((prev) => {
       const newSelection = prev.filter((r) => r.repo_id !== repoId);
       onSelectionChange?.(newSelection);
@@ -128,23 +130,23 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
 
           <div>
             <div className="flex gap-2">
-              <div className="font-medium text-cgray-dtext">{repo.repo_name}</div>
-
-              
-              {!repo?._id &&
-
-              <div className="flex items-center justify-center">
-
-                <span className="text-[0.50rem] bg-green-100 text-green-500 rounded-sm py-[0.20rem] px-1">Just added</span>
-
+              <div className="font-medium text-cgray-dtext">
+                {repo.repo_name}
               </div>
-              
-              }
 
+              {!repo?._id && (
+                <div className="flex items-center justify-center">
+                  <span className="text-[0.50rem] bg-green-100 text-green-500 rounded-sm py-[0.20rem] px-1">
+                    Just added
+                  </span>
+                </div>
+              )}
             </div>
             {showRepoDetails && repo.description && (
-              <div className="text-xs text-gray-600 mt-1">
-                {repo.description}
+              <div className="w-full text-xs text-gray-600 mt-1 wrap-normal">
+                {/* {repo.description} */}
+
+                {repo.description.length > 25 ? repo.description.slice(0, 25) + "..." : repo.description}
               </div>
             )}
           </div>
@@ -163,7 +165,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
   );
 
   // console.log(selectedRepos)
-  console.log(removedRepo)
+  console.log(removedRepo);
 
   return (
     <div className={className}>
@@ -184,7 +186,28 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
           />
         </div>
 
-        {filteredRepos?.length > 0 ? (
+        {loading ? (
+          <div className="custom-scrollbar mt-2 overflow-y-auto max-h-[calc(100%-7.8rem)] sm:max-h-[calc(100%-7.8rem)] border-cgray-border border bg-white  p-2 rounded-lg even-shadow">
+            {[1, 2, 3, 4]?.map((e) => {
+              return (
+                <div key={e} className=" flex gap-3 border rounded-lg p-3 mb-3">
+                  <Skeleton className="mt-3" width="4%" height={24} />
+
+                  <div className="mb-2 w-full">
+                    <Skeleton variant="text" className="mb-2" width="40%" />
+
+                    <div className="flex flex-col gap-1">
+                      <Skeleton variant="text" className="" width="70%" />
+                      <Skeleton variant="text" className="" width="30%" />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : filteredRepos?.length === 0 ? (
+          <NotFoundComponent />
+        ) : (
           <div className="custom-scrollbar mt-2 overflow-y-auto max-h-[calc(100%-7.8rem)] sm:max-h-[calc(100%-7.8rem)] border-cgray-border border bg-white  p-2 rounded-lg even-shadow">
             {filteredRepos?.length > 0 &&
               filteredRepos?.map((repo) => (
@@ -196,9 +219,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
                   onClick={() => toggleRepoSelection(repo)}
                 >
                   <div className="flex items-center">
-                    {renderRepoIcon
-                      ? renderRepoIcon(repo)
-                      : defaultRepoIcon()}
+                    {renderRepoIcon ? renderRepoIcon(repo) : defaultRepoIcon()}
                     <div className="flex-1">
                       <div className="font-medium text-cgray-dtext">
                         {repo.repo_name}
@@ -230,8 +251,6 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
                 </div>
               ))}
           </div>
-        ) : (
-          <div className="text-gray-500 pl-5 py-4">No repository found</div>
         )}
       </div>
 
@@ -247,20 +266,31 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
         </div>
 
         <div className={selectedContainerClassName}>
-          {selectedRepos.length === 0 ? (
+          {loading ? (
+            <div className="mt-2">
+              {[1, 2, 3, 4, 5].map((e) => {
+                return (
+                  <div className="flex items-center gap-4 mb-10">
+                    <Skeleton className="" width={26} height={26} />
+                    <Skeleton variant="text" className="" width="50%" />
+                  </div>
+                );
+              })}
+            </div>
+          ) : selectedRepos.length === 0 ? (
             <div className="text-gray-500 text-center py-8">
               No repositories selected yet
             </div>
           ) : (
-            selectedRepos.map((repo) =>
-              renderSelectedRepo
+            selectedRepos.map((repo) => {
+              return renderSelectedRepo
                 ? renderSelectedRepo(repo, () =>
                     removeSelectedRepo(repo.repo_id)
                   )
                 : defaultSelectedRepo(repo, () =>
                     removeSelectedRepo(repo.repo_id)
-                  )
-            )
+                  );
+            })
           )}
         </div>
       </div>

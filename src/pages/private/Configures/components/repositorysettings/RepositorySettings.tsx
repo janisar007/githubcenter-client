@@ -16,7 +16,7 @@ const RepositorySettings = () => {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [selectedRepos, setSelectedRepos] = useState<Repository[]>([]);
 
-  const [repoLoading, setRepoLoading] = useState<boolean>(false);
+  const [repoLoading, setRepoLoading] = useState<boolean>(true);
   const { addToast } = useToast();
   console.log(repoLoading)
 
@@ -115,6 +115,7 @@ const RepositorySettings = () => {
     <div className="h-screen p-">
       <RepositorySelector
         allRepositories={repos}
+        loading={repoLoading}
         initiallySelected={selectedRepos}
         onSelectionChange={setSelectedRepos}
         className="h-[63%] overflow-auto rounded-lg flex flex-col sm:flex-row gap-14 sm:gap-8 px-4 py-2 hide-scrollbar sm:show-scrollbar"
@@ -130,7 +131,7 @@ const RepositorySettings = () => {
         showRepoDetails={true}
       />
 
-      <button onClick={handleSave} className="blue-button mt-2">
+      <button disabled={repoLoading} onClick={handleSave} className="blue-button mt-2">
         Save Selection
       </button>
 

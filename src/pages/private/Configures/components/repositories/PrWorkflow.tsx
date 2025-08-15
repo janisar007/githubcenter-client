@@ -18,13 +18,13 @@ interface PrWorkflowPropsType {
 
 const PrWorkflow = ({ pr, workflows }: PrWorkflowPropsType) => {
   const [showWorkflow, setShowWorkflow] = useState<boolean>(false);
-  const p = 0;
+  
   return (
     <div className="border-[0.09rem] border-gray-100 hover:border-gray-300 rounded-lg overflow-hidden shadow-sm transition-shadow cursor-pointer bg-white flex flex-col px-3 py-4 gap-2 w-full">
       <div className="flex flex-col sm:flex-row sm:gap-2 sm:justify-between">
         <div className="flex gap-2 flex-wrap">
           <div className="font-semibold">{`#${pr.number}`}</div>
-          <div className="font-semibold">{pr.title}</div>
+          <div className="font-semibold hover:text-blue-700 underline" onClick={() => window.open(pr?.html_url, "_blank")}>{pr.title}</div>
         </div>
         <div className="mt-2 sm:mt-0">
           <div className="bg-[#238636] text-white rounded-xl px-3 py-[0.30rem] flex items-center justify-center gap-1 text-sm w-fit">

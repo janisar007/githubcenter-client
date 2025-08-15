@@ -1,7 +1,6 @@
 import { Tab, TabPanel, TabProvider, Tabs } from "@/components/costum/Tab";
 import SidebarTabs from "./components/SidebarTabs";
-
-
+import Tooltip from "@/components/costum/Tooltip/Tooltip";
 
 export default function Configures() {
   return (
@@ -26,13 +25,23 @@ export default function Configures() {
           >
             Configures
           </Tab>
+
           <Tab
-            tabId="settings"
+            tabId="analytics"
             activeClassName="text-cgray-dtext border-b-[0.09rem] border-gray-800"
             inactiveClassName="bg-none text-cgray-ntext border-none"
             disabled
           >
-            Settings
+            <Tooltip
+              delay={50}
+              offset={12}
+              content="Comming Soon"
+              position="bottom"
+              tooltipClassName="bg-vol-950 text-white"
+              arrowClassName="bg-vol-950"
+            >
+              <span>Analytics</span>
+            </Tooltip>
           </Tab>
         </Tabs>
 
@@ -47,9 +56,9 @@ export default function Configures() {
           <SidebarTabs />
         </TabPanel>
 
-        <TabPanel tabId="settings" className="p-4 bg-gray-50 rounded">
-          <h2>Settings Content</h2>
-          <p>This is the settings tab content.</p>
+        <TabPanel tabId="analytics" className="p-4 bg-gray-50 rounded">
+          <h2>Analytics Content</h2>
+          <p>This is the Analytics tab content.</p>
         </TabPanel>
       </TabProvider>
     </div>

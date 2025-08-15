@@ -1,3 +1,4 @@
+/* @import "keep-react/css"; */
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -6,8 +7,8 @@
 body {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;       /* You can set 100–900 */
-  font-style: normal;     /* Use 'italic' if needed */
+  font-weight: 400; /* You can set 100–900 */
+  font-style: normal; /* Use 'italic' if needed */
   height: 100%;
 }
 
@@ -75,19 +76,18 @@ html {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-   
 
-  --color-cgray-border: #EBEBEC; /* d*/
-  --color-cgray-first: #FCFCFC; /*first top gary lightest*/
-  --color-cgray-second: #FAFAFB; /* right hand side of side bar gray == second top bar*/
-  --color-cgray-focused: #FFFFFF; /* when focused on the option*/
-  --color-cgray-selected: #ECECEE; /* selected side bar option*/
+  --color-cgray-border: #ebebec; /* d*/
+  --color-cgray-first: #fcfcfc; /*first top gary lightest*/
+  --color-cgray-second: #fafafb; /* right hand side of side bar gray == second top bar*/
+  --color-cgray-focused: #ffffff; /* when focused on the option*/
+  --color-cgray-selected: #ececee; /* selected side bar option*/
 
-  --color-cgray-ntext: #5F5F6F; /*normal text gray == like in second top bar*/
-  --color-cgray-dtext: #2B2B34; /*darker text gray*/
+  --color-cgray-ntext: #5f5f6f; /*normal text gray == like in second top bar*/
+  --color-cgray-dtext: #2b2b34; /*darker text gray*/
 
-  --color-cblue-100: #5F15FE; /*normal toggle blue*/
-  --color-cblue-200: #7DA9E8; /*information blue*/
+  --color-cblue-100: #5f15fe; /*normal toggle blue*/
+  --color-cblue-200: #7da9e8; /*information blue*/
 
   --color-vol-50: #f3f0ff;
   --color-vol-100: #eae5ff;
@@ -100,7 +100,6 @@ html {
   --color-vol-800: #5302d5;
   --color-vol-900: #4604ae;
   --color-vol-950: #280077;
-
 }
 
 :root {
@@ -189,25 +188,20 @@ html {
 
 /* Webkit-based browsers (Chrome, Edge, Safari) */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;              /* width of the entire scrollbar */
-  height: 6px;             /* for horizontal scroll */
+  width: 8px; /* width of the entire scrollbar */
+  height: 6px; /* for horizontal scroll */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #fff;     /* background (scroll space) */
+  background: #fff; /* background (scroll space) */
   border-radius: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #fff;  /* scrollbar color */
+  background-color: #fff; /* scrollbar color */
   border-radius: 8px;
-  border: 2px solid #edf2f7;  /* adds padding and contrast */
+  border: 2px solid #edf2f7; /* adds padding and contrast */
 }
-
-
-
-
-
 
 .blue-button {
   padding: 7px 14px;
@@ -217,25 +211,19 @@ html {
   color: white;
   background: linear-gradient(
     to bottom,
-    #a970ff,     /* light violet top */
-    #7b4dff      /* deep violet bottom */
+    #a970ff,
+    /* light violet top */ #7b4dff /* deep violet bottom */
   );
   border: 1px solid #6c3cff; /* border is a darker shade */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3), /* inner top gloss */
-    0 1px 2px rgba(0, 0, 0, 0.1);           /* subtle outer shadow */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    /* inner top gloss */ 0 1px 2px rgba(0, 0, 0, 0.1); /* subtle outer shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .blue-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #b07dff,
-    #6e3dff
-  );
+  background: linear-gradient(to bottom, #b07dff, #6e3dff);
 }
-
 
 .white-button {
   padding: 7px 14px;
@@ -245,23 +233,18 @@ html {
   color: #333;
   background: linear-gradient(
     to bottom,
-    #ffffff,     /* pure white top */
-    #f0f0f0      /* soft light gray bottom */
+    #ffffff,
+    /* pure white top */ #f0f0f0 /* soft light gray bottom */
   );
   border: 1px solid #d1d1d1; /* light gray border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6), /* inner white gloss */
-    0 1px 2px rgba(0, 0, 0, 0.05);          /* outer shadow */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    /* inner white gloss */ 0 1px 2px rgba(0, 0, 0, 0.05); /* outer shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .white-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #f9f9f9,
-    #e5e5e5
-  );
+  background: linear-gradient(to bottom, #f9f9f9, #e5e5e5);
 }
 
 .red-button {
@@ -272,13 +255,12 @@ html {
   color: #fff;
   background: linear-gradient(
     to bottom,
-    #ff5f5f,     /* light red top */
-    #e03535      /* darker red bottom */
+    #ff5f5f,
+    /* light red top */ #e03535 /* darker red bottom */
   );
   border: 1px solid #cc2b2b; /* red border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3), /* inner gloss */
-    0 1px 2px rgba(0, 0, 0, 0.1);           /* outer shadow */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    /* inner gloss */ 0 1px 2px rgba(0, 0, 0, 0.1); /* outer shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -290,27 +272,20 @@ html {
   color: #ffffff;
   background: linear-gradient(
     to bottom,
-    #f7baba,     /* lighter muted red */
-    #e88f8f      /* soft dull red */
+    #f7baba,
+    /* lighter muted red */ #e88f8f /* soft dull red */
   );
   border: 1px solid #d99b9b; /* muted red border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2), /* subtle gloss */
-    0 1px 2px rgba(0, 0, 0, 0.05);          /* very light shadow */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    /* subtle gloss */ 0 1px 2px rgba(0, 0, 0, 0.05); /* very light shadow */
   cursor: not-allowed;
   opacity: 0.6;
   pointer-events: none;
 }
 
-
 .red-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #ff7a7a,
-    #d62828
-  );
+  background: linear-gradient(to bottom, #ff7a7a, #d62828);
 }
-
 
 .green-button {
   padding: 7px 14px;
@@ -320,25 +295,19 @@ html {
   color: #fff;
   background: linear-gradient(
     to bottom,
-    #5fdc8f,     /* light green top */
-    #2eae60      /* darker green bottom */
+    #5fdc8f,
+    /* light green top */ #2eae60 /* darker green bottom */
   );
   border: 1px solid #249553; /* green border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3), /* inner gloss */
-    0 1px 2px rgba(0, 0, 0, 0.1);           /* outer shadow */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    /* inner gloss */ 0 1px 2px rgba(0, 0, 0, 0.1); /* outer shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .green-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #7fec9f,
-    #249553
-  );
+  background: linear-gradient(to bottom, #7fec9f, #249553);
 }
-
 
 .yellow-button {
   padding: 7px 14px;
@@ -348,25 +317,19 @@ html {
   color: #000;
   background: linear-gradient(
     to bottom,
-    #fff89e,     /* light yellow top */
-    #f7c948      /* deeper yellow bottom */
+    #fff89e,
+    /* light yellow top */ #f7c948 /* deeper yellow bottom */
   );
-  border: 1px solid #e6b100;  /* gold/yellow border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.5), /* top gloss */
-    0 1px 2px rgba(0, 0, 0, 0.1);           /* outer soft shadow */
+  border: 1px solid #e6b100; /* gold/yellow border */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    /* top gloss */ 0 1px 2px rgba(0, 0, 0, 0.1); /* outer soft shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .yellow-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #fffcb0,
-    #e6b100
-  );
+  background: linear-gradient(to bottom, #fffcb0, #e6b100);
 }
-
 
 .orange-button {
   padding: 7px 14px;
@@ -376,23 +339,18 @@ html {
   color: #fff;
   background: linear-gradient(
     to bottom,
-    #ffd4a3,    /* light orange top */
-    #f7941e     /* rich orange bottom */
+    #ffd4a3,
+    /* light orange top */ #f7941e /* rich orange bottom */
   );
-  border: 1px solid #e67300;   /* deeper orange border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.5), /* glossy top */
-    0 1px 2px rgba(0, 0, 0, 0.1);           /* soft outer shadow */
+  border: 1px solid #e67300; /* deeper orange border */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    /* glossy top */ 0 1px 2px rgba(0, 0, 0, 0.1); /* soft outer shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .orange-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #ffe0bd,
-    #e67300
-  );
+  background: linear-gradient(to bottom, #ffe0bd, #e67300);
 }
 
 .even-shadow {
@@ -404,11 +362,13 @@ html {
   /* background-color: white; Ensures shadow visibility */
 }
 
-
 .animated-dotted-overlay {
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0);
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 0
+  );
   background-size: 20px 20px;
   animation: blinkDots 2s infinite alternate;
   pointer-events: auto;
@@ -417,13 +377,22 @@ html {
 
 @keyframes blinkDots {
   0% {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 0
+    );
   }
   50% {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 0);
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.16) 1px,
+      transparent 0
+    );
   }
   100% {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 0
+    );
   }
 }
 
@@ -437,7 +406,6 @@ canvas {
   pointer-events: none; /* So it doesn't block clicks */
 }
 
-
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer and Edge */
@@ -450,7 +418,6 @@ canvas {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
-
 
 .custom-checkbox {
   appearance: none;
@@ -468,7 +435,11 @@ canvas {
 }
 
 .custom-checkbox:checked {
-  background: linear-gradient(to bottom right, #7c3aed, #8b5cf6); /* Purple gradient */
+  background: linear-gradient(
+    to bottom right,
+    #7c3aed,
+    #8b5cf6
+  ); /* Purple gradient */
   border-color: transparent;
 }
 
@@ -477,7 +448,6 @@ canvas {
   font-size: 16px;
   color: white;
 }
-
 
 @keyframes fadeIn {
   from {
@@ -510,8 +480,14 @@ canvas {
 
 /* CSS for animation (add to your global styles) */
 @keyframes fadeInDropDown {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .animate-fadeInDropDown {
   animation: fadeIn 0.2s ease-out forwards;
@@ -521,8 +497,6 @@ canvas {
   border-bottom-style: dashed;
 }
 
-
-
 .black-button {
   padding: 7px 12px;
   border-radius: 8px;
@@ -531,37 +505,26 @@ canvas {
   color: #fff;
   background: linear-gradient(
     to bottom,
-    #2b2b2b,     /* light green top */
-    #1c1c1c      /* darker green bottom */
+    #2b2b2b,
+    /* light green top */ #1c1c1c /* darker green bottom */
   );
   border: 1px solid #141414; /* green border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1), /* inner gloss */
-    0 1px 2px rgba(0, 0, 0, 0.5);           /* outer shadow */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    /* inner gloss */ 0 1px 2px rgba(0, 0, 0, 0.5); /* outer shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .black-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #3a3a3a,
-    #2a2a2a
-  );
+  background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
 }
 
 /* In your global CSS file */
 .text-outline {
-  text-shadow:
-    -0.3px -0.3px 0 #000,  
-     0.3px -0.3px 0 #000,
-    -0.3px  0.3px 0 #000,
-     0.3px  0.3px 0 #000;
+  text-shadow: -0.3px -0.3px 0 #000, 0.3px -0.3px 0 #000, -0.3px 0.3px 0 #000,
+    0.3px 0.3px 0 #000;
   color: #fff;
 }
-
-
-
 
 .start-button {
   padding: 5px 14px;
@@ -571,26 +534,32 @@ canvas {
   color: #333;
   background: linear-gradient(
     to bottom,
-    #ffffff,     /* pure white top */
-    #f0f0f0      /* soft light gray bottom */
+    #ffffff,
+    /* pure white top */ #f0f0f0 /* soft light gray bottom */
   );
   border: 1px solid #4a4a4a; /* light gray border */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6), /* inner white gloss */
-    0 1px 2px rgba(0, 0, 0, 0.05);          /* outer shadow */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    /* inner white gloss */ 0 1px 2px rgba(0, 0, 0, 0.05); /* outer shadow */
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .start-button:hover {
-  background: linear-gradient(
-    to bottom,
-    #f9f9f9,
-    #e5e5e5
-  );
+  background: linear-gradient(to bottom, #f9f9f9, #e5e5e5);
 }
 
 .relative-box {
-  background-image: radial-gradient(rgba(0, 200, 255, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(
+    rgba(0, 200, 255, 0.05) 1px,
+    transparent 1px
+  );
   background-size: 4px 4px;
+}
+
+@keyframes fadeInTooltip {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInTooltip {
+  animation: fadeIn 0.2s ease-out forwards;
 }

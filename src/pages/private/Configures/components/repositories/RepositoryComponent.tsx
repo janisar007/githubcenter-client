@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import PrWorkflow from "./PrWorkflow";
 import { useQueryParam } from "@/hooks/useQueryParam";
 import { apiService } from "@/api/apiService";
+import { Skeleton } from "@/components/costum/Skeleton";
+import { NotFoundComponent } from "@/components/costum/Missing/NotFoundComponent";
 
 interface RepositoryComponentType {
   repo_name: string;
@@ -26,6 +28,7 @@ const RepositoryComponent = ({
   userId,
 }: RepositoryComponentType) => {
   const [prData, setPrData] = useState<PullRequestWithWorkflowsType[]>([]);
+  const [prLoading, setPrLoading] = useState<boolean>(true);
   const groupName = useQueryParam("groupName");
 
   useEffect(() => {
@@ -41,6 +44,7 @@ const RepositoryComponent = ({
       ];
 
       try {
+        setPrLoading(true);
         const get_data = await apiService.getPrWorkflowInfo(
           reposRequest,
           userId,
@@ -49,10 +53,12 @@ const RepositoryComponent = ({
         setPrData(get_data.data?.pullRequests?.[`${username}/${repo_name}`]);
       } catch (error) {
         console.log(error);
+      } finally {
+        setPrLoading(false);
       }
     };
 
-    console.log(userId)
+    console.log(userId);
 
     // setPrData([
     //   {
@@ -454,21 +460,69 @@ const RepositoryComponent = ({
             <span className="bg-gray-100 px-1 rounded-xs">{groupName}</span>
           </span>
         )}
-        <span className="text-2xl md:text-4xl font-bold text-cgray-ntext">
-          {`${repo_name}`}
-        </span>
+
+        <div className="flex">
+          <span
+            onClick={() =>
+              window.open(
+                `https://github.com/${username}/${repo_name}`,
+                "_blank"
+              )
+            }
+            className="text-2xl md:text-4xl font-bold text-cgray-ntext hover:text-blue-700 cursor-pointer hover:underline"
+          >
+            {`${repo_name}`}
+          </span>
+        </div>
       </div>
       <div className="flex w-full overflow-y-auto p-2">
         <div className="w-full lg:w-[65%] gap-2 flex flex-col p-2">
-          {prData.map((prInfo: PullRequestWithWorkflowsType, index: number) => {
-            return (
-              <PrWorkflow
-                key={index}
-                pr={prInfo.pr}
-                workflows={prInfo.workflows}
-              />
-            );
-          })}
+          {prLoading ? (
+            [1, 2, 3, 4, 5]?.map((e) => {
+              return (
+                <div key={e} className="border rounded-lg p-3">
+                  <div className="flex w-full justify-between items-center mb-5">
+                    <Skeleton variant="text" className="" width="7%" />
+                    <Skeleton
+                      variant="circle"
+                      className=""
+                      width={"9%"}
+                      height={20}
+                    />
+                  </div>
+                  <div className="mb-7">
+                    <Skeleton variant="text" className="mb-2" width="70%" />
+
+                    <div className="flex items-center gap-2">
+                      <Skeleton
+                        variant="circle"
+                        className=""
+                        width={30}
+                        height={30}
+                      />
+
+                      <Skeleton variant="text" className="" width="20%" />
+                    </div>
+                  </div>
+                  <Skeleton variant="text" width="17%" className="mb-5" />
+                </div>
+              );
+            })
+          ) : prData.length === 0 ? (
+            <NotFoundComponent />
+          ) : (
+            prData.map(
+              (prInfo: PullRequestWithWorkflowsType, index: number) => {
+                return (
+                  <PrWorkflow
+                    key={index}
+                    pr={prInfo.pr}
+                    workflows={prInfo.workflows}
+                  />
+                );
+              }
+            )
+          )}
         </div>
       </div>
     </div>

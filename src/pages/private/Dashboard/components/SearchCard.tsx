@@ -8,6 +8,8 @@ import Dialog from "@/components/costum/Dialog";
 import AddGithubDialogBox from "./AddGithubDialogBox";
 import { Skeleton } from "@/components/costum/Skeleton";
 import { formatDate } from "@/utils/tools";
+import VideoDialogBox from "./VideoDialogBox";
+import Tooltip from "@/components/costum/Tooltip/Tooltip";
 
 interface Card {
   userId: string;
@@ -51,6 +53,9 @@ const CardGrid: React.FC<CardGridProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef<any>(null);
+
+  const [isVidOpen, setIsVidOpen] = useState(false);
+  const inputVidRef = useRef<any>(null);
 
   const [searchTerm, setSearchTerm] = useState("");
   //   const [favoritesOnly, setFavoritesOnly] = useState(false);
@@ -185,9 +190,18 @@ const CardGrid: React.FC<CardGridProps> = ({
                           </div>
 
                           <div className="flex items-center gap-5">
+                            <Tooltip
+                                          delay={50}
+                                          offset={12}
+                                          content="Comming Soon"
+                                          position="top"
+                                          tooltipClassName="bg-vol-950 text-white"
+                                          arrowClassName="bg-vol-950"
+                                        >
                             <div className="text-xl text-cgray-ntext">
                               <IoIosAnalytics />
                             </div>
+                            </Tooltip>
                             <div className="text-cgray-dtext">
                               <BsThreeDots />
                             </div>
@@ -331,7 +345,36 @@ const CardGrid: React.FC<CardGridProps> = ({
           </div>
         }
       >
-        <AddGithubDialogBox />
+        <AddGithubDialogBox setIsVidOpen={setIsVidOpen} />
+      </Dialog>
+
+      <Dialog
+        isOpen={isVidOpen}
+        onClose={() => setIsVidOpen(false)}
+        title={
+          <span>Pat create video</span>
+          }
+        initialFocusRef={inputVidRef}
+        overlayBlur="blur(8px)"
+        overlayDarkness="rgba(0, 0, 0, 0.7)"
+        overlayClassName="transition-opacity duration-300"
+        contentClassName="w-full max-w-xl"
+        headerClassName="hidden"
+        bodyClassName="bg-white"
+        footerClassName="hidden"
+        closeButtonClassName="text-gray-500 hover:text-gray-700"
+        footerContent={
+          <div className="flex justify-end gap-2">
+            {/* <button className="white-button" onClick={() => setIsOpen(false)}>
+              Cancel
+            </button>
+            <button className="blue-button" onClick={() => setIsOpen(false)}>
+              Confirm
+            </button> */}
+          </div>
+        }
+      >
+        <VideoDialogBox />
       </Dialog>
     </div>
   );

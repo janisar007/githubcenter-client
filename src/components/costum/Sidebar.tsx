@@ -209,6 +209,7 @@ const SidebarOption: React.FC<SidebarOptionProps> = ({
       } transition-colors duration-200 w-full text-left`}
       onClick={() => {
         setSelectedOption(optionId);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setSelectedGroup?.("");
         callbackFunction?.();
       }}
@@ -382,6 +383,7 @@ const SidebarOptionWithSubOptions: React.FC<
                 } transition-colors duration-200 w-full text-left cursor-pointer`}
                 onClick={() => {
                   setSelectedOption(subOption.optionId);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                   setSelectedGroup?.(title);
                   subOption.callbackFunction?.();
                 }}

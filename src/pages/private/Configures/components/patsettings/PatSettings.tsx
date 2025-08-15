@@ -10,10 +10,12 @@ import { AlertDialog } from "@/components/costum/AlertDialog/AlertDialog";
 import { useToast } from "@/components/costum/Toast/ToastContext";
 import { GoPencil } from "react-icons/go";
 import RenamePatDialogBox from "./RenamePatDialogBox";
+import { Skeleton } from "@/components/costum/Skeleton";
 
 const PatSettings = () => {
   const [reqPatData, setReqPatData] = useState<any>({});
   const [patData, setPatData] = useState<any>({});
+  const [patLoading, setPatLoading] = useState<boolean>(true);
   const { addToast } = useToast();
 
   const [isPatUpdateOpen, setIsPatUpdateOpen] = useState(false);
@@ -30,6 +32,7 @@ const PatSettings = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setPatLoading(true);
         const reqData = {
           userId,
           ghUsername: username,
@@ -42,6 +45,8 @@ const PatSettings = () => {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setPatLoading(false);
       }
     };
 
@@ -68,7 +73,7 @@ const PatSettings = () => {
         closeButton: true,
         position: "top-center",
       });
-      
+
       window.location.reload();
     } catch (error) {
       console.error("Unexpected error:", error);
@@ -97,45 +102,71 @@ const PatSettings = () => {
 
         {/* Token Card */}
         <div className="bg-white rounded-lg border m-[0.10rem]">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-5 gap-4">
-            {/* Left side: Token Info */}
-            <div className="text-cgray-dtext flex flex-col gap-2">
-              <div className="font-medium flex items-center gap-2 text-sm sm:text-base">
-                <span>{patData?.patName}</span>
-                <span
-                  onClick={() => setIsRenamePatOpen(true)}
-                  className="hover:text-blue-600 cursor-pointer"
+          {patLoading ? (
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-5 gap-4">
+              {/* Left side: Token Info */}
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex items-center gap-2 ">
+                  <Skeleton variant="text" className="" width="17%" />
+                </div>
+                <div className="flex flex-wrap items-center gap-1 ">
+                  <Skeleton variant="text" className="" width="21%" />
+                  <BsDot className="hidden sm:block" />
+                  <Skeleton variant="text" className="" width="21%" />
+                </div>
+              </div>
+
+              {/* Right side: Update Button */}
+
+              <div className="">
+                <button
+                  onClick={() => setIsPatUpdateOpen(true)}
+                  className="blue-button w-full sm:w-auto"
                 >
-                  <GoPencil />
-                </span>
-              </div>
-              <div className="text-xs flex flex-wrap items-center gap-1 text-cgray-ntext">
-                <span>
-                  {`Created at ${
-                    patData?.createdAt && formatDate(patData?.createdAt)
-                  }`}
-                </span>
-                <BsDot className="hidden sm:block" />
-                <span>
-                  {`Updated on ${
-                    patData?.updatedAt && formatDate(patData?.updatedAt)
-                  }`}
-                </span>
+                  Update
+                </button>
               </div>
             </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-5 gap-4">
+              {/* Left side: Token Info */}
+              <div className="text-cgray-dtext flex flex-col gap-2">
+                <div className="font-medium flex items-center gap-2 text-sm sm:text-base">
+                  <span>{patData?.patName}</span>
+                  <span
+                    onClick={() => setIsRenamePatOpen(true)}
+                    className="hover:text-blue-600 cursor-pointer"
+                  >
+                    <GoPencil />
+                  </span>
+                </div>
+                <div className="text-xs flex flex-wrap items-center gap-1 text-cgray-ntext">
+                  <span>
+                    {`Created at ${
+                      patData?.createdAt && formatDate(patData?.createdAt)
+                    }`}
+                  </span>
+                  <BsDot className="hidden sm:block" />
+                  <span>
+                    {`Updated on ${
+                      patData?.updatedAt && formatDate(patData?.updatedAt)
+                    }`}
+                  </span>
+                </div>
+              </div>
 
-            {/* Right side: Update Button */}
+              {/* Right side: Update Button */}
 
-            <div className="">
-              <button
-                onClick={() => setIsPatUpdateOpen(true)}
-                className="blue-button w-full sm:w-auto"
-              >
-                Update
-              </button>
-
+              <div className="">
+                <button
+                  onClick={() => setIsPatUpdateOpen(true)}
+                  className="blue-button w-full sm:w-auto"
+                >
+                  Update
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -174,10 +205,7 @@ const PatSettings = () => {
         closeButtonClassName="text-gray-500 hover:text-gray-700"
         footerContent={<div className="flex justify-end gap-2"></div>}
       >
-        <RenamePatDialogBox
-          patName={patData?.patName}
-          patId={patData?._id}
-        />
+        <RenamePatDialogBox patName={patData?.patName} patId={patData?._id} />
       </Dialog>
 
       {/* Confirmation Alert */}

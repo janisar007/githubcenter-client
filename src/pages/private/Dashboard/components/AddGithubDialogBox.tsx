@@ -34,9 +34,10 @@ const userFormFields: FormField[] = [
 
 // 3. Define form component
 const AddGithubDialogBox = ({
-  initialData,
+  initialData, setIsVidOpen
 }: {
   initialData?: Partial<UserFormData>;
+  setIsVidOpen?: any
 }) => {
   const { addToast } = useToast();
 
@@ -100,6 +101,8 @@ const AddGithubDialogBox = ({
         resetButtonClassName="white-button"
         buttonsContainerClassName="flex space-x-3 justify-end mt-6 col-span-2"
       />
+
+      <div onClick={() => setIsVidOpen(true)} className="text-[0.60rem] text-blue-600 hover:underline cursor-pointer">How to create Personal Access Token (PAT) ?</div>
     </div>
   );
 };
