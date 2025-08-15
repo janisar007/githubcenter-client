@@ -95,7 +95,7 @@ const CardGrid: React.FC<CardGridProps> = ({
     });
   }, [cards, searchTerm, loading]);
 
-  console.log(filteredCards)
+  console.log(filteredCards);
 
   return (
     <div className={`flex flex-col ${className}`}>
@@ -191,16 +191,16 @@ const CardGrid: React.FC<CardGridProps> = ({
 
                           <div className="flex items-center gap-5">
                             <Tooltip
-                                          delay={50}
-                                          offset={12}
-                                          content="Comming Soon"
-                                          position="top"
-                                          tooltipClassName="bg-vol-950 text-white"
-                                          arrowClassName="bg-vol-950"
-                                        >
-                            <div className="text-xl text-cgray-ntext">
-                              <IoIosAnalytics />
-                            </div>
+                              delay={50}
+                              offset={12}
+                              content="Comming Soon"
+                              position="top"
+                              tooltipClassName="bg-vol-950 text-white"
+                              arrowClassName="bg-vol-950"
+                            >
+                              <div className="text-xl text-cgray-ntext">
+                                <IoIosAnalytics />
+                              </div>
                             </Tooltip>
                             <div className="text-cgray-dtext">
                               <BsThreeDots />
@@ -322,9 +322,7 @@ const CardGrid: React.FC<CardGridProps> = ({
       <Dialog
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title={
-          <span>Add Github Account</span>
-          }
+        title={<span>Add Github Account</span>}
         initialFocusRef={inputRef}
         overlayBlur="blur(8px)"
         overlayDarkness="rgba(0, 0, 0, 0.7)"
@@ -351,9 +349,7 @@ const CardGrid: React.FC<CardGridProps> = ({
       <Dialog
         isOpen={isVidOpen}
         onClose={() => setIsVidOpen(false)}
-        title={
-          <span>Pat create video</span>
-          }
+        title={<span>Pat create video</span>}
         initialFocusRef={inputVidRef}
         overlayBlur="blur(8px)"
         overlayDarkness="rgba(0, 0, 0, 0.7)"

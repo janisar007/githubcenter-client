@@ -11,6 +11,8 @@ export const Header = () => {
   // const { signOut } = useClerk();
   const navigate = useNavigate();
 
+  const email = localStorage.getItem("email")
+
 
   return (
     <header className="bg-vol-50 shadow-sm border-b-2 flex items-center px-2 lg:px-4 py-[0.65rem]">
@@ -38,8 +40,9 @@ export const Header = () => {
             <LuChevronsUpDown className="text-cgray-ntext"/>
           </div>
         </nav>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center  justify-center gap-1 space-x-2">
           {/* <Logout/> */}
+          <span className="text-sm font-semibold">{email?.split("@")[0]}</span>
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>

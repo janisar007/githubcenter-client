@@ -509,7 +509,7 @@ const RepositoryComponent = ({
               );
             })
           ) : prData.length === 0 ? (
-            <NotFoundComponent />
+            <NotFoundComponent massege={"There might not be any Pull Request in this repository."} />
           ) : (
             prData.map(
               (prInfo: PullRequestWithWorkflowsType, index: number) => {

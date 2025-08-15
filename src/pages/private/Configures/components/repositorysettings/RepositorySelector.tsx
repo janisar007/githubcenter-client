@@ -206,7 +206,7 @@ const RepositorySelector: React.FC<RepositorySelectorProps> = ({
             })}
           </div>
         ) : filteredRepos?.length === 0 ? (
-          <NotFoundComponent />
+          <NotFoundComponent massege={"This account does not contain any repository."} />
         ) : (
           <div className="custom-scrollbar mt-2 overflow-y-auto max-h-[calc(100%-7.8rem)] sm:max-h-[calc(100%-7.8rem)] border-cgray-border border bg-white  p-2 rounded-lg even-shadow">
             {filteredRepos?.length > 0 &&
