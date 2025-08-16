@@ -261,6 +261,28 @@ export const apiService = {
       throw error;
     }
   },
+
+  //----groupapiservices----
+
+  getPrReview: async (
+    userId: string | null,
+    username: string | null,
+    repo:string, pullNumber: number
+  ) => {
+    try {
+      const response = await baseService.get(
+        `/pr/get/review?userId=${userId}&ghUsername=${username}&repo=${repo}&pullNumber=${pullNumber}`
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return error.response.data;
+      }
+      throw error;
+    }
+  },
+
+
   
 
 };
