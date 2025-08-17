@@ -151,3 +151,113 @@ export const statusConstant:any = {
     text_color: "text-[#856404]"
   }
 };
+
+
+export const geminaiData = {
+    "message": "PR review generated successfully",
+    "status": true,
+    "code": 200,
+    "data": {
+        "summary": "This PR introduces a new API endpoint for retrieving pull request reviews and integrates it into the `PrWorkflow` component. The code generally looks good, but there are some areas where improvements can be made, particularly in error handling, naming consistency, and security considerations.",
+        "codeReview": [
+            "Consider adding more descriptive comments to the new `getPrReview` function, explaining its purpose and parameters.",
+            "Implement proper error handling in the `fetchReview` function within the `PrWorkflow` component. Displaying the error to the user would be beneficial.",
+            "Sanitize the `userId`, `username`, `repo`, and `pullNumber` parameters in the `getPrReview` API endpoint to prevent potential security vulnerabilities (e.g., SQL injection).",
+            "Consider adding input validation to the parameters passed to `getPrReview` on the client-side to improve data integrity."
+        ],
+        "testSuggestions": [
+            "Create unit tests for the `getPrReview` function in `apiService.ts`. These tests should cover successful responses, error responses, and different parameter combinations.",
+            "Write integration tests to verify the end-to-end functionality of fetching and displaying pull request reviews in the `PrWorkflow` component.",
+            "Mock the `baseService.get` method in the unit tests for `apiService.ts` to isolate the function being tested.",
+            "Consider adding a loading state to the `PrWorkflow` component while fetching the review to provide better user feedback."
+        ],
+        "fileSpecificComments": [
+            {
+                "path": "src/api/apiService.ts",
+                "line": 267,
+                "side": "RIGHT",
+                "body": "Consider renaming 'getPrReview' to 'fetchPrReview' for better consistency with naming conventions.\n\n**Suggested Code:**\n```ts\nfetchPrReview\n```"
+            },
+            {
+                "path": "src/api/apiService.ts",
+                "line": 273,
+                "side": "RIGHT",
+                "body": "Consider using template literals for constructing the URL to improve readability.\n\n**Suggested Code:**\n```ts\n`/pr/get/review?userId=${userId}&ghUsername=${username}&repo=${repo}&pullNumber=${pullNumber}`\n```"
+            },
+            {
+                "path": "src/api/apiService.ts",
+                "line": 279,
+                "side": "RIGHT",
+                "body": "It's good to return the error data, but consider logging the error on the server side for debugging purposes.\n\n**Suggested Code:**\n```ts\nconsole.error(error); return error.response.data;\n```"
+            },
+            {
+                "path": "src/pages/private/Configures/components/repositories/PrWorkflow.tsx",
+                "line": 23,
+                "side": "RIGHT",
+                "body": "Consider fetching the userId earlier, outside of the component, and passing it in as a prop to avoid repeated lookups.\n\n**Suggested Code:**\n```ts\n// Outside the component:\nconst userId = localStorage.getItem(\"userId\");\n\n// Inside PrWorkflow component:\nconst PrWorkflow = ({ pr, workflows, repo_name, username, userId }: PrWorkflowPropsType) => {\n```"
+            },
+            {
+                "path": "src/pages/private/Configures/components/repositories/PrWorkflow.tsx",
+                "line": 33,
+                "side": "RIGHT",
+                "body": "Add error handling within the `fetchReview` function to inform the user if the review retrieval fails. A simple alert could suffice.\n\n**Suggested Code:**\n```ts\ntry { ... } catch (error) { console.error(error); alert('Failed to fetch review.'); }\n```"
+            },
+            {
+                "path": "src/pages/private/Configures/components/repositories/PrWorkflow.tsx",
+                "line": 31,
+                "side": "RIGHT",
+                "body": "Avoid logging sensitive information like `username` directly to the console in a production environment.\n\n**Suggested Code:**\n```ts\n// Remove or redact console.log(username)\n```"
+            }
+        ],
+        "generalFeedback": [
+            {
+                "path": "GENERAL_FEEDBACK.md",
+                "line": 1,
+                "side": "RIGHT",
+                "body": "Consider adding more descriptive comments to the new `getPrReview` function, explaining its purpose and parameters."
+            },
+            {
+                "path": "GENERAL_FEEDBACK.md",
+                "line": 2,
+                "side": "RIGHT",
+                "body": "Implement proper error handling in the `fetchReview` function within the `PrWorkflow` component. Displaying the error to the user would be beneficial."
+            },
+            {
+                "path": "GENERAL_FEEDBACK.md",
+                "line": 3,
+                "side": "RIGHT",
+                "body": "Sanitize the `userId`, `username`, `repo`, and `pullNumber` parameters in the `getPrReview` API endpoint to prevent potential security vulnerabilities (e.g., SQL injection)."
+            },
+            {
+                "path": "GENERAL_FEEDBACK.md",
+                "line": 4,
+                "side": "RIGHT",
+                "body": "Consider adding input validation to the parameters passed to `getPrReview` on the client-side to improve data integrity."
+            }
+        ],
+        "prDescription": [
+            {
+                "path": "PR_DESCRIPTION.md",
+                "line": 1,
+                "side": "RIGHT",
+                "body": {
+                    "title": "feat: Add PR Review Retrieval",
+                    "summary": "This pull request introduces the ability to retrieve pull request reviews and display them within the repository configuration page.",
+                    "changes": [
+                        "Added a new `getPrReview` API endpoint to fetch pull request review data.",
+                        "Integrated the new API endpoint into the `PrWorkflow` component.",
+                        "Modified the `RepositoryComponent` to pass `repo_name` and `username` props to the `PrWorkflow` component.",
+                        "Added a 'Review PR' button to the `PrWorkflow` component that triggers the review retrieval."
+                    ],
+                    "impact": "This PR allows users to easily retrieve and view PR reviews within the application, improving the code review process. Potential risks include API rate limits and security vulnerabilities related to data handling. Sanitize inputs to avoid injection attacks.",
+                    "followUp": [
+                        "Implement proper error handling and user feedback in the `PrWorkflow` component.",
+                        "Add unit and integration tests to ensure the reliability of the new functionality.",
+                        "Consider adding caching to reduce the number of API calls to fetch reviews.",
+                        "Implement input validation and sanitization for the new API parameters."
+                    ]
+                }
+            }
+        ]
+    }
+}

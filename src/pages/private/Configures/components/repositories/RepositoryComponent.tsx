@@ -6,6 +6,15 @@ import { useQueryParam } from "@/hooks/useQueryParam";
 import { apiService } from "@/api/apiService";
 import { Skeleton } from "@/components/costum/Skeleton";
 import { NotFoundComponent } from "@/components/costum/Missing/NotFoundComponent";
+import { BoxTab } from "@/components/costum/BoxTab/BoxTab";
+import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
+import { TbLayoutSidebarRightExpandFilled } from "react-icons/tb";
+import Summary from "./AiReviewComponents/Summary";
+import CodeReview from "./AiReviewComponents/CodeReview";
+import BetterCodeSuggestions from "./AiReviewComponents/BetterCodeSuggestions";
+import PrDesciption from "./AiReviewComponents/PrDesciption";
+import GeneralFeedback from "./AiReviewComponents/GeneralFeedback";
+import TestSuggestions from "./AiReviewComponents/TestSuggestions";
 
 interface RepositoryComponentType {
   repo_name: string;
@@ -29,7 +38,12 @@ const RepositoryComponent = ({
 }: RepositoryComponentType) => {
   const [prData, setPrData] = useState<PullRequestWithWorkflowsType[]>([]);
   const [prLoading, setPrLoading] = useState<boolean>(true);
+  const [showRightUi, setShowRightUi] = useState<boolean>(false);
+  const [prReviewLoading, setPrReviewLoading] = useState<boolean>(true);
+  const [prReviewData, setPrReviewData] = useState<any>({});
   const groupName = useQueryParam("groupName");
+
+  const [isExpand, setIsExpand] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -452,8 +466,54 @@ const RepositoryComponent = ({
     fetchData();
   }, [repo_name, username]);
 
+  const tabs = [
+    {
+      id: "reviewwithcodesuggestions",
+      label: "Better Code Suggestions",
+      content: (
+        <BetterCodeSuggestions
+          fileSpecificComments={prReviewData.fileSpecificComments}
+        />
+      ),
+      // disabled: true,
+    },
+
+    {
+      id: "prdescription",
+      label: "PR Description",
+      content: (
+        <PrDesciption prDescription={prReviewData?.prDescription?.[0]?.body} />
+      ),
+    },
+
+    {
+      id: "summary",
+      label: "PR Summary",
+      content: <Summary summary={prReviewData.summary} />,
+    },
+    {
+      id: "codereview",
+      label: "Code Review",
+      content: <CodeReview codeReview={prReviewData.codeReview} />,
+    },
+    {
+      id: "testsuggestions",
+      label: "Test Suggestions",
+      content: (
+        <TestSuggestions testSuggestions={prReviewData.testSuggestions} />
+      ),
+    },
+    // {
+    //   id: "generalfeedback",
+    //   label: "General Feedback",
+    //   content: <GeneralFeedback generalFeedback={prReviewData?.generalFeedback}/>,
+    // },
+  ];
+
+  console.log(prReviewData);
+
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full ">
       <div className="flex pl-4 mb-3 flex-col">
         {groupName && (
           <span className="text-cgray-ntext text-sm flex">
@@ -476,7 +536,11 @@ const RepositoryComponent = ({
         </div>
       </div>
       <div className="flex w-full overflow-y-auto p-2">
-        <div className="w-full lg:w-[65%] gap-2 flex flex-col p-2">
+        <div
+          className={`w-full lg:w-[45%] ${
+            isExpand && "hidden"
+          } gap-2 flex flex-col p-2`}
+        >
           {prLoading ? (
             [1, 2, 3, 4, 5]?.map((e) => {
               return (
@@ -509,7 +573,11 @@ const RepositoryComponent = ({
               );
             })
           ) : prData.length === 0 ? (
-            <NotFoundComponent massege={"There might not be any Pull Request in this repository."} />
+            <NotFoundComponent
+              massege={
+                "There might not be any Pull Request in this repository."
+              }
+            />
           ) : (
             prData.map(
               (prInfo: PullRequestWithWorkflowsType, index: number) => {
@@ -518,12 +586,69 @@ const RepositoryComponent = ({
                     key={index}
                     pr={prInfo.pr}
                     workflows={prInfo.workflows}
+                    repo_name={repo_name}
+                    username={username}
+                    setPrReviewData={setPrReviewData}
+                    setPrReviewLoading={setPrReviewLoading}
+                    setShowRightUi={setShowRightUi}
                   />
                 );
               }
             )
           )}
         </div>
+
+        { showRightUi &&
+          <div className={`${!isExpand ? "w-[55%]" : "w-full"}`}>
+            <div className="p-[0.18rem] max-w-4xl mx-auto bg-vol-50 rounded-lg">
+              <div className="w-full flex gap-3  items-center mb-8 mt-4 ml-2 ">
+                <div className="">
+                  {!isExpand ? (
+                    <TbLayoutSidebarRightExpandFilled
+                      className="text-xl cursor-pointer hover:text-vol-800"
+                      onClick={() => setIsExpand(!isExpand)}
+                    />
+                  ) : (
+                    <TbLayoutSidebarLeftExpandFilled
+                      className="text-xl cursor-pointer hover:text-vol-800"
+                      onClick={() => setIsExpand(!isExpand)}
+                    />
+                  )}
+                </div>
+
+                <div className="text-[1.1rem]  font-bold  mr-2">
+                  Code Review - PR Description - Better Code Suggestions{" "}
+                </div>
+              </div>
+
+              {prReviewLoading ? (
+                <div className="w-full bg-white border py-4 px-5 rounded-lg flex flex-col gap-8">
+                  <div className="flex flex-wrap gap-2">
+                    <Skeleton className="" height={45} width="20%" />
+                    <Skeleton className="" height={45} width="30%" />
+                    <Skeleton className="" height={45} width="40%" />
+                    <Skeleton className="" height={45} width="30%" />
+                    <Skeleton className="" height={45} width="35%" />
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Skeleton className="" height={300} width="100%" />
+                  </div>
+                </div>
+              ) : Object.keys(prReviewData).length === 0 ? (
+                <NotFoundComponent />
+              ) : (
+                <BoxTab
+                  items={tabs}
+                  layout="auto"
+                  boxClassName="hover:shadow-md font-medium cursor-pointer"
+                  activeBoxClassName="shadow-md bg-vol-100 text-black"
+                  containerClassName="border p-4 rounded-lg bg-white"
+                  contentClassName="mt-8 bg-vol-50"
+                />
+              )}
+            </div>
+          </div>
+        }
       </div>
     </div>
   );

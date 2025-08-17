@@ -4,28 +4,74 @@ import {
   // alphabetBgColors,
   alphabetColorPalette,
   conclusionConstant,
+  geminaiData,
   statusConstant,
 } from "@/constants/cssConstants";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { useState } from "react";
 import { RiArrowRightSFill } from "react-icons/ri";
 import { RiArrowDownSFill } from "react-icons/ri";
+import { apiService } from "@/api/apiService";
+import Tooltip from "@/components/costum/Tooltip/Tooltip";
 
 interface PrWorkflowPropsType {
   pr: PullRequest;
   workflows: WorkflowRun[] | null;
+  repo_name: string;
+  username: string | null;
+  setPrReviewData: any;
+  setPrReviewLoading: any;
+  setShowRightUi: any;
 }
 
-const PrWorkflow = ({ pr, workflows }: PrWorkflowPropsType) => {
+const PrWorkflow = ({
+  pr,
+  workflows,
+  repo_name,
+  username,
+  setPrReviewData,
+  setPrReviewLoading,
+  setShowRightUi
+}: PrWorkflowPropsType) => {
   const [showWorkflow, setShowWorkflow] = useState<boolean>(false);
-  
+
+  const userId = localStorage.getItem("userId");
+
+  console.log(username);
+
+  const fetchReview = async () => {
+    try {
+      setShowRightUi(true)
+      setPrReviewLoading(true)
+      const getreview = await apiService.getPrReview(
+        userId,
+        username,
+        repo_name,
+        pr.number
+      );
+
+      console.log(getreview);
+      setPrReviewData(getreview.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPrReviewLoading(false);
+    }
+  };
+
   return (
     <div className="border-[0.09rem] border-gray-100 hover:border-gray-300 rounded-lg overflow-hidden shadow-sm transition-shadow cursor-pointer bg-white flex flex-col px-3 py-4 gap-2 w-full">
       <div className="flex flex-col sm:flex-row sm:gap-2 sm:justify-between">
         <div className="flex gap-2 flex-wrap">
           <div className="font-semibold">{`#${pr.number}`}</div>
-          <div className="font-semibold hover:text-blue-700 underline" onClick={() => window.open(pr?.html_url, "_blank")}>{pr.title}</div>
+          <div
+            className="font-semibold hover:text-blue-700 underline"
+            onClick={() => window.open(pr?.html_url, "_blank")}
+          >
+            {pr.title}
+          </div>
         </div>
+
         <div className="mt-2 sm:mt-0">
           <div className="bg-[#238636] text-white rounded-xl px-3 py-[0.30rem] flex items-center justify-center gap-1 text-sm w-fit">
             <span className="text-white">
@@ -85,15 +131,34 @@ const PrWorkflow = ({ pr, workflows }: PrWorkflowPropsType) => {
 
       <div className="flex flex-col gap-5 mt-4">
         <div
-          onClick={() => setShowWorkflow(!showWorkflow)}
-          className={`cursor-pointer font-semibold text-gray-400 ${
-            !showWorkflow ? "text-gray-400" : "text-gray-600"
-          } flex items-center hover:text-gray-600`}
+          className={`cursor-pointer font-semibold  flex items-center w-full  justify-between`}
         >
-          <div>
-            {showWorkflow ? <RiArrowDownSFill /> : <RiArrowRightSFill />}
+          <div
+            onClick={() => setShowWorkflow(!showWorkflow)}
+            className={`flex hover:text-gray-600  items-center justify-between text-gray-400 ${
+              !showWorkflow ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
+            <div>
+              {showWorkflow ? <RiArrowDownSFill /> : <RiArrowRightSFill />}
+            </div>
+            <div>{`workflows(${workflows ? workflows?.length : 0})`}</div>
           </div>
-          <div>{`workflows(${workflows ? workflows?.length : 0})`}</div>
+
+          <div className="" onClick={fetchReview}>
+            <Tooltip
+              delay={50}
+              offset={12}
+              content="Generate an AI-powered review of your PR with smart code suggestions, a clear description, concise summary, and more to help you merge faster."
+              position="top"
+              tooltipClassName="bg-gray-100 text-white text-[0.60rem] w-[15rem] font-normal"
+              arrowClassName="bg-gray-100 hidden"
+            >
+              <button className="ai-btn">
+                Generate AI Review & Description
+              </button>
+            </Tooltip>
+          </div>
         </div>
         <div
           className={`transition-all duration-600 ease-in-out overflow-hidden flex flex-col gap-7 ${

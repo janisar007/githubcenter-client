@@ -8,6 +8,7 @@ import { useUser } from "@clerk/clerk-react";
 import { apiService } from "./api/apiService";
 import { Trefoil } from "ldrs/react";
 import "ldrs/react/Trefoil.css";
+import "highlight.js/styles/atom-one-dark.css";
 
 const GlobalLoader = () => (
   <div className="w-full h-screen flex flex-col items-center justify-center bg-white">

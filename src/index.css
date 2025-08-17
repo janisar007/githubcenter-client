@@ -135,6 +135,12 @@ html {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --ai-border-width: 3px;        /* thickness of the rainbow border */
+  --ai-radius: 999px;            /* pill-ish; change to 12px for rounded rect */
+  --ai-speed: 2.8s;              /* rotation speed */
+  --ai-bg: #0e1016;              /* button fill */
+  --ai-fg: #ffffff;              /* text color */
 }
 
 .dark {
@@ -198,6 +204,31 @@ html {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #fff; /* scrollbar color */
+  border-radius: 8px;
+  border: 2px solid #edf2f7; /* adds padding and contrast */
+}
+
+
+
+/* In Code reviews tabs*/
+.custom-scrollbar2 {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #a0aec0 #f3f0ff; /* For Firefox */
+}
+
+/* Webkit-based browsers (Chrome, Edge, Safari) */
+.custom-scrollbar2::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+  height: 6px; /* for horizontal scroll */
+}
+
+.custom-scrollbar2::-webkit-scrollbar-track {
+  background: #fff; /* background (scroll space) */
+  border-radius: 8px;
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb {
   background-color: #fff; /* scrollbar color */
   border-radius: 8px;
   border: 2px solid #edf2f7; /* adds padding and contrast */
@@ -562,4 +593,111 @@ canvas {
 }
 .animate-fadeInTooltip {
   animation: fadeIn 0.2s ease-out forwards;
+}
+
+/* Register the custom property so the angle can animate smoothly */
+@property --ai-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Button (scoped variables: won't touch the rest of your UI) */
+.ai-btn {
+  --ai-border: 0.11rem;
+  --ai-radius: 10px;          /* 12px for rounded-rect */
+  --ai-speed: 2s;              /* color flow speed */
+  --ai-bg: #f3f0ff;
+  --ai-fg: #0e1016;
+  --ai-angle: 0deg;
+
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  padding: 0.6rem 1rem;
+  background: var(--ai-bg);
+  border: 0;
+  border-radius: var(--ai-radius);
+  font: 600 0.80rem/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
+  cursor: pointer;
+  isolation: isolate;
+
+  /* Text gradient with animation */
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: conic-gradient(
+    from var(--ai-angle),
+    #ff0055, #ff7a00, #ffd400, #3cff00, #00e0ff, #6a5cff, #c400ff, #ff0055
+  );
+  background-size: 100% 100%;
+  animation: ai-colors var(--ai-speed) linear infinite;
+
+  /* ✅ Drop shadow outside */
+  box-shadow:
+    0 0px 0px rgba(0, 0, 0, 0.15),
+    0 0 8px rgba(108, 92, 231, 0.35);
+}
+
+/* Animated multicolor border */
+.ai-btn::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--ai-border));
+  border-radius: inherit;
+  padding: var(--ai-border);
+
+  background: conic-gradient(
+    from var(--ai-angle),
+    #ff0055, #ff7a00, #ffd400, #3cff00, #00e0ff, #6a5cff, #c400ff, #ff0055
+  );
+
+  /* Show only the "ring" */
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+
+  animation: ai-colors var(--ai-speed) linear infinite;
+  z-index: -1;
+}
+
+/* Optional: subtle inner glow */
+.ai-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 12px rgba(255,255,255,.06),
+    0 0 18px rgba(108,92,231,.25);
+  pointer-events: none;
+}
+
+/* Focus/hover */
+.ai-btn:hover { filter: brightness(1.05); }
+.ai-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(100,108,255,.35);
+}
+
+/* Animation for both text and border */
+@keyframes ai-colors {
+  to { --ai-angle: 360deg; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ai-btn,
+  .ai-btn::before {
+    animation: none;
+  }
+  .ai-btn {
+    background-image: linear-gradient(90deg, 
+      #ff0055, #ff7a00, #ffd400, #3cff00, #00e0ff, #6a5cff, #c400ff);
+  }
 }
