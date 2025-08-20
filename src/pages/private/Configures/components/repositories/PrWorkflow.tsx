@@ -163,9 +163,20 @@ const PrWorkflow = ({
               tooltipClassName="bg-gray-100 text-white text-[0.60rem] w-[15rem] font-normal"
               arrowClassName="bg-gray-100 hidden"
             >
-              <button className="ai-btn">
-                Generate AI Review & Description
-              </button>
+              <button className="relative px-3 py-2 font-semibold rounded-lg 
+  text-transparent bg-clip-text
+  bg-gradient-to-r from-red-500 via-orange-500 via-yellow-500 
+  via-green-500 via-blue-500 via-indigo-500 to-purple-500
+  before:absolute before:inset-0 before:rounded-xl 
+  before:p-[2px] before:bg-gradient-to-r 
+  before:from-red-500 before:via-orange-500 before:via-yellow-500 
+  before:via-green-500 before:via-blue-500 before:via-indigo-500 
+  before:to-purple-500 before:content-[''] before:-z-10
+  after:absolute after:inset-[2px] after:rounded-lg 
+  after:bg-white after:dark:bg-black after:-z-10 border-2 text-sm border-purple-400 cursor-pointer">
+  Generate AI Review & Description
+</button>
+
             </Tooltip>
           </div>
         </div>
