@@ -685,18 +685,3 @@ canvas {
 }
 
 /* Animation for both text and border */
-@keyframes ai-colors {
-  to { --ai-angle: 360deg; }
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .ai-btn,
-  .ai-btn::before {
-    animation: none;
-  }
-  .ai-btn {
-    background-image: linear-gradient(90deg, 
-      #ff0055, #ff7a00, #ffd400, #3cff00, #00e0ff, #6a5cff, #c400ff);
-  }
-}
