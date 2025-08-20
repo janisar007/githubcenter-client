@@ -22,6 +22,8 @@ interface PrWorkflowPropsType {
   setPrReviewData: any;
   setPrReviewLoading: any;
   setShowRightUi: any;
+  setSelectedPr: any;
+  selectedPr: any;
 }
 
 const PrWorkflow = ({
@@ -31,18 +33,22 @@ const PrWorkflow = ({
   username,
   setPrReviewData,
   setPrReviewLoading,
-  setShowRightUi
+  setShowRightUi,
+  setSelectedPr,
+  selectedPr,
 }: PrWorkflowPropsType) => {
   const [showWorkflow, setShowWorkflow] = useState<boolean>(false);
 
   const userId = localStorage.getItem("userId");
 
-  console.log(username);
+  // console.log(username);
 
-  const fetchReview = async () => {
+  const fetchReview = async (pr: any) => {
     try {
-      setShowRightUi(true)
-      setPrReviewLoading(true)
+      setSelectedPr(pr);
+      setShowRightUi(true);
+      setPrReviewLoading(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       const getreview = await apiService.getPrReview(
         userId,
         username,
@@ -60,7 +66,10 @@ const PrWorkflow = ({
   };
 
   return (
-    <div className="border-[0.09rem] border-gray-100 hover:border-gray-300 rounded-lg overflow-hidden shadow-sm transition-shadow cursor-pointer bg-white flex flex-col px-3 py-4 gap-2 w-full">
+
+    <div className={selectedPr && selectedPr?.number === pr.number && "rounded-lg p-[0.19rem] bg-vol-50"}>
+
+      <div className={`border-[0.09rem]  ${selectedPr && selectedPr?.number === pr.number ? "mt-[3rem] " : "border-gray-100"}  rounded-lg overflow-hidden shadow-sm transition-shadow cursor-pointer bg-white flex flex-col px-3 py-4 gap-2 w-full`}>
       <div className="flex flex-col sm:flex-row sm:gap-2 sm:justify-between">
         <div className="flex gap-2 flex-wrap">
           <div className="font-semibold">{`#${pr.number}`}</div>
@@ -145,7 +154,7 @@ const PrWorkflow = ({
             <div>{`workflows(${workflows ? workflows?.length : 0})`}</div>
           </div>
 
-          <div className="" onClick={fetchReview}>
+          <div className="" onClick={() => fetchReview(pr)}>
             <Tooltip
               delay={50}
               offset={12}
@@ -214,6 +223,11 @@ const PrWorkflow = ({
         </div>
       </div>
     </div>
+
+
+
+    </div>
+    
   );
 };
 export default PrWorkflow;

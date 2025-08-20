@@ -622,18 +622,17 @@ canvas {
   cursor: pointer;
   isolation: isolate;
 
-  /* Text gradient with animation */
+  /* ✅ Multicolor text (static, no animation) */
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-  background-image: conic-gradient(
-    from var(--ai-angle),
+  background-image: linear-gradient(
+    90deg,
     #ff0055, #ff7a00, #ffd400, #3cff00, #00e0ff, #6a5cff, #c400ff, #ff0055
   );
   background-size: 100% 100%;
-  animation: ai-colors var(--ai-speed) linear infinite;
 
-  /* ✅ Drop shadow outside */
+  /* Drop shadow outside */
   box-shadow:
     0 0px 0px rgba(0, 0, 0, 0.15),
     0 0 8px rgba(108, 92, 231, 0.35);
