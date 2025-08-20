@@ -1,30 +1,32 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 type TabItem = {
-  id: string
-  label: React.ReactNode
-  content: React.ReactNode
-  disabled?: boolean
-}
+  id: string;
+  label: React.ReactNode;
+  content: React.ReactNode;
+  disabled?: boolean;
+};
 
-type TabLayout = "single-line" | "two-line" | "three-line" | "auto"
+type TabLayout = "single-line" | "two-line" | "three-line" | "auto";
 
 interface BoxTabProps {
-  items: TabItem[]
-  defaultValue?: string
-  layout?: TabLayout
-  boxClassName?: string
-  activeBoxClassName?: string
-  containerClassName?: string
-  contentClassName?: string
-  onValueChange?: (value: string) => void
+  items: TabItem[];
+  defaultValue?: string;
+  title?: string;
+  layout?: TabLayout;
+  boxClassName?: string;
+  activeBoxClassName?: string;
+  containerClassName?: string;
+  contentClassName?: string;
+  onValueChange?: (value: string) => void;
 }
 
 const BoxTab = React.forwardRef<HTMLDivElement, BoxTabProps>(
   (
     {
       items,
+      title = "Code Review - PR Description - Better Code Suggestions",
       defaultValue,
       layout = "auto",
       boxClassName,
@@ -38,28 +40,28 @@ const BoxTab = React.forwardRef<HTMLDivElement, BoxTabProps>(
   ) => {
     const [activeTab, setActiveTab] = React.useState(
       defaultValue || items[0]?.id || ""
-    )
+    );
 
     const handleTabChange = (tabId: string) => {
-      if (items.find((item) => item.id === tabId)?.disabled) return
-      setActiveTab(tabId)
-      onValueChange?.(tabId)
-    }
+      if (items.find((item) => item.id === tabId)?.disabled) return;
+      setActiveTab(tabId);
+      onValueChange?.(tabId);
+    };
 
     // Determine line layout
     const getLayoutClass = () => {
       switch (layout) {
         case "single-line":
-          return "flex-nowrap overflow-x-auto"
+          return "flex-nowrap overflow-x-auto";
         case "two-line":
-          return "flex-wrap max-h-[calc(2*var(--tab-height))]"
+          return "flex-wrap max-h-[calc(2*var(--tab-height))]";
         case "three-line":
-          return "flex-wrap max-h-[calc(3*var(--tab-height))]"
+          return "flex-wrap max-h-[calc(3*var(--tab-height))]";
         case "auto":
         default:
-          return "flex-wrap"
+          return "flex-wrap";
       }
-    }
+    };
 
     return (
       <div
@@ -67,6 +69,7 @@ const BoxTab = React.forwardRef<HTMLDivElement, BoxTabProps>(
         className={cn("flex flex-col w-full", containerClassName)}
         {...props}
       >
+        <div className="text-[1.1rem]  font-semibold text-gray-500  mr-2 mb-6 ml-1">{title} </div>
         {/* Tab Boxes Container */}
         <div
           className={cn(
@@ -92,7 +95,10 @@ const BoxTab = React.forwardRef<HTMLDivElement, BoxTabProps>(
                       "bg-primary text-primary-foreground border-primary",
                       activeBoxClassName
                     )
-                  : cn("bg-background text-foreground border-input", boxClassName),
+                  : cn(
+                      "bg-background text-foreground border-input",
+                      boxClassName
+                    ),
                 item.disabled && "opacity-50 cursor-not-allowed"
               )}
             >
@@ -115,11 +121,11 @@ const BoxTab = React.forwardRef<HTMLDivElement, BoxTabProps>(
           )}
         </div>
       </div>
-    )
+    );
   }
-)
+);
 
-BoxTab.displayName = "BoxTab"
+BoxTab.displayName = "BoxTab";
 
-export { BoxTab }
-export type { BoxTabProps, TabItem, TabLayout }
+export { BoxTab };
+export type { BoxTabProps, TabItem, TabLayout };

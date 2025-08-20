@@ -41,6 +41,7 @@ const RepositoryComponent = ({
   const [showRightUi, setShowRightUi] = useState<boolean>(false);
   const [prReviewLoading, setPrReviewLoading] = useState<boolean>(true);
   const [prReviewData, setPrReviewData] = useState<any>({});
+  const [selectedPr, setSelectedPr] = useState<any>(null);
   const groupName = useQueryParam("groupName");
 
   const [isExpand, setIsExpand] = useState<boolean>(false);
@@ -591,6 +592,8 @@ const RepositoryComponent = ({
                     setPrReviewData={setPrReviewData}
                     setPrReviewLoading={setPrReviewLoading}
                     setShowRightUi={setShowRightUi}
+                    setSelectedPr={setSelectedPr}
+                    selectedPr={selectedPr}
                   />
                 );
               }
@@ -600,7 +603,7 @@ const RepositoryComponent = ({
 
         { showRightUi &&
           <div className={`${!isExpand ? "w-[55%]" : "w-full"}`}>
-            <div className="p-[0.18rem] max-w-4xl mx-auto bg-vol-50 rounded-lg">
+            <div className="p-[0.18rem] max-w-4xl mx-auto bg-vol-50 rounded-lg mt-2">
               <div className="w-full flex gap-3  items-center mb-8 mt-4 ml-2 ">
                 <div className="">
                   {!isExpand ? (
@@ -616,9 +619,9 @@ const RepositoryComponent = ({
                   )}
                 </div>
 
-                <div className="text-[1.1rem]  font-bold  mr-2">
-                  Code Review - PR Description - Better Code Suggestions{" "}
-                </div>
+                {selectedPr && <div className="text-[1.1rem]  font-bold  mr-2">
+                  {selectedPr?.title}{" "}
+                </div>}
               </div>
 
               {prReviewLoading ? (
